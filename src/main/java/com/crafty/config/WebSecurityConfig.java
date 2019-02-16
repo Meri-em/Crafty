@@ -1,35 +1,77 @@
 package com.crafty.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.crafty.security.JwtAuthenticationEntryPoint;
+import com.crafty.security.JwtAuthenticationTokenFilter;
+
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+	
+	@Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+            .userDetailsService(this.userDetailsService)
+            .passwordEncoder(passwordEncoder());
+    }
  
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+    	return new SCryptPasswordEncoder(16384, 8, 1, 32, 32);
+    }
+    
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    
+    @Bean
+    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+        return new JwtAuthenticationTokenFilter();
+    }
+    
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
     	httpSecurity
          // disabling csrf here, you should enable it before using in production
-         .csrf().disable()
+        .csrf().disable()
+        
+        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+
+        // Don't create session.
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        
         .authorizeRequests()
+	        .antMatchers("/api/v1/welcome").permitAll()
             .antMatchers("/api/v1/register").permitAll()
-//            .antMatchers("/api/v1/welcome").permitAll()
-            .antMatchers("/api/v1/hello").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .permitAll()
-            .and()
-            .logout()
-            .permitAll();
-    }
-    
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-    	return new SCryptPasswordEncoder(16384, 8, 1, 32, 32);
+            .antMatchers("/api/v1/login").permitAll()
+            .anyRequest().authenticated();
+    	
+    	// Custom JWT based security filter.
+        httpSecurity
+            .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+        // Disable page caching.
+        httpSecurity.headers().cacheControl();
     }
 }
