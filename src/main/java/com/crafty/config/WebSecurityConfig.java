@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.crafty.security.JwtAuthenticationEntryPoint;
 import com.crafty.security.JwtAuthenticationTokenFilter;
@@ -65,6 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .antMatchers("/api/v1/welcome").permitAll()
             .antMatchers("/api/v1/register").permitAll()
             .antMatchers("/api/v1/login").permitAll()
+            .antMatchers("/api/v1/items/**").permitAll()
+            .antMatchers("/images/**").permitAll()
             .anyRequest().authenticated();
     	
     	// Custom JWT based security filter.
@@ -73,5 +77,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Disable page caching.
         httpSecurity.headers().cacheControl();
+    }
+    
+    @Bean
+    public WebMvcConfigurerAdapter corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+
+
+            }
+        };
     }
 }

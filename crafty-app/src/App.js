@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+
+
+class Sasa extends Component {
+	render(){
+		return "This is SASA";
+	}
+}
+
+const Baba  = () =>  "This is BABA";
 
 class App extends Component {
+  componentDidMount() {
+    axios.get('http://localhost:8080/api/v1/welcome').then((res) => {
+      console.log(res);
+    })
+  }
   render() {
-    return (
+	  const result = (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
+		  <Sasa />
+		  <Baba />
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
@@ -22,6 +39,8 @@ class App extends Component {
         </header>
       </div>
     );
+	console.log(result);
+    return result;
   }
 }
 

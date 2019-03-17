@@ -38,10 +38,5 @@ public class AuthResource {
 	public LoginResultDTO login(@RequestBody @Valid LoginDTO loginDTO) {
 		return authService.login(loginDTO);
 	}
-	
-	@GetMapping("/user/email")
-	public String getUserEmail() {
-		return "maria.karcheva@yahoo.com";
-	}
 
 }

@@ -12,7 +12,10 @@ import com.crafty.enumeration.UserRole;
 @Entity
 public class User extends BaseEntityId {
 	
+	private static final long serialVersionUID = -7122787408462767391L;
+
 	@NotNull
+	@Column(unique = true)
 	private String email;
 	
 	@NotNull
