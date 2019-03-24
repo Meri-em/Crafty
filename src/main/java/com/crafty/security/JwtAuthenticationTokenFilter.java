@@ -46,7 +46,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     claims.getSubject(),
                     claims.getRoles(),
                     claims.getLoggedInUserFirstName(),
-                    claims.getLoggedInUserLastName()
+                    claims.getLoggedInUserLastName(),
+                    claims.getMemberId(),
+                    claims.getAuthorId()
                 );
 
                 log.info("Checking authentication for {}", jwtUser);

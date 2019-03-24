@@ -1,17 +1,32 @@
+DROP DATABASE IF EXISTS craft;
+CREATE DATABASE craft;
+
 USE craft;
-CREATE TABLE user (
+
+CREATE TABLE member (
 	id CHAR(36) NOT NULL,
-	email VARCHAR(255) NOT NULL,
-	password VARCHAR(100) NOT NULL,
-	role VARCHAR(100) NOT NULL,
-	PRIMARY KEY (id),
-	UNIQUE (email)
+	first_name VARCHAR(255),
+	last_name VARCHAR(255),
+	PRIMARY KEY(id)
 );
 
 CREATE TABLE author (
     id CHAR(36) NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	PRIMARY KEY (id)
+);
+
+CREATE TABLE user (
+	id CHAR(36) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	role VARCHAR(100) NOT NULL,
+	member_id CHAR(36),
+	author_id CHAR(36),
+	PRIMARY KEY (id),
+	FOREIGN KEY (member_id) REFERENCES member(id),
+	FOREIGN KEY (author_id) REFERENCES author(id),
+	UNIQUE (email)
 );
 
 CREATE TABLE item (
@@ -35,11 +50,16 @@ CREATE TABLE item_image (
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
-REPLACE INTO user VALUES
-('2bee9ef1-7a94-41e3-81d9-4a38e2a6bec8','maria.karcheva@yahoo.com','$e0801$OGKNxhbBab6TpdqAs0l61GND5E2n3tk5plM1J77CYFY=$/XMXe6swplcNEj3reL4Rwg3boLGljXqXzOJ5hyfpPKg=','MEMBER');
+REPLACE INTO member VALUES
+('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', NULL, NULL);
 
 REPLACE INTO author VALUES
 ('f180cc79-5856-4985-9794-26b7a787bec2', 'Кръстина Филипова');
+
+REPLACE INTO user VALUES
+('2bee9ef1-7a94-41e3-81d9-4a38e2a6bec8','maria.karcheva@yahoo.com','$e0801$OGKNxhbBab6TpdqAs0l61GND5E2n3tk5plM1J77CYFY=$/XMXe6swplcNEj3reL4Rwg3boLGljXqXzOJ5hyfpPKg=',
+'MEMBER','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0',NULL);
+
 
 REPLACE INTO item VALUES
 ('cd8c8983-dc7a-4570-97ca-ed2a218b18ba','Възглавница с бухали','Възглавница с бухали описание','PILLOW','2019-03-08 12:12:01', 12.5,'f180cc79-5856-4985-9794-26b7a787bec2'),
@@ -53,4 +73,6 @@ REPLACE INTO item_image VALUES
 ('5c2af457-a07f-4c0f-95ae-ff9e297dc581','2.jpg','64605868-ab4d-40a1-9b1e-28c5ac5a7ae0',2),
 ('9d9af93b-b1c7-47b6-9f7a-606e2d2009a8','1.jpg','52038cd8-91b7-4852-abec-fa8281edef68',1),
 ('a9073774-8366-4d37-96fb-ce66910576cb','2.jpg','52038cd8-91b7-4852-abec-fa8281edef68',2);
+
+
 

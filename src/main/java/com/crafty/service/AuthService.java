@@ -1,5 +1,12 @@
 package com.crafty.service;
 
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,69 +19,86 @@ import org.springframework.stereotype.Service;
 import com.crafty.dto.LoginDTO;
 import com.crafty.dto.LoginResultDTO;
 import com.crafty.dto.RegistrationDTO;
+import com.crafty.entity.Member;
 import com.crafty.entity.User;
 import com.crafty.enumeration.UserRole;
+import com.crafty.repository.MemberRepository;
 import com.crafty.repository.UserRepository;
 import com.crafty.security.JwtClaims;
 import com.crafty.security.JwtScopeConstants;
 import com.crafty.security.JwtTokenUtil;
 import com.crafty.security.JwtUser;
+import com.crafty.security.JwtUserFactory;
+import com.crafty.web.RequestData;
+import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.ConflictException;
 import com.crafty.web.exception.UnauthorizedException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @Service
 public class AuthService {
-	
+
+	private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+
 	private final UserRepository userRepository;
+	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final UserDetailsService userDetailsService;
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenUtil jwtTokenUtil;
-	
-	public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-			UserDetailsService userDetailsService, AuthenticationManager authenticationManager,
-			JwtTokenUtil jwtTokenUtil) {
+
+	public AuthService(UserRepository userRepository, MemberRepository memberRepository,
+			PasswordEncoder passwordEncoder, UserDetailsService userDetailsService,
+			AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
 		this.userRepository = userRepository;
+		this.memberRepository = memberRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.userDetailsService = userDetailsService;
 		this.authenticationManager = authenticationManager;
 		this.jwtTokenUtil = jwtTokenUtil;
 	}
-	
+
 	public void register(RegistrationDTO registrationDTO) {
-		userRepository.findByEmail(registrationDTO.getEmail())
-			.ifPresent(u -> {
-				throw new ConflictException("User with provided email already exists");
-			});
+		userRepository.findByEmail(registrationDTO.getEmail()).ifPresent(u -> {
+			throw new ConflictException("User with provided email already exists");
+		});
+		String memberId = UUID.randomUUID().toString();
+		Member member = new Member();
+		member.setId(memberId);
+		member.setFirstName(registrationDTO.getFirstName());
+		member.setLastName(registrationDTO.getLastName());
+		memberRepository.save(member);
+
 		User user = new User();
 		user.setEmail(registrationDTO.getEmail().toLowerCase());
 		user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 		user.setRole(UserRole.MEMBER);
+		user.setMemberId(memberId);
 		userRepository.save(user);
 	}
-	
+
 	public LoginResultDTO login(LoginDTO loginDTO) {
 		String email = loginDTO.getEmail();
-		userRepository.findByEmail(email)
-			.orElseThrow(() -> new UnauthorizedException("Incorrect email or password"));
+		userRepository.findByEmail(email).orElseThrow(() -> new UnauthorizedException("Incorrect email or password"));
 		this.authenticate(email, loginDTO.getPassword());
 		return generateToken(email);
 	}
-	
+
 	private LoginResultDTO generateToken(String email) throws AuthenticationException {
-        JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(email);
+		JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(email);
 //        UserDTO user = authServiceClient.getUserByEmail(email).getData();
 
-        String carrierId = null;
-        String employerId;
-        String employerGroupId;
+		String carrierId = null;
+		String employerId;
+		String employerGroupId;
 
-        // The member might not be present here. An example might be for
-        // the users in the CSR application. In those cases,
-        // use the value on the user table to lookup this information.
+		// The member might not be present here. An example might be for
+		// the users in the CSR application. In those cases,
+		// use the value on the user table to lookup this information.
 //        if (member.isPresent()) {
 
-            // TODO: Fix this later.
+		// TODO: Fix this later.
 //            employerGroupId = member.get().getEmployerGroupId();
 //
 //            // Get the carrier ID and employer ID from the employer group ID.
@@ -97,22 +121,46 @@ public class AuthService {
 //            carrierId = user.getCarrierId();
 //        }
 //        
-        JwtClaims.Builder jwtClaimsBuilder = new JwtClaims.Builder(jwtUser);
-                //.userAssociativeData(JwtAssociativeData.forUser(jwtUser, user.getMemberId(), employerGroupId, employerId, carrierId));
-        
-        String accessToken = jwtTokenUtil.generateToken(jwtClaimsBuilder.addScope(JwtScopeConstants.ACCESS_TOKEN).build());
-        String refreshToken = jwtTokenUtil.generateToken(jwtClaimsBuilder.addScope(JwtScopeConstants.REFRESH_TOKEN).build());
-        
-        return new LoginResultDTO(accessToken, refreshToken);
-    }
-	
+		JwtClaims.Builder jwtClaimsBuilder = new JwtClaims.Builder(jwtUser);
+		// .userAssociativeData(JwtAssociativeData.forUser(jwtUser, user.getMemberId(),
+		// employerGroupId, employerId, carrierId));
+
+		String accessToken = jwtTokenUtil
+				.generateToken(jwtClaimsBuilder.addScope(JwtScopeConstants.ACCESS_TOKEN).build());
+		String refreshToken = jwtTokenUtil
+				.generateToken(jwtClaimsBuilder.addScope(JwtScopeConstants.REFRESH_TOKEN).build());
+
+		return new LoginResultDTO(accessToken, refreshToken);
+	}
+
 	public void authenticate(String email, String password) {
 		Authentication authentication;
-        try {
-            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-        } catch (AuthenticationException ex) {
-        	throw new UnauthorizedException("Incorrect email or password");
-        }
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+		try {
+			authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+		} catch (AuthenticationException ex) {
+			throw new UnauthorizedException("Incorrect email or password");
+		}
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+
+	public LoginResultDTO refreshToken(HttpServletRequest request)
+			throws JsonParseException, JsonMappingException, IOException {
+		String tokenHeader = RequestData.AUTHORIZATION;
+		String refreshToken = request.getHeader(tokenHeader);
+
+		JwtClaims claims = jwtTokenUtil.parseToken(refreshToken);
+		String email = claims.getSubject();
+
+		JwtUser jwtUser = JwtUserFactory.create(claims.getLoggedInUserId(), email, claims.getRoles(), null, null,
+				claims.getMemberId(), claims.getAuthorId());
+
+		log.info("Checking registration token for {}", jwtUser);
+
+		if (jwtTokenUtil.validateToken(refreshToken, jwtUser)) {
+			return generateToken(email);
+		}
+
+		throw new BadRequestException("The token is not valid");
 	}
 }

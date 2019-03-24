@@ -13,10 +13,11 @@ public final class JwtUserFactory {
 
     private JwtUserFactory() { }
 
-    public static JwtUser create(String id, String email, Set<String> authorities, String firstName, String lastName) {
+    public static JwtUser create(String id, String email, Set<String> authorities, String firstName, String lastName,
+    		String memberId, String authorId) {
         Set<GrantedAuthority> grantedAuthorities = mapToGrantedAuthorities(authorities);
         
-        return new JwtUser(id, email, null, grantedAuthorities, firstName, lastName);
+        return new JwtUser(id, email, null, grantedAuthorities, firstName, lastName, memberId, authorId);
     }
     
     private static Set<GrantedAuthority> mapToGrantedAuthorities(Set<String> authorities) {

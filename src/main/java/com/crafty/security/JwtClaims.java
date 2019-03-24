@@ -21,7 +21,7 @@ public class JwtClaims {
     public static final String LOGGED_IN_USER_LAST_NAME = "lastName";
     public static final String MEMBER_ID = "memberId";
     public static final String EMPLOYER_GROUP_ID = "employerGroupId";
-    public static final String EMPLOYER_ID = "employerId";
+    public static final String AUTHOR_ID = "authorId";
     public static final String CARRIER_ID = "carrierId";
     public static final String IMPERSONATED_BY_USER_ID = "impersonatorUserId";
     public static final String SWITCH_USER_GRANTED_AUTHORITY = "switchUserAuthority";
@@ -35,7 +35,7 @@ public class JwtClaims {
     
     private final String memberId;
     private final String employerGroupId;
-    private final String employerId;
+    private final String authorId;
     private final String carrierId;
     
     private final String impersonatedByUserId;
@@ -55,7 +55,7 @@ public class JwtClaims {
             getStringClaimValue.apply(token, JwtClaims.LOGGED_IN_USER_LAST_NAME),
             getStringClaimValue.apply(token, JwtClaims.MEMBER_ID),
             getStringClaimValue.apply(token, JwtClaims.EMPLOYER_GROUP_ID),
-            getStringClaimValue.apply(token, JwtClaims.EMPLOYER_ID),
+            getStringClaimValue.apply(token, JwtClaims.AUTHOR_ID),
             getStringClaimValue.apply(token, JwtClaims.CARRIER_ID),
             getStringClaimValue.apply(token, JwtClaims.IMPERSONATED_BY_USER_ID),
             getStringClaimValue.apply(token, JwtClaims.SWITCH_USER_GRANTED_AUTHORITY),
@@ -84,7 +84,7 @@ public class JwtClaims {
         this.loggedInUserLastName = loggedInUserLastName;
         this.memberId = memberId;
         this.employerGroupId = employerGroupId;
-        this.employerId = employerId;
+        this.authorId = employerId;
         this.carrierId = carrierId;
         this.impersonatedByUserId = impersonatedByUserId;
         this.switchUserGrantedAuthority = switchUserGrantedAuthority;
@@ -111,16 +111,16 @@ public class JwtClaims {
     	return loggedInUserLastName;
     }
     
-    public Optional<String> getMemberId() {
-        return optionalIfEmpty(memberId);
+    public String getMemberId() {
+        return memberId;
     }
     
     public Optional<String> getEmployerGroupId() {
         return optionalIfEmpty(employerGroupId);
     }
     
-    public Optional<String> getEmployerId() {
-        return optionalIfEmpty(employerId);
+    public String getAuthorId() {
+        return authorId;
     }
     
     public Optional<String> getCarrierId() {
@@ -144,7 +144,7 @@ public class JwtClaims {
             { put(LOGGED_IN_USER_LAST_NAME, loggedInUserLastName); }
             { put(MEMBER_ID, memberId); }
             { put(EMPLOYER_GROUP_ID, employerGroupId); }
-            { put(EMPLOYER_ID, employerId); }
+            { put(AUTHOR_ID, authorId); }
             { put(CARRIER_ID, carrierId); }
             { put(IMPERSONATED_BY_USER_ID, impersonatedByUserId); }
             { put(SWITCH_USER_GRANTED_AUTHORITY, switchUserGrantedAuthority); }
@@ -162,7 +162,7 @@ public class JwtClaims {
 		int result = 1;
 		result = prime * result + ((carrierId == null) ? 0 : carrierId.hashCode());
 		result = prime * result + ((employerGroupId == null) ? 0 : employerGroupId.hashCode());
-		result = prime * result + ((employerId == null) ? 0 : employerId.hashCode());
+		result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
 		result = prime * result + ((impersonatedByUserId == null) ? 0 : impersonatedByUserId.hashCode());
 		result = prime * result + ((loggedInUserFirstName == null) ? 0 : loggedInUserFirstName.hashCode());
 		result = prime * result + ((loggedInUserId == null) ? 0 : loggedInUserId.hashCode());
@@ -193,10 +193,10 @@ public class JwtClaims {
 				return false;
 		} else if (!employerGroupId.equals(other.employerGroupId))
 			return false;
-		if (employerId == null) {
-			if (other.employerId != null)
+		if (authorId == null) {
+			if (other.authorId != null)
 				return false;
-		} else if (!employerId.equals(other.employerId))
+		} else if (!authorId.equals(other.authorId))
 			return false;
 		if (impersonatedByUserId == null) {
 			if (other.impersonatedByUserId != null)
@@ -246,7 +246,7 @@ public class JwtClaims {
         return "JwtClaims [subject=" + subject + ", roles=" + roles + ", loggedInUserId=" + loggedInUserId
                 + ", impersonatedByUserId=" + impersonatedByUserId + ", switchUserGrantedAuthority="
                 + switchUserGrantedAuthority + ", memberId=" + memberId + ", employerGroupId=" + employerGroupId
-                + ", employerId=" + employerId + ", carrierId=" + carrierId + "]";
+                + ", employerId=" + authorId + ", carrierId=" + carrierId + "]";
     }
 
     public static class Builder {
@@ -259,7 +259,7 @@ public class JwtClaims {
         
         private String memberId;
         private String employerGroupId;
-        private String employerId;
+        private String authorId;
         private String carrierId;
         
         private String impersonatedByUserId;
@@ -275,9 +275,9 @@ public class JwtClaims {
             this.loggedInUserFirstName = principal.getFirstName();
             this.loggedInUserLastName = principal.getLastName();
             
-            this.memberId = "";
+            this.memberId = principal.getMemberId();
             this.employerGroupId = "";
-            this.employerId = "";
+            this.authorId = principal.getAuthorId();
             this.carrierId = "";
             
             this.impersonatedByUserId = "";
@@ -309,7 +309,7 @@ public class JwtClaims {
                 
                 memberId,
                 employerGroupId,
-                employerId,
+                authorId,
                 carrierId,
                 
                 impersonatedByUserId,

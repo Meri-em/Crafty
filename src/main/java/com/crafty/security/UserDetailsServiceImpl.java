@@ -31,7 +31,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     	
     	Set<String> authorities = new HashSet<>();
     	authorities.add(user.getRole().name());
-        return new JwtUser(user.getId(), user.getEmail(),user.getPassword(), mapToGrantedAuthorities(authorities), "", "");
+        return new JwtUser(user.getId(), user.getEmail(),user.getPassword(), mapToGrantedAuthorities(authorities), "", "",
+        		user.getMemberId(), user.getAuthorId());
     }
     
     private static Set<GrantedAuthority> mapToGrantedAuthorities(Set<String> authorities) {

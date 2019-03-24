@@ -1,5 +1,8 @@
 package com.crafty.web.rest;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +18,8 @@ import com.crafty.dto.LoginResultDTO;
 import com.crafty.dto.RegistrationDTO;
 import com.crafty.security.JwtUser;
 import com.crafty.service.AuthService;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RestController
 @RequestMapping("api/v1")
@@ -48,15 +53,19 @@ public class AuthResource {
 	@GetMapping("/user/info")
 	public CraftyResponse<String> getEmail() {
 		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return CraftyResponse.build("email: " + jwtUser.getUsername() + ", authorities: " + jwtUser.getAuthorities());
+		StringBuilder sb = new StringBuilder();
+		sb.append("email: " + jwtUser.getUsername());
+		sb.append(", authorities: " + jwtUser.getAuthorities());
+		sb.append(", memberId: " + jwtUser.getMemberId());
+		return CraftyResponse.build(sb.toString());
 	}
 	
-//	@GetMapping("/refresh")
-//    public LoginResultDTO refreshToken(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
-//    	LoginResultDTO result = authService.refreshToken(request);
-//    	return BINDResponse.build(result);
-//    	
-//    }
+	@GetMapping(value = "/refresh")
+    public CraftyResponse<LoginResultDTO> refreshToken(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+    	LoginResultDTO result = authService.refreshToken(request);
+    	return CraftyResponse.build(result);
+    	
+    }
 	
 
 }
