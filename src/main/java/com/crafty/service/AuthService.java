@@ -55,8 +55,8 @@ public class AuthService {
 	
 	public LoginResultDTO login(LoginDTO loginDTO) {
 		String email = loginDTO.getEmail();
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UnauthorizedException("Incorrect email or password"));
+		userRepository.findByEmail(email)
+			.orElseThrow(() -> new UnauthorizedException("Incorrect email or password"));
 		this.authenticate(email, loginDTO.getPassword());
 		return generateToken(email);
 	}

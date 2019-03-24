@@ -1,4 +1,4 @@
-package com.crafty.config;
+package com.crafty.dto;
 
 import java.io.Serializable;
 

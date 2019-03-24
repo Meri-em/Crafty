@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.crafty.config.ItemImageDTO;
 import com.crafty.dto.AuthorDTO;
 import com.crafty.dto.ItemDTO;
+import com.crafty.dto.ItemImageDTO;
 import com.crafty.dto.SimpleItemDTO;
 import com.crafty.entity.Author;
 import com.crafty.entity.Item;

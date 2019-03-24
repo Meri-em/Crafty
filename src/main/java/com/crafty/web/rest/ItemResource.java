@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crafty.dto.CraftyResponse;
 import com.crafty.dto.ItemDTO;
 import com.crafty.dto.SimpleItemDTO;
 import com.crafty.service.ItemService;
@@ -23,12 +24,12 @@ public class ItemResource {
 	}
 	
 	@GetMapping("/{itemId}")
-	public ItemDTO getItemById(@PathVariable String itemId) {
-		return itemService.getItemById(itemId);
+	public CraftyResponse<ItemDTO> getItemById(@PathVariable String itemId) {
+		return CraftyResponse.build(itemService.getItemById(itemId));
 	}
 	
 	@GetMapping("")
-	public List<SimpleItemDTO> getItemsByCategory(@RequestParam("category") String category) {
-		return itemService.getItemsByCategory(category);
+	public CraftyResponse<List<SimpleItemDTO>> getItemsByCategory(@RequestParam("category") String category) {
+		return CraftyResponse.build(itemService.getItemsByCategory(category));
 	}
 }
