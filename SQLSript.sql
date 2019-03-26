@@ -23,6 +23,7 @@ CREATE TABLE user (
 	role VARCHAR(100) NOT NULL,
 	member_id CHAR(36),
 	author_id CHAR(36),
+	last_logout_date DATETIME,
 	PRIMARY KEY (id),
 	FOREIGN KEY (member_id) REFERENCES member(id),
 	FOREIGN KEY (author_id) REFERENCES author(id),
@@ -58,7 +59,7 @@ REPLACE INTO author VALUES
 
 REPLACE INTO user VALUES
 ('2bee9ef1-7a94-41e3-81d9-4a38e2a6bec8','maria.karcheva@yahoo.com','$e0801$OGKNxhbBab6TpdqAs0l61GND5E2n3tk5plM1J77CYFY=$/XMXe6swplcNEj3reL4Rwg3boLGljXqXzOJ5hyfpPKg=',
-'MEMBER','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0',NULL);
+'MEMBER','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0',NULL,NULL);
 
 
 REPLACE INTO item VALUES

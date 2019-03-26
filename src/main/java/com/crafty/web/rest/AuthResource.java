@@ -60,12 +60,18 @@ public class AuthResource {
 		return CraftyResponse.build(sb.toString());
 	}
 	
-	@GetMapping(value = "/refresh")
+	@PostMapping("/refresh")
     public CraftyResponse<LoginResultDTO> refreshToken(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
     	LoginResultDTO result = authService.refreshToken(request);
     	return CraftyResponse.build(result);
     	
     }
+	
+	@PostMapping("/logout")
+	public CraftyResponse<Boolean> logout() {
+		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return CraftyResponse.build(authService.doLogout(jwtUser.getId()));
+	}
 	
 
 }

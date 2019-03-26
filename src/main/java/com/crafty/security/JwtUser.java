@@ -1,5 +1,6 @@
 package com.crafty.security;
 
+import java.time.Instant;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -13,21 +14,19 @@ public class JwtUser implements UserDetails {
 	private String username;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
-	private final String firstName;
-    private final String lastName;
     private final String memberId;
     private final String authorId;
+    private final Instant lastLogoutDate;
 	
-	public JwtUser(String id, String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName,
-			String memberId, String authorId) {
+	public JwtUser(String id, String username, String password, Collection<? extends GrantedAuthority> authorities,
+			String memberId, String authorId, Instant lastLogoutDate) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.memberId = memberId;
 		this.authorId = authorId;
+		this.lastLogoutDate = lastLogoutDate;
 	}
 
 	@Override
@@ -69,14 +68,6 @@ public class JwtUser implements UserDetails {
 		return id;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
 	public String getMemberId() {
 		return memberId;
 	}
@@ -84,6 +75,11 @@ public class JwtUser implements UserDetails {
 	public String getAuthorId() {
 		return authorId;
 	}
+
+	public Instant getLastLogoutDate() {
+		return lastLogoutDate;
+	}
+	
 	
 }
 

@@ -1,6 +1,8 @@
 package com.crafty.security;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,7 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.crafty.ApplicationProperties;
+import com.crafty.entity.User;
+import com.crafty.repository.UserRepository;
 import com.crafty.web.RequestData;
 
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
@@ -26,12 +29,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private ApplicationProperties applicationProperties;
+    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-
-//        String systemToken = request.getHeader(RequestData.SYSTEM_AUTHORIZATION);
         String authToken = request.getHeader(RequestData.AUTHORIZATION) != null ? request.getHeader(RequestData.AUTHORIZATION) : request.getHeader(RequestData.SWAGGER_AUTHORIZATION);
 
         if (authToken != null && !authToken.isEmpty()) {
@@ -45,15 +46,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     claims.getLoggedInUserId(),
                     claims.getSubject(),
                     claims.getRoles(),
-                    claims.getLoggedInUserFirstName(),
-                    claims.getLoggedInUserLastName(),
                     claims.getMemberId(),
-                    claims.getAuthorId()
+                    claims.getAuthorId(),
+                    claims.getLastLogoutDate() != null ? Instant.parse(claims.getLastLogoutDate()) : null
                 );
 
                 log.info("Checking authentication for {}", jwtUser);
-
-                if (jwtTokenUtil.validateToken(authToken, jwtUser) && claims.getScope().equals(JwtScopeConstants.ACCESS_TOKEN)) {
+                Optional<User> userOptional = userRepository.findById(claims.getLoggedInUserId());
+                if (jwtTokenUtil.validateToken(authToken, jwtUser, userOptional.get().getLastLogoutDate()) && claims.getScope().equals(JwtScopeConstants.ACCESS_TOKEN)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(jwtUser, null, jwtUser.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     log.info("Authenticated {}, setting security context", jwtUser);

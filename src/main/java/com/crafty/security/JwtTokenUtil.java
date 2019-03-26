@@ -41,8 +41,14 @@ public class JwtTokenUtil implements Serializable {
         return getRawClaims(token).getExpiration().toInstant();
     }
     
-    public Boolean validateToken(String token, JwtUser jwtUser) {
-        return (jwtUser.getUsername() != null && !isTokenExpired(token));
+    public Boolean validateToken(String token, JwtUser jwtUser, Instant lastLogoutDate) {
+    	boolean equalLogoutDates;
+    	if (lastLogoutDate == null) {
+    		equalLogoutDates = jwtUser.getLastLogoutDate() == null;
+    	} else {
+    		equalLogoutDates = lastLogoutDate.equals(jwtUser.getLastLogoutDate());
+    	}
+        return (equalLogoutDates && jwtUser.getUsername() != null && !isTokenExpired(token));
     }
 
     public String generateToken(JwtClaims jwtClaims) {

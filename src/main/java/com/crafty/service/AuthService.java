@@ -1,6 +1,8 @@
 package com.crafty.service;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +31,7 @@ import com.crafty.security.JwtScopeConstants;
 import com.crafty.security.JwtTokenUtil;
 import com.crafty.security.JwtUser;
 import com.crafty.security.JwtUserFactory;
+import com.crafty.util.SystemClock;
 import com.crafty.web.RequestData;
 import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.ConflictException;
@@ -47,16 +50,18 @@ public class AuthService {
 	private final UserDetailsService userDetailsService;
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenUtil jwtTokenUtil;
+	private final SystemClock systemClock;
 
 	public AuthService(UserRepository userRepository, MemberRepository memberRepository,
 			PasswordEncoder passwordEncoder, UserDetailsService userDetailsService,
-			AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
+			AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, SystemClock systemClock) {
 		this.userRepository = userRepository;
 		this.memberRepository = memberRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.userDetailsService = userDetailsService;
 		this.authenticationManager = authenticationManager;
 		this.jwtTokenUtil = jwtTokenUtil;
+		this.systemClock = systemClock;
 	}
 
 	public void register(RegistrationDTO registrationDTO) {
@@ -87,43 +92,7 @@ public class AuthService {
 
 	private LoginResultDTO generateToken(String email) throws AuthenticationException {
 		JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(email);
-//        UserDTO user = authServiceClient.getUserByEmail(email).getData();
-
-		String carrierId = null;
-		String employerId;
-		String employerGroupId;
-
-		// The member might not be present here. An example might be for
-		// the users in the CSR application. In those cases,
-		// use the value on the user table to lookup this information.
-//        if (member.isPresent()) {
-
-		// TODO: Fix this later.
-//            employerGroupId = member.get().getEmployerGroupId();
-//
-//            // Get the carrier ID and employer ID from the employer group ID.
-//            EmployerGroupDTO employerGroupDTO = employerGroupServiceClient.getEmployerGroupById(employerGroupId).getData();
-//            employerId = employerGroupDTO.getEmployer().getId();
-//            Optional<EmployerDTO> employerDTO = employerServiceClient.getEmployers().getData().stream()
-//                .filter(e -> e.getId().equals(employerId))
-//                .findFirst();
-//
-//            if (employerDTO.isPresent()) {
-//                carrierId = employerDTO.get().getCarrierId();
-//            }
-//            carrierId = "BIND_000001";
-//            employerId = "BIND_000001";
-//            employerGroupId = "BIND_000001";
-//        }
-//        else {
-//            employerGroupId = user.getEmployerGroupId();
-//            employerId = user.getEmployerId();
-//            carrierId = user.getCarrierId();
-//        }
-//        
 		JwtClaims.Builder jwtClaimsBuilder = new JwtClaims.Builder(jwtUser);
-		// .userAssociativeData(JwtAssociativeData.forUser(jwtUser, user.getMemberId(),
-		// employerGroupId, employerId, carrierId));
 
 		String accessToken = jwtTokenUtil
 				.generateToken(jwtClaimsBuilder.addScope(JwtScopeConstants.ACCESS_TOKEN).build());
@@ -152,15 +121,29 @@ public class AuthService {
 		JwtClaims claims = jwtTokenUtil.parseToken(refreshToken);
 		String email = claims.getSubject();
 
-		JwtUser jwtUser = JwtUserFactory.create(claims.getLoggedInUserId(), email, claims.getRoles(), null, null,
-				claims.getMemberId(), claims.getAuthorId());
+		JwtUser jwtUser = JwtUserFactory.create(claims.getLoggedInUserId(), email, claims.getRoles(),
+				claims.getMemberId(), claims.getAuthorId(), 
+				claims.getLastLogoutDate() != null ? Instant.parse(claims.getLastLogoutDate()) : null);
 
 		log.info("Checking registration token for {}", jwtUser);
 
-		if (jwtTokenUtil.validateToken(refreshToken, jwtUser)) {
+		Optional<User> userOptional = userRepository.findById(claims.getLoggedInUserId());
+		if (jwtTokenUtil.validateToken(refreshToken, jwtUser, userOptional.get().getLastLogoutDate())) {
 			return generateToken(email);
 		}
 
 		throw new BadRequestException("The token is not valid");
+	}
+	
+	public boolean doLogout(String userId) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			user.setLastLogoutDate(systemClock.instant());
+			userRepository.save(user);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

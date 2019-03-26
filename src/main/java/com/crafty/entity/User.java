@@ -1,5 +1,7 @@
 package com.crafty.entity;
 
+import java.time.Instant;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -32,6 +34,8 @@ public class User extends BaseEntityId {
 	
 	@Column(columnDefinition = "char(36)")
 	private String authorId;
+	
+	private Instant lastLogoutDate;
 
 	public String getEmail() {
 		return email;
@@ -71,6 +75,14 @@ public class User extends BaseEntityId {
 
 	public void setAuthorId(String authorId) {
 		this.authorId = authorId;
+	}
+
+	public Instant getLastLogoutDate() {
+		return lastLogoutDate;
+	}
+
+	public void setLastLogoutDate(Instant lastLogoutDate) {
+		this.lastLogoutDate = lastLogoutDate;
 	}
 	
 }

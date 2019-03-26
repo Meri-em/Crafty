@@ -1,5 +1,6 @@
 package com.crafty.security;
 
+import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,11 +14,11 @@ public final class JwtUserFactory {
 
     private JwtUserFactory() { }
 
-    public static JwtUser create(String id, String email, Set<String> authorities, String firstName, String lastName,
-    		String memberId, String authorId) {
+    public static JwtUser create(String id, String email, Set<String> authorities,
+    		String memberId, String authorId, Instant lastLogoutDate) {
         Set<GrantedAuthority> grantedAuthorities = mapToGrantedAuthorities(authorities);
         
-        return new JwtUser(id, email, null, grantedAuthorities, firstName, lastName, memberId, authorId);
+        return new JwtUser(id, email, null, grantedAuthorities, memberId, authorId, lastLogoutDate);
     }
     
     private static Set<GrantedAuthority> mapToGrantedAuthorities(Set<String> authorities) {
