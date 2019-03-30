@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.crafty.security.JwtAuthenticationEntryPoint;
 import com.crafty.security.JwtAuthenticationTokenFilter;
@@ -78,19 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Disable page caching.
         httpSecurity.headers().cacheControl();
-    }
-    
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
-//                .allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
-
-
-            }
-        };
     }
     
 }

@@ -2,32 +2,28 @@ package com.crafty.dto;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class LoginResultDTO implements Serializable {
 
     private static final long serialVersionUID = 7936874901150441858L;
     
-    private String idToken;
+    private String accessToken;
     private String refreshToken;
     
     public LoginResultDTO() { }
 
-    public LoginResultDTO(String idToken, String refreshToken) {
-        this.idToken = idToken;
+    public LoginResultDTO(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 
-    @JsonProperty("id_token")
-    public String getIdToken() {
-        return idToken;
-    }
+	public String getAccessToken() {
+		return accessToken;
+	}
 
-    public void setIdToken(String idToken) {
-        this.idToken = idToken;
-    }
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
 
-    @JsonProperty("refresh_token")
 	public String getRefreshToken() {
 		return refreshToken;
 	}

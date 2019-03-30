@@ -23,6 +23,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/v1")
 public class AuthResource {
 	
@@ -32,20 +33,18 @@ public class AuthResource {
 		this.authService = authService;
 	}
 	
-	@CrossOrigin
+	
 	@GetMapping("/welcome")
     public CraftyResponse<String> getWelcomeMessage() {
 		return CraftyResponse.build("Welcome");
     }
 	
-	@CrossOrigin
 	@PostMapping(value="/register", consumes = "application/json", produces = "application/json")
 	public CraftyResponse<String> register(@RequestBody @Valid RegistrationDTO registrationDTO) {
 		authService.register(registrationDTO);
 		return CraftyResponse.build("You were successfully registered");
 	}
 	
-	@CrossOrigin
 	@PostMapping(value="/login", consumes = "application/json", produces = "application/json")
 	public CraftyResponse<LoginResultDTO> login(@RequestBody @Valid LoginDTO loginDTO) {
 		return CraftyResponse.build(authService.login(loginDTO));
@@ -54,7 +53,6 @@ public class AuthResource {
 	/*
 	 * This endpoint can be access if the user is logged in the system. It is used to verify that the user is logged in.
 	 */
-	@CrossOrigin
 	@GetMapping("/user/info")
 	public CraftyResponse<String> getEmail() {
 		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,7 +63,6 @@ public class AuthResource {
 		return CraftyResponse.build(sb.toString());
 	}
 	
-	@CrossOrigin
 	@PostMapping("/refresh")
     public CraftyResponse<LoginResultDTO> refreshToken(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
     	LoginResultDTO result = authService.refreshToken(request);
@@ -73,7 +70,6 @@ public class AuthResource {
     	
     }
 	
-	@CrossOrigin
 	@PostMapping("/logout")
 	public CraftyResponse<Boolean> logout() {
 		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

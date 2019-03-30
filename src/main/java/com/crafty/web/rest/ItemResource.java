@@ -15,6 +15,7 @@ import com.crafty.dto.SimpleItemDTO;
 import com.crafty.service.ItemService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/v1/items")
 public class ItemResource {
 	
@@ -24,13 +25,11 @@ public class ItemResource {
 		this.itemService = itemService;
 	}
 	
-	@CrossOrigin
 	@GetMapping("/{itemId}")
 	public CraftyResponse<ItemDTO> getItemById(@PathVariable String itemId) {
 		return CraftyResponse.build(itemService.getItemById(itemId));
 	}
 	
-	@CrossOrigin
 	@GetMapping("/search")
 	public CraftyResponse<List<SimpleItemDTO>> getItemsByCategory(
 			@RequestParam(value = "text", required = false) String text,
