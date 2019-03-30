@@ -59,7 +59,7 @@ REPLACE INTO member VALUES
 ('cb97aac4-1b58-4563-b8f7-14060124d49e', NULL, NULL);
 
 REPLACE INTO author VALUES
-('f180cc79-5856-4985-9794-26b7a787bec2', 'Арт точка');
+('f180cc79-5856-4985-9794-26b7a787bec2', 'Арт точка'),
 ('bdfbf791-95ba-401a-8461-8a8ecaf876dd', 'Дървен свят'),
 ('91b8bcec-0c65-4aa6-8e9b-3af9a309c802', 'MoreThanSeaGlass'),
 ('387927a1-f131-4a45-a7b7-b50969ff3cba', 'Цветно Китно');
