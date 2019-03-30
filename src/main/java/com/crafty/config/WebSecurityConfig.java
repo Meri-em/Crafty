@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.crafty.security.JwtAuthenticationEntryPoint;
 import com.crafty.security.JwtAuthenticationTokenFilter;
@@ -81,14 +81,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
-    public WebMvcConfigurerAdapter corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/**");
+//                .allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
 
 
             }
         };
     }
+    
 }

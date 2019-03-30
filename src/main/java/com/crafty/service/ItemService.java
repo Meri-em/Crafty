@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.crafty.dto.ItemDTO;
 import com.crafty.dto.SimpleItemDTO;
@@ -28,8 +29,14 @@ public class ItemService {
 		return mapperHelper.toItemDTO(item);
 	}
 	
-	public List<SimpleItemDTO> getItemsByCategory(String category) {
-		return itemRepository.findByCategoryOrderByCreatedAtDesc(category).stream()
+	public List<SimpleItemDTO> searchItems(String text, List<String> authorIds,
+			List<String> categories, Double minPrice, Double maxPrice) {
+		String authorIdsString = CollectionUtils.isEmpty(authorIds) ? null : "";
+		String categoriesString =  CollectionUtils.isEmpty(categories) ? null : "";
+		
+		List<Item> items = itemRepository.findItems(text, authorIdsString, authorIds, 
+				categoriesString, categories, minPrice, maxPrice);
+		return items.stream()
 			.map(item -> mapperHelper.toSimpleItemDTO(item))
 			.collect(Collectors.toList());
 	}
