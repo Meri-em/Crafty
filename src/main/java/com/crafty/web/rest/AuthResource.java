@@ -38,7 +38,7 @@ public class AuthResource {
 		return "Welcome";
     }
 	
-	@PostMapping(value="/register", consumes = "application/json", produces = "application/json")
+	@PostMapping(value="/register", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
 	public String register(@RequestBody @Valid RegistrationDTO registrationDTO) {
 		authService.register(registrationDTO);
 		return "You were successfully registered";

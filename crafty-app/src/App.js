@@ -22,7 +22,7 @@ class App extends Component {
     getMyProfile({}).then(console.log, e => console.log(e.response, Object.entries(e)));
     getItems().then(res => {
       console.log(res);
-      this.setState({ items: res.data.data });
+      this.setState({ items: res.data });
     })
   }
   render() {

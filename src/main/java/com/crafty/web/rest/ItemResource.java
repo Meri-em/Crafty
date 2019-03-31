@@ -24,12 +24,12 @@ public class ItemResource {
 		this.itemService = itemService;
 	}
 	
-	@GetMapping("/{itemId}")
+	@GetMapping(value = "/{itemId}", produces = "application/json;charset=UTF-8")
 	public ItemDTO getItemById(@PathVariable String itemId) {
 		return itemService.getItemById(itemId);
 	}
 	
-	@GetMapping("/search")
+	@GetMapping(value = "/search", produces = "application/json;charset=UTF-8")
 	public List<SimpleItemDTO> getItemsByCategory(
 			@RequestParam(value = "text", required = false) String text,
 			@RequestParam(value = "author-ids", required = false) List<String> authorIds,
