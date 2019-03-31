@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseErrorHandler;
 
-import com.crafty.dto.CraftyResponse;
+import com.crafty.dto.ErrorResponse;
 import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.ConflictException;
 import com.crafty.web.exception.ForbiddenException;
@@ -27,22 +27,22 @@ public class CraftyResponseErrorHandler implements ResponseErrorHandler {
      */
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
-        CraftyResponse<?> craftyResponse = objectMapper.readValue(response.getBody(), CraftyResponse.class);
+        ErrorResponse craftyResponse = objectMapper.readValue(response.getBody(), ErrorResponse.class);
         switch (response.getStatusCode()) {
             case BAD_REQUEST:
-                throw new BadRequestException(craftyResponse.getMessage());
+                throw new BadRequestException(craftyResponse.getError());
             case UNAUTHORIZED:
-                throw new UnauthorizedException(craftyResponse.getMessage());
+                throw new UnauthorizedException(craftyResponse.getError());
             case NOT_FOUND:
-                throw new NotFoundException(craftyResponse.getMessage());
+                throw new NotFoundException(craftyResponse.getError());
             case CONFLICT:
-                throw new ConflictException(craftyResponse.getMessage());
+                throw new ConflictException(craftyResponse.getError());
             case UNPROCESSABLE_ENTITY:
-                throw new UnprocessableEntityException(craftyResponse.getMessage());
+                throw new UnprocessableEntityException(craftyResponse.getError());
             case FORBIDDEN:
-                throw new ForbiddenException(craftyResponse.getMessage());
+                throw new ForbiddenException(craftyResponse.getError());
             default:
-                throw new RuntimeException(craftyResponse.getMessage());
+                throw new RuntimeException(craftyResponse.getError());
 
         }
     }

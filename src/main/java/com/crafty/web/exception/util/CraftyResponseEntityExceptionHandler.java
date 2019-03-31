@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.crafty.dto.CraftyResponse;
+import com.crafty.dto.ErrorResponse;
 import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.ConflictException;
 import com.crafty.web.exception.ForbiddenException;
@@ -31,9 +31,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ BadRequestException.class })
-    public ResponseEntity<CraftyResponse<?>> handleBadRequestException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleBadRequestException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -44,9 +44,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ UnauthorizedException.class })
-    public ResponseEntity<CraftyResponse<?>> handleUnauthorizedException(UnauthorizedException ex) {
+    public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     /**
@@ -57,9 +57,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ NotFoundException.class })
-    public ResponseEntity<CraftyResponse<?>> handleNotFoundException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleNotFoundException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -70,9 +70,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ ConflictException.class })
-    public ResponseEntity<CraftyResponse<?>> handleConflictException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleConflictException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.CONFLICT);
     }
 
     /**
@@ -83,9 +83,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ UnprocessableEntityException.class })
-    public ResponseEntity<CraftyResponse<?>> handleUnprocessableEntityException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleUnprocessableEntityException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -96,9 +96,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ RuntimeException.class })
-    public ResponseEntity<CraftyResponse<?>> handleRuntimeException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleRuntimeException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
     /**
@@ -109,9 +109,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ AccessDeniedException.class })
-    public ResponseEntity<CraftyResponse<?>> handleAccessDeniedException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     /**
@@ -122,9 +122,9 @@ public class CraftyResponseEntityExceptionHandler extends ResponseEntityExceptio
      * @return
      */
     @ExceptionHandler({ ForbiddenException.class })
-    public ResponseEntity<CraftyResponse<?>> handleForbiddenException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleForbiddenException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(CraftyResponse.build(null, ex.getMessage()), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.FORBIDDEN);
     }
 }
 
