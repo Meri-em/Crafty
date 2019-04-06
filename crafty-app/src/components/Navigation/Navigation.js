@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Navigation.css';
@@ -22,10 +22,17 @@ const Group = ({ href, text, items }) => (
   </div>
 );
 
-const Navigation = () => (
-  <div className="Navigation">
-    {menu.map((e, i) => <Group {...e} key={i} />)}
-  </div>
-);
+class Navigation extends Component {
+  state = {};
+
+  render() {
+    return (
+      <div className={`Navigation mobile-${this.state.on ? 'on' : 'off'}`}>
+        <a className="mobile-menu" onClick={() => this.setState({ on: !this.state.on })}></a>
+        {menu.map((e, i) => <Group {...e} key={i} />)}
+      </div>
+    )
+  }
+}
 
 export default Navigation;

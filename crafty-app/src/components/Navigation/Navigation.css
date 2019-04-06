@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   z-index: 2;
+  line-height: 20px;
 }
 .Navigation a {
   background: #543;
@@ -29,4 +30,40 @@
 }
 .NavGroup:hover nav {
   display: block;
+}
+.Navigation .mobile-menu {
+  cursor: pointer;
+  text-align: center;
+  font: bold 20px/1 monospace;
+  display: none;
+}
+.mobile-menu::before {
+  transition: 0.5s;
+  border-radius: 1em;
+  content: '☰';
+  display: inline-block;
+}
+
+.mobile-on .mobile-menu::before {
+  transform: rotate(90deg);
+}
+@media (max-width: 700px) {
+  .Navigation .mobile-menu {
+    display: block;
+  }
+
+  .Navigation {
+    flex-direction: column;
+  }
+  .Navigation.mobile-off .NavGroup {
+    display: none;
+  }
+  .NavGroup nav {
+    display: block;
+    position: static;
+    border-radius: 0;
+  }
+  .NavGroup nav a {
+    padding-left: 20px;
+  }
 }
