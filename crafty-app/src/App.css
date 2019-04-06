@@ -3,18 +3,8 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
   pointer-events: none;
   display: block;
   margin: auto;
-}
-
-img {
-  max-width: 100%;
-}
-.item {
-  display: inline-block;
-  width: 200px;
-  vertical-align: top;
-  margin: 20px;
 }

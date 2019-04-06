@@ -1,0 +1,32 @@
+.Navigation {
+  background: #543;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+.Navigation a {
+  background: #543;
+  padding: 10px;
+  display: block;
+  z-index: 3;
+  position: relative;
+}
+
+.Navigation a:hover {
+  background: #321
+} 
+.NavGroup {
+  position: relative;
+  min-width: 150px;
+}
+.NavGroup nav {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 1px 5px black;
+}
+.NavGroup:hover nav {
+  display: block;
+}

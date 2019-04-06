@@ -1,0 +1,16 @@
+[
+  { "easter": { "text": "Великден" } },
+  { "home": { 
+    "text": "За дома",
+    "items": [
+      { "pillow": { "text": "Възглавници" } },
+      { "vase" : { "text": "Вази" } }
+    ] 
+  } },
+  { "accessories": {
+    "text": "Аксесоари",
+    "items": [
+      { "earrings": { "text": "Обеци" } }
+    ]
+  } }
+]
