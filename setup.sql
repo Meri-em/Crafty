@@ -51,6 +51,14 @@ CREATE TABLE item_image (
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
+CREATE TABLE favourite (
+	member_id CHAR(36) NOT NULL,
+	author_id CHAR(36) NOT NULL,
+	PRIMARY KEY (member_id, author_id),
+	FOREIGN KEY (member_id) REFERENCES member(id),
+	FOREIGN KEY (author_id) REFERENCES author(id)
+);
+
 REPLACE INTO member VALUES
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'Maria', 'Karcheva'),
 	('834c8e56-6464-4143-acbc-b7e48e643a6c', 'Ангел', 'Димитров'),
@@ -122,3 +130,6 @@ REPLACE INTO item_image VALUES
 	('89640f19-50d2-4ecd-9871-e6079614e3c0','1.jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',1),
 	('b8839dbe-c679-40b9-90c0-a26b131a501c','2.jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',2);
 
+REPLACE INTO favourite VALUES
+('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'f180cc79-5856-4985-9794-26b7a787bec2'),
+('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '91b8bcec-0c65-4aa6-8e9b-3af9a309c802');

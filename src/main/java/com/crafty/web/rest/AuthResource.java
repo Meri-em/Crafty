@@ -66,7 +66,6 @@ public class AuthResource {
     public LoginResultDTO refreshToken(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
     	LoginResultDTO result = authService.refreshToken(request);
     	return result;
-    	
     }
 	
 	@PostMapping("/logout")
