@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as EP from './endpoints';
-import { LS, toQuery } from './utils';
+import { LS, toQuery, transform } from './utils';
 
 // TEST
 export const welcome  = () => axios(EP.WELCOME);
@@ -31,7 +31,12 @@ export const authorized = settings => {
 export const logout        = authorized({ method: 'POST', url: EP.LOGOUT });
 export const getMyProfile  = authorized({ url: EP.MY_PROFILE });
 
+
+const items = axios.create({ transformResponse: data => transform(JSON.parse(data)) });
+
 // ITEMS
-export const getItem   = id => axios(`${EP.ITEM}${id}`);
-export const getItems  = () => axios(EP.ITEMS);
-export const search    = params => axios(EP.SEARCH + toQuery(params));
+export const getItem   = id => items(`${EP.ITEM}${id}`);
+export const getItems  = () => items(EP.ITEMS);
+export const search    = params => items(EP.SEARCH + toQuery(params));
+export const browse    = group => search({ categories: group.toUpperCase() });
+// (min|max)-price, text, author-ids, categories

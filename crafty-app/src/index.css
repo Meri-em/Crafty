@@ -6,10 +6,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #333;
-  color: #ccc;
+  /* background: #333; */
+  /* color: #ccc; */
+  background: linear-gradient(#f5debc, #877a68) fixed 100vh;
+  color: #1f140f;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+img {
+  max-width: 100%;
+}
+a {
+  text-decoration: none;
+  color: #ccc;
 }
