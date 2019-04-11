@@ -131,5 +131,30 @@ REPLACE INTO item_image VALUES
 	('b8839dbe-c679-40b9-90c0-a26b131a501c','2.jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',2);
 
 REPLACE INTO favourite VALUES
-('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'f180cc79-5856-4985-9794-26b7a787bec2'),
-('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '91b8bcec-0c65-4aa6-8e9b-3af9a309c802');
+	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'f180cc79-5856-4985-9794-26b7a787bec2'),
+	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '91b8bcec-0c65-4aa6-8e9b-3af9a309c802');
+
+CREATE TABLE category (
+	id VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	parent VARCHAR(50),
+	`order` INT(11),
+	PRIMARY KEY (id),
+	FOREIGN KEY (parent) REFERENCES category(id)
+);
+
+REPLACE INTO catgeory VALUES
+	('HOLIDAYS', 'Празници', NULL, 0),
+	('JEWELRY', 'Бижута', NULL, 2),
+	('HOME', 'За дома', NULL, 1),
+	('CLOTHING', 'Облекло', NULL, 3),
+	('EASTER', 'Великден', 'HOLIDAYS', 0),
+	('PILLOW', 'Възглавници', 'HOME', 0),
+	('VASE', 'Вази', 'HOME', 1),
+	('CLOCK', 'Чосовници', 'HOME', 2),
+	('T-SHIRT', 'Тениски', 'CLOTHING', 0),
+	('SCARF', 'Рисувани шалове', 'CLOTHING', 1),
+	('EARRINGS', 'Обеци', 'JEWELRY', 0),
+	('BRACELET', 'Гривни', 'JEWELRY', 1),
+	('JEWELRY_SET', 'Колиета', 'JEWELRY', 3),
+	('NECKLACE', 'Комплекти', 'JEWELRY', 2);
