@@ -4,6 +4,9 @@ export const API_ROOT    = `${SERVER_ROOT}/api/v1`;
 // TEST
 export const WELCOME     = `${API_ROOT}/welcome`;
 
+// NAVIGATION
+export const NAVIGATION  = `${API_ROOT}/categories`;
+
 // AUTH
 export const REGISTER    = `${API_ROOT}/register`;
 export const LOGIN       = `${API_ROOT}/login`;
