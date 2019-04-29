@@ -1,8 +1,9 @@
 export const SERVER_ROOT = '';
 export const API_ROOT    = `${SERVER_ROOT}/api/v1`;
 
-// TEST
+// GENERAL
 export const WELCOME     = `${API_ROOT}/welcome`;
+export const NAVIGATION  = `${API_ROOT}/categories`;
 
 // NAVIGATION
 export const NAVIGATION  = `${API_ROOT}/categories`;

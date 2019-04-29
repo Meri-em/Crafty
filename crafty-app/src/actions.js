@@ -2,8 +2,9 @@ import axios from 'axios';
 import * as EP from './endpoints';
 import { LS, toQuery, transform } from './utils';
 
-// TEST
-export const welcome  = () => axios(EP.WELCOME);
+// GENERAL
+export const welcome       = () => axios(EP.WELCOME);
+export const getNavigation = () => axios(EP.NAVIGATION);
 
 // AUTH
 export const register = data => axios.post(EP.REGISTER, data);

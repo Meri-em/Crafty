@@ -143,7 +143,7 @@ CREATE TABLE category (
 	FOREIGN KEY (parent) REFERENCES category(id)
 );
 
-REPLACE INTO catgeory VALUES
+REPLACE INTO category VALUES
 	('HOLIDAYS', 'Празници', NULL, 0),
 	('JEWELRY', 'Бижута', NULL, 2),
 	('HOME', 'За дома', NULL, 1),
@@ -151,7 +151,7 @@ REPLACE INTO catgeory VALUES
 	('EASTER', 'Великден', 'HOLIDAYS', 0),
 	('PILLOW', 'Възглавници', 'HOME', 0),
 	('VASE', 'Вази', 'HOME', 1),
-	('CLOCK', 'Чосовници', 'HOME', 2),
+	('CLOCK', 'Часовници', 'HOME', 2),
 	('T-SHIRT', 'Тениски', 'CLOTHING', 0),
 	('SCARF', 'Рисувани шалове', 'CLOTHING', 1),
 	('EARRINGS', 'Обеци', 'JEWELRY', 0),
