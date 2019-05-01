@@ -12,7 +12,7 @@ const convert = (obj, baseHref='') => {
 
 const Group = ({ href, text, items }) => (
   <div className="NavGroup">
-    <Link to={'/' + href}>{text}</Link>
+    <Link to={href}>{text}</Link>
     {!items.length || (
       <nav>
         {items.map((e, i) => <Group {...e} key={i} />)}
