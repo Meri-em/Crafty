@@ -21,7 +21,8 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 	        + "  AND (:categoriesString IS NULL OR it.category IN (:categories))"
 			+ "  AND (:authorIdsString IS NULL OR author.id IN (:authorIds))"
 	        + "  AND (:minPrice IS NULL OR it.price >= :minPrice)"
-	        + "  AND (:maxPrice IS NULL OR it.price <= :maxPrice)")
+	        + "  AND (:maxPrice IS NULL OR it.price <= :maxPrice)"
+	        + "  ORDER BY it.createdAt DESC")
 	List<Item> findItems(@Param("text") String text, 
 			@Param("authorIdsString") String authorIdsString,
 			@Param("authorIds") List<String> authorIds,
