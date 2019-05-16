@@ -8,3 +8,10 @@
   display: block;
   margin: auto;
 }
+.App > header {
+  display: flex;
+  flex-wrap: wrap;
+}
+.Navigation {
+  flex: 100%;
+}
