@@ -36,8 +36,9 @@ export const getMyProfile  = authorized({ url: EP.MY_PROFILE });
 const items = axios.create({ transformResponse: data => transform(JSON.parse(data)) });
 
 // ITEMS
-export const getItem   = id => items(`${EP.ITEM}${id}`);
-export const getItems  = () => items(EP.ITEMS);
-export const search    = params => items(EP.SEARCH + toQuery(params));
-export const browse    = group => search({ categories: group.toUpperCase() });
+export const getItem      = id => items(`${EP.ITEM}${id}`);
+export const getItems     = () => items(EP.ITEMS);
+export const search       = params => items(EP.SEARCH + toQuery(params));
+export const searchByName = name => search({ text: name });
+export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
