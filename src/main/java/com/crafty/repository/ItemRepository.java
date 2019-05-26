@@ -17,7 +17,8 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 	
 	@Query(value = "SELECT it FROM Item it"
 			+ "  JOIN it.author author"
-	        + "  WHERE (:text IS NULL OR it.name LIKE CONCAT('%', :text, '%') OR it.description LIKE CONCAT('%', :text, '%'))"
+	        + "  WHERE (:text IS NULL OR"
+	        + "  LOWER(it.name) LIKE LOWER(CONCAT('%', :text, '%')) OR LOWER(it.description) LIKE LOWER(CONCAT('%', :text, '%')))"
 	        + "  AND (:categoriesString IS NULL OR it.category IN (:categories))"
 			+ "  AND (:authorIdsString IS NULL OR author.id IN (:authorIds))"
 	        + "  AND (:minPrice IS NULL OR it.price >= :minPrice)"
