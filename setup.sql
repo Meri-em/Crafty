@@ -396,3 +396,4 @@ REPLACE INTO item_image VALUES
 	('c79f525b-d7a6-43b8-8476-771f422af302','1.jpg','d1174be8-e5d4-4883-a104-0c1f1fa8d6ed',1),
 	('d4256871-aa86-4ff6-a7bf-6e5cfe1cd80d','1.jpg','baa90954-1072-4717-97fb-e3dd5634ac05',1),
 	('bafe2c46-0e60-4e34-849b-c0abcfca6697','1.jpg','68ca0930-8278-46d1-880a-624d72765efe',1);
+
