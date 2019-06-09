@@ -23,6 +23,7 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 			+ "  AND (:authorIdsString IS NULL OR author.id IN (:authorIds))"
 	        + "  AND (:minPrice IS NULL OR it.price >= :minPrice)"
 	        + "  AND (:maxPrice IS NULL OR it.price <= :maxPrice)"
+	        + "  AND it.archived IS FALSE"
 	        + "  ORDER BY it.createdAt DESC")
 	List<Item> findItems(@Param("text") String text, 
 			@Param("authorIdsString") String authorIdsString,
@@ -30,13 +31,5 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 			@Param("categoriesString") String categoriesString,
 			@Param("categories") List<String> categories,
 			@Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
-	
-//	@Query(value = "SELECT * FROM item\n"
-//	        + "INNER JOIN member ON member.id = member_coverage.member_id\n"
-//	        + "WHERE member.employer_id IN (:employerIds)\n"
-//	        + "  AND is_core_coverage = FALSE\n"
-//	        + "  AND addin_status != 'CANCELED'\n"
-//	        + "  AND (:startDate IS NULL OR purchased_date >= :startDate)\n"
-//	        + "  AND (:endDate IS NULL OR purchased_date < :endDate) \n", nativeQuery = true)
 
 }

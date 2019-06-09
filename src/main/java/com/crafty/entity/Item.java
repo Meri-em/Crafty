@@ -41,6 +41,9 @@ public class Item extends BaseEntityId {
 	
 	@OneToMany(mappedBy = "item", fetch=FetchType.EAGER)
 	private List<ItemImage> itemImages = new ArrayList<>();
+	
+	@Column(columnDefinition = "BIT(1)")
+	private boolean archived;
 
 	public String getName() {
 		return name;
@@ -97,6 +100,13 @@ public class Item extends BaseEntityId {
 	public void setItemImages(List<ItemImage> itemImages) {
 		this.itemImages = itemImages;
 	}
-	
+
+	public boolean isArchived() {
+		return archived;
+	}
+
+	public void setArchived(boolean archived) {
+		this.archived = archived;
+	}
 	
 }

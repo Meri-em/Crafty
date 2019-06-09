@@ -9,10 +9,12 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.crafty.dto.AuthorDTO;
+import com.crafty.dto.CartItemDTO;
 import com.crafty.dto.ItemDTO;
 import com.crafty.dto.ItemImageDTO;
 import com.crafty.dto.SimpleItemDTO;
 import com.crafty.entity.Author;
+import com.crafty.entity.CartItem;
 import com.crafty.entity.Item;
 import com.crafty.entity.ItemImage;
 
@@ -58,7 +60,15 @@ public class MapperHelper {
 		List<ItemImageDTO> itemImages = item.getItemImages().stream().sorted(itemImageComparator)
 				.map(it -> toItemImageDTO(it)).collect(Collectors.toList());
 		itemDTO.setItemImages(itemImages);
+		itemDTO.setArchived(item.isArchived());
 		return itemDTO;
+	}
+	
+	public CartItemDTO toCartItemDTO(CartItem cartItem) {
+		CartItemDTO cartItemDTO = new CartItemDTO();
+		cartItemDTO.setSimpleItem(this.toSimpleItemDTO(cartItem.getItem()));
+		cartItemDTO.setQuantity(cartItem.getQuantity());
+		return cartItemDTO;
 	}
 	
 	private String getImagePath(ItemImage itemImage) {

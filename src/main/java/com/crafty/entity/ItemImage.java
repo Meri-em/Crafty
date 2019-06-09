@@ -17,7 +17,7 @@ public class ItemImage extends BaseEntityId {
 	private int order;
 	
 	@ManyToOne
-	@JoinColumn(name = "itemId")
+	@JoinColumn(name = "item_id")
 	@NotNull
 	private Item item;
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +38,10 @@ public class ItemResource {
 			@RequestParam(value = "min-price", required = false) Double minPrice,
 			@RequestParam(value = "max-price", required = false) Double maxPrice) {
 		return itemService.searchItems(text, authorIds, categories, minPrice, maxPrice);
+	}
+	
+	@PostMapping("")
+	public String addItem() {
+		return "Add a new item";
 	}
 }

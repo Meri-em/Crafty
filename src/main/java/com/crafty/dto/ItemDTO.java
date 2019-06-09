@@ -17,6 +17,8 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 	
 	private List<ItemImageDTO> itemImages;
 	
+	private boolean archived;
+	
 	public ItemDTO() { }
 	
 	public ItemDTO(SimpleItemDTO simpleItem) {
@@ -46,6 +48,14 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 
 	public void setItemImages(List<ItemImageDTO> itemImages) {
 		this.itemImages = itemImages;
+	}
+
+	public boolean isArchived() {
+		return archived;
+	}
+
+	public void setArchived(boolean archived) {
+		this.archived = archived;
 	}
 	
 }

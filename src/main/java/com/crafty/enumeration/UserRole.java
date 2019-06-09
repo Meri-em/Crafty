@@ -1,5 +1,5 @@
 package com.crafty.enumeration;
 
 public enum UserRole {
-	MEMBER, AUTHOR, ADMIN
+	ROLE_MEMBER, ROLE_AUTHOR
 }
