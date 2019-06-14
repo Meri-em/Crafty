@@ -1,5 +1,7 @@
 package com.crafty.service;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,9 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.crafty.dto.CartItemDTO;
 import com.crafty.entity.CartItem;
 import com.crafty.entity.Item;
+import com.crafty.entity.Payment;
 import com.crafty.repository.CartItemRepository;
 import com.crafty.repository.ItemRepository;
+import com.crafty.repository.PaymentRepository;
 import com.crafty.util.MapperHelper;
+import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.NotFoundException;
 
 @Service
@@ -21,13 +26,16 @@ public class CartService {
 	
 	private final ItemRepository itemRepository;
 	private final CartItemRepository cartItemRepository;
+	private final PaymentRepository paymentRepository;
 	private final MapperHelper mapperHelper;
 	
 	public CartService(CartItemRepository cartItemRepository,
 			ItemRepository itemRepository,
+			PaymentRepository paymentRepository,
 			MapperHelper mapperHelper) {
 		this.cartItemRepository = cartItemRepository;
 		this.itemRepository = itemRepository;
+		this.paymentRepository = paymentRepository;
 		this.mapperHelper = mapperHelper;
 	}
 	
@@ -67,6 +75,27 @@ public class CartService {
 	
 	public void clearCart(String memberId) {
 		cartItemRepository.deleteByMemberId(memberId);
+	}
+	
+	public void purchaseItemsFromCart(String memberId) {
+		List<CartItem> cartItems = cartItemRepository.findByMemberId(memberId);
+		if (cartItems.isEmpty()) {
+			throw new BadRequestException("The cart is empty");
+		}
+		Instant createdAt = Instant.now();
+		List<Payment> payments = new ArrayList<>();
+		for (CartItem cartItem : cartItems) {
+			Payment payment = new Payment();
+			payment.setCreatedAt(createdAt);
+			payment.setMemberId(memberId);
+			Item item = cartItem.getItem();
+			payment.setItem(item);
+			payment.setPaidPerItem(item.getPrice());
+			payment.setQuantity(cartItem.getQuantity());
+			payments.add(payment);
+		}
+		payments = paymentRepository.saveAll(payments);
+		cartItemRepository.deleteAll(cartItems);
 	}
 
 }

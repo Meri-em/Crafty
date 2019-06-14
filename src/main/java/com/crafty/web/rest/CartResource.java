@@ -52,6 +52,12 @@ public class CartResource {
 		return "Success";
 	}
 	
+	@PostMapping("/purchase")
+	public String purchaseItemsFromCart() {
+		cartService.purchaseItemsFromCart(getLoggedInMemberId());
+		return "The purchase is successful";
+	}
+	
 	private String getLoggedInMemberId() {
 		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return jwtUser.getMemberId();

@@ -8,7 +8,7 @@ public class CartItemDTO implements Serializable {
 	
 	private int quantity;
 	
-	private SimpleItemDTO simpleItem;
+	private SimpleItemDTO item;
 
 	public int getQuantity() {
 		return quantity;
@@ -18,12 +18,12 @@ public class CartItemDTO implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public SimpleItemDTO getSimpleItem() {
-		return simpleItem;
+	public SimpleItemDTO getItem() {
+		return item;
 	}
 
-	public void setSimpleItem(SimpleItemDTO simpleItem) {
-		this.simpleItem = simpleItem;
+	public void setItem(SimpleItemDTO item) {
+		this.item = item;
 	}
 	
 }

@@ -412,6 +412,7 @@ CREATE TABLE cart_item (
 
 REPLACE INTO cart_item VALUES
 ('ea498434-ea70-427d-af4b-a0b7a4a24e59','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','ed9c5126-2731-4aaf-87cb-d7c0533f76c4',1),
+('d384056f-4a36-4bb2-b19a-635e65826aa7','5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40','8e79652f-7940-4ab2-bb09-c0feca7e912e',2),
 ('e5f0afea-0a3f-4519-a426-f82c801f4bb7','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','39312010-f7c3-430e-93c3-f21d8a286084',1);
 
 CREATE TABLE payment (
@@ -419,7 +420,7 @@ CREATE TABLE payment (
 	member_id CHAR(36) NOT NULL,
 	item_id CHAR(36) NOT NULL,
 	quantity INT(11) NOT NULL,
-	price DOUBLE,
+	paid_per_item DOUBLE,
 	created_at DATETIME NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY (member_id) REFERENCES member(id),

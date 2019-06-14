@@ -27,7 +27,7 @@ public class Payment extends BaseEntityId {
 	
 	private int quantity;
 	
-	private double price;
+	private double paidPerItem;
 	
 	@NotNull
 	private Instant createdAt;
@@ -56,12 +56,12 @@ public class Payment extends BaseEntityId {
 		this.quantity = quantity;
 	}
 
-	public double getPrice() {
-		return price;
+	public double getPaidPerItem() {
+		return paidPerItem;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setPaidPerItem(double paidPerItem) {
+		this.paidPerItem = paidPerItem;
 	}
 
 	public Instant getCreatedAt() {

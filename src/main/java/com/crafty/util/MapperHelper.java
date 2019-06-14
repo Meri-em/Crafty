@@ -12,11 +12,13 @@ import com.crafty.dto.AuthorDTO;
 import com.crafty.dto.CartItemDTO;
 import com.crafty.dto.ItemDTO;
 import com.crafty.dto.ItemImageDTO;
+import com.crafty.dto.PaymentItemDTO;
 import com.crafty.dto.SimpleItemDTO;
 import com.crafty.entity.Author;
 import com.crafty.entity.CartItem;
 import com.crafty.entity.Item;
 import com.crafty.entity.ItemImage;
+import com.crafty.entity.Payment;
 
 @Component
 public class MapperHelper {
@@ -66,9 +68,18 @@ public class MapperHelper {
 	
 	public CartItemDTO toCartItemDTO(CartItem cartItem) {
 		CartItemDTO cartItemDTO = new CartItemDTO();
-		cartItemDTO.setSimpleItem(this.toSimpleItemDTO(cartItem.getItem()));
+		cartItemDTO.setItem(this.toSimpleItemDTO(cartItem.getItem()));
 		cartItemDTO.setQuantity(cartItem.getQuantity());
 		return cartItemDTO;
+	}
+	
+	public PaymentItemDTO toPaymentItemDTO(Payment payment) {
+		PaymentItemDTO dto = new PaymentItemDTO();
+		dto.setQuantity(payment.getQuantity());
+		dto.setCreatedAt(LocalDateTime.ofInstant(payment.getCreatedAt(), ZoneOffset.UTC));
+		dto.setPaidPerItem(payment.getPaidPerItem());
+		dto.setItem(toSimpleItemDTO(payment.getItem()));
+		return dto;
 	}
 	
 	private String getImagePath(ItemImage itemImage) {
