@@ -38,6 +38,7 @@ public class ItemResource {
 			@RequestParam(value = "min-price", required = false) Double minPrice,
 			@RequestParam(value = "max-price", required = false) Double maxPrice) {
 		return itemService.searchItems(text, authorIds, categories, minPrice, maxPrice);
+
 	}
 	
 	@PostMapping("")
