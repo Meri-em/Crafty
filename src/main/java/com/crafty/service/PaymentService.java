@@ -1,5 +1,6 @@
 package com.crafty.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +26,11 @@ public class PaymentService {
 	
 	public PaymentDTO getPayments(String memberId) {
 		List<Payment> payments = paymentRepository.findByMemberId(memberId);
-		double totalPaid  = 0;
+		BigDecimal totalPaid  = BigDecimal.ZERO;
 		for (Payment payment : payments) {
-			totalPaid += payment.getQuantity() * payment.getPaidPerItem();
+			totalPaid = totalPaid.add(
+				payment.getPaidPerItem().multiply(BigDecimal.valueOf(payment.getQuantity()))
+			);
 		}
 		PaymentDTO result = new PaymentDTO();
 		result.setTotalPaid(totalPaid);

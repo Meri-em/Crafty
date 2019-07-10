@@ -1,21 +1,22 @@
 package com.crafty.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class PaymentDTO implements Serializable {
 
 	private static final long serialVersionUID = 4109910896425338737L;
 	
-	private double totalPaid;
+	private BigDecimal totalPaid;
 	
 	private List<PaymentItemDTO> payments;
 
-	public double getTotalPaid() {
+	public BigDecimal getTotalPaid() {
 		return totalPaid;
 	}
 
-	public void setTotalPaid(double totalPaid) {
+	public void setTotalPaid(BigDecimal totalPaid) {
 		this.totalPaid = totalPaid;
 	}
 

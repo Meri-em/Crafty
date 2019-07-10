@@ -1,5 +1,6 @@
 package com.crafty.entity;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Item extends BaseEntityId {
 	@NotNull
 	private Instant createdAt;
 	
-	private double price;
+	private BigDecimal price;
 	
 	@ManyToOne
     @JoinColumn(name = "author_id")
@@ -77,11 +78,11 @@ public class Item extends BaseEntityId {
 		this.createdAt = createdAt;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

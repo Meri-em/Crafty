@@ -1,6 +1,7 @@
 package com.crafty.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class SimpleItemDTO implements Serializable {
 	
@@ -10,7 +11,7 @@ public class SimpleItemDTO implements Serializable {
 	
 	private String name;
 	
-	private double price;
+	private BigDecimal price;
 	
 	private AuthorDTO author;
 	
@@ -18,7 +19,7 @@ public class SimpleItemDTO implements Serializable {
 	
 	public SimpleItemDTO () { }
 	
-	public SimpleItemDTO(String id, String name, double price, AuthorDTO author, String primaryImagePath) {
+	public SimpleItemDTO(String id, String name, BigDecimal price, AuthorDTO author, String primaryImagePath) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -42,11 +43,11 @@ public class SimpleItemDTO implements Serializable {
 		this.name = name;
 	}
 	
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 	
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

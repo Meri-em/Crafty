@@ -1,5 +1,6 @@
 package com.crafty.entity;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import javax.persistence.Column;
@@ -27,7 +28,7 @@ public class Payment extends BaseEntityId {
 	
 	private int quantity;
 	
-	private double paidPerItem;
+	private BigDecimal paidPerItem;
 	
 	@NotNull
 	private Instant createdAt;
@@ -56,11 +57,11 @@ public class Payment extends BaseEntityId {
 		this.quantity = quantity;
 	}
 
-	public double getPaidPerItem() {
+	public BigDecimal getPaidPerItem() {
 		return paidPerItem;
 	}
 
-	public void setPaidPerItem(double paidPerItem) {
+	public void setPaidPerItem(BigDecimal paidPerItem) {
 		this.paidPerItem = paidPerItem;
 	}
 

@@ -1,6 +1,7 @@
 package com.crafty.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,7 +12,7 @@ public class PaymentItemDTO implements Serializable {
 	
 	private int quantity;
 	
-	private double paidPerItem;
+	private BigDecimal paidPerItem;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm.SSS")
 	private LocalDateTime createdAt;
@@ -26,11 +27,11 @@ public class PaymentItemDTO implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public double getPaidPerItem() {
+	public BigDecimal getPaidPerItem() {
 		return paidPerItem;
 	}
 
-	public void setPaidPerItem(double paidPerItem) {
+	public void setPaidPerItem(BigDecimal paidPerItem) {
 		this.paidPerItem = paidPerItem;
 	}
 
