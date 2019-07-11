@@ -435,7 +435,7 @@ CREATE TABLE payment (
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
-REPLACE INTO paymepaymentnt VALUES
+REPLACE INTO payment VALUES
 	('7e21ec47-6ae2-4864-a46e-518a67710c57','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','c2b76bc3-da3b-46fb-a8c8-cf44122a4f50',1,14,'2019-06-01 12:29:11'),
 	('523fe06d-4cd9-44ef-820f-495d8c9eaaa0','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','7b3ebcf3-73d5-4342-a653-eda72195d025',1,10,'2019-06-07 14:32:46'),
 	('ed8f4d2e-6c61-4a10-ba13-4b08ffa038cb','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','94d699e4-d60a-4729-941a-ba43cdc94880',3,3.5,'2019-03-12 17:00:01');
