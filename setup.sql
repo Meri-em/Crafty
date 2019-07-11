@@ -52,12 +52,20 @@ CREATE TABLE item_image (
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
-CREATE TABLE favourite (
+CREATE TABLE favourite_author (
 	member_id CHAR(36) NOT NULL,
 	author_id CHAR(36) NOT NULL,
 	PRIMARY KEY (member_id, author_id),
 	FOREIGN KEY (member_id) REFERENCES member(id),
 	FOREIGN KEY (author_id) REFERENCES author(id)
+);
+
+CREATE TABLE favourite_item (
+	member_id CHAR(36) NOT NULL,
+	item_id CHAR(36) NOT NULL,
+	PRIMARY KEY (member_id, item_id),
+	FOREIGN KEY (member_id) REFERENCES member(id),
+	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
 REPLACE INTO member VALUES
@@ -131,7 +139,7 @@ REPLACE INTO item_image VALUES
 	('89640f19-50d2-4ecd-9871-e6079614e3c0','1.jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',1),
 	('b8839dbe-c679-40b9-90c0-a26b131a501c','2.jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',2);
 
-REPLACE INTO favourite VALUES
+REPLACE INTO favourite_author VALUES
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'f180cc79-5856-4985-9794-26b7a787bec2'),
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '91b8bcec-0c65-4aa6-8e9b-3af9a309c802');
 
@@ -411,9 +419,9 @@ CREATE TABLE cart_item (
 );
 
 REPLACE INTO cart_item VALUES
-('ea498434-ea70-427d-af4b-a0b7a4a24e59','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','ed9c5126-2731-4aaf-87cb-d7c0533f76c4',1),
-('d384056f-4a36-4bb2-b19a-635e65826aa7','5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40','8e79652f-7940-4ab2-bb09-c0feca7e912e',2),
-('e5f0afea-0a3f-4519-a426-f82c801f4bb7','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','39312010-f7c3-430e-93c3-f21d8a286084',1);
+	('ea498434-ea70-427d-af4b-a0b7a4a24e59','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','ed9c5126-2731-4aaf-87cb-d7c0533f76c4',1),
+	('d384056f-4a36-4bb2-b19a-635e65826aa7','5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40','8e79652f-7940-4ab2-bb09-c0feca7e912e',2),
+	('e5f0afea-0a3f-4519-a426-f82c801f4bb7','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','39312010-f7c3-430e-93c3-f21d8a286084',1);
 
 CREATE TABLE payment (
 	id CHAR(36) NOT NULL,
@@ -427,7 +435,12 @@ CREATE TABLE payment (
 	FOREIGN KEY (item_id) REFERENCES item(id)
 );
 
-REPLACE INTO payment VALUES
-('7e21ec47-6ae2-4864-a46e-518a67710c57','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','c2b76bc3-da3b-46fb-a8c8-cf44122a4f50',1,14,'2019-06-01 12:29:11'),
-('523fe06d-4cd9-44ef-820f-495d8c9eaaa0','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','7b3ebcf3-73d5-4342-a653-eda72195d025',1,10,'2019-06-07 14:32:46'),
-('ed8f4d2e-6c61-4a10-ba13-4b08ffa038cb','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','94d699e4-d60a-4729-941a-ba43cdc94880',3,3.5,'2019-03-12 17:00:01');
+REPLACE INTO paymepaymentnt VALUES
+	('7e21ec47-6ae2-4864-a46e-518a67710c57','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','c2b76bc3-da3b-46fb-a8c8-cf44122a4f50',1,14,'2019-06-01 12:29:11'),
+	('523fe06d-4cd9-44ef-820f-495d8c9eaaa0','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','7b3ebcf3-73d5-4342-a653-eda72195d025',1,10,'2019-06-07 14:32:46'),
+	('ed8f4d2e-6c61-4a10-ba13-4b08ffa038cb','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','94d699e4-d60a-4729-941a-ba43cdc94880',3,3.5,'2019-03-12 17:00:01');
+
+REPLACE INTO favourite_item VALUES
+	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'bfa084e2-9cbb-4774-8d45-e4eea380cd1a'),
+	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'e21e4dcf-5487-4894-8933-0912de9c4f78'),
+	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '9c3c5471-379d-44f6-825d-ac8e0ca9229c');

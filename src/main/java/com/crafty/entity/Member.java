@@ -19,9 +19,14 @@ public class Member extends BaseEntityId {
 	private String lastName;	
 	
 	@ManyToMany
-	@JoinTable(name = "favourite", joinColumns = @JoinColumn(name = "member_id"), 
+	@JoinTable(name = "favourite_author", joinColumns = @JoinColumn(name = "member_id"),
 			inverseJoinColumns = @JoinColumn(name = "author_id"))
 	private Set<Author> favouriteAuthors;
+
+	@ManyToMany
+	@JoinTable(name = "favourite_item", joinColumns = @JoinColumn(name = "member_id"),
+		inverseJoinColumns = @JoinColumn(name = "item_id"))
+	private Set<Item> favouriteItems;
 
 	public String getFirstName() {
 		return firstName;
@@ -45,5 +50,13 @@ public class Member extends BaseEntityId {
 
 	public void setFavouriteAuthors(Set<Author> favouriteAuthors) {
 		this.favouriteAuthors = favouriteAuthors;
+	}
+
+	public Set<Item> getFavouriteItems() {
+		return favouriteItems;
+	}
+
+	public void setFavouriteItems(Set<Item> favouriteItems) {
+		this.favouriteItems = favouriteItems;
 	}
 }

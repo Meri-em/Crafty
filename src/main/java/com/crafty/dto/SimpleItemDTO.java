@@ -15,16 +15,16 @@ public class SimpleItemDTO implements Serializable {
 	
 	private AuthorDTO author;
 	
-	private String primaryImagePath;
+	private String image;
 	
 	public SimpleItemDTO () { }
 	
-	public SimpleItemDTO(String id, String name, BigDecimal price, AuthorDTO author, String primaryImagePath) {
+	public SimpleItemDTO(String id, String name, BigDecimal price, AuthorDTO author, String image) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.author = author;
-		this.primaryImagePath = primaryImagePath;
+		this.image = image;
 	}
 	
 	public String getId() {
@@ -59,14 +59,11 @@ public class SimpleItemDTO implements Serializable {
 		this.author = author;
 	}
 
-	public String getPrimaryImagePath() {
-		return primaryImagePath;
+	public String getImage() {
+		return image;
 	}
 
-	public void setPrimaryImagePath(String primaryImagePath) {
-		this.primaryImagePath = primaryImagePath;
+	public void setImage(String image) {
+		this.image = image;
 	}
-	
-	
-	
 }

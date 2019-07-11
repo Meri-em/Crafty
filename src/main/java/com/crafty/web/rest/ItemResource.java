@@ -18,18 +18,15 @@ import com.crafty.service.ItemService;
 @CrossOrigin
 @RequestMapping("api/v1/items")
 public class ItemResource {
-	
-	private final ItemService itemService;
-	
-	public ItemResource(ItemService itemService) {
+	private final ItemService itemService;public ItemResource(ItemService itemService) {
 		this.itemService = itemService;
 	}
-	
+
 	@GetMapping("/{itemId}")
 	public ItemDTO getItemById(@PathVariable String itemId) {
 		return itemService.getItemById(itemId);
 	}
-	
+
 	@GetMapping("/search")
 	public List<SimpleItemDTO> getItemsByCategory(
 			@RequestParam(value = "text", required = false) String text,

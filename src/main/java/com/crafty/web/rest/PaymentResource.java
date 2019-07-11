@@ -1,5 +1,6 @@
 package com.crafty.web.rest;
 
+import com.crafty.util.CurrentUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,7 @@ public class PaymentResource {
 	
 	@GetMapping("")
 	public PaymentDTO getPayments() {
-		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return paymentService.getPayments(jwtUser.getMemberId());
+		return paymentService.getPayments(CurrentUser.getMemberId());
 	}
 
 }

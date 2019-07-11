@@ -2,6 +2,8 @@ package com.crafty.web.rest;
 
 import java.util.List;
 
+import com.crafty.dto.CartDTO;
+import com.crafty.util.CurrentUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,38 +31,33 @@ public class CartResource {
 	}
 	
 	@GetMapping("")
-	public List<CartItemDTO> getCartItems() {
-		String memberId = getLoggedInMemberId();
+	public CartDTO getCartItems() {
+		String memberId = CurrentUser.getMemberId();
 		return cartService.getCartItems(memberId);
 	}
 	
 	@PostMapping("")
 	public String addItemToCart(@RequestBody CartItemRequestDTO cartItemRequest) {
-		return cartService.addItemToCart(getLoggedInMemberId(), cartItemRequest.getItemId(),
+		return cartService.addItemToCart(CurrentUser.getMemberId(), cartItemRequest.getItemId(),
 				cartItemRequest.getQuantity());
 	}
 	
 	@DeleteMapping("")
 	public String deleteItems(@RequestParam(value = "item-ids", required = true) List<String> itemIds) {
-		cartService.deleteItems(getLoggedInMemberId(), itemIds);
+		cartService.deleteItems(CurrentUser.getMemberId(), itemIds);
 		return "Success!";
 	}
 	
 	@DeleteMapping("/clear")
 	public String clearCart() {
-		cartService.clearCart(getLoggedInMemberId());
+		cartService.clearCart(CurrentUser.getMemberId());
 		return "Success";
 	}
 	
 	@PostMapping("/purchase")
 	public String purchaseItemsFromCart() {
-		cartService.purchaseItemsFromCart(getLoggedInMemberId());
+		cartService.purchaseItemsFromCart(CurrentUser.getMemberId());
 		return "The purchase is successful";
-	}
-	
-	private String getLoggedInMemberId() {
-		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return jwtUser.getMemberId();
 	}
 
 }

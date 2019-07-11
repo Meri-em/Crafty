@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.crafty.util.CurrentUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,8 +71,7 @@ public class AuthResource {
 	
 	@PostMapping("/logout")
 	public boolean logout() {
-		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return authService.doLogout(jwtUser.getId());
+		return authService.doLogout(CurrentUser.getId());
 	}
 	
 

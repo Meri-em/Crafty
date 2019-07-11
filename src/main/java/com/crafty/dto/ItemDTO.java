@@ -15,7 +15,7 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm.SSS")
 	private LocalDateTime createdAt;
 	
-	private List<ItemImageDTO> itemImages;
+	private List<ItemImageDTO> images;
 	
 	private boolean archived;
 	
@@ -23,7 +23,7 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 	
 	public ItemDTO(SimpleItemDTO simpleItem) {
 		super(simpleItem.getId(), simpleItem.getName(), simpleItem.getPrice(), 
-				simpleItem.getAuthor(), simpleItem.getPrimaryImagePath());
+				simpleItem.getAuthor(), simpleItem.getImage());
 	}
 	
 	public String getDescription() {
@@ -42,12 +42,12 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public List<ItemImageDTO> getItemImages() {
-		return itemImages;
+	public List<ItemImageDTO> getImages() {
+		return images;
 	}
 
-	public void setItemImages(List<ItemImageDTO> itemImages) {
-		this.itemImages = itemImages;
+	public void setImages(List<ItemImageDTO> images) {
+		this.images = images;
 	}
 
 	public boolean isArchived() {

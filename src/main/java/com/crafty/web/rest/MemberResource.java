@@ -2,6 +2,7 @@ package com.crafty.web.rest;
 
 import java.util.List;
 
+import com.crafty.util.CurrentUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,22 +26,34 @@ public class MemberResource {
 		this.memberService = memberService;
 	}
 	
-	@GetMapping("/favourites")
+	@GetMapping("/favourite-authors")
 	public List<AuthorDTO> getFavouriteAuthors() {
-		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return memberService.getFavouriteAuthors(jwtUser.getMemberId());
+		return memberService.getFavouriteAuthors(CurrentUser.getMemberId());
 	}
 	
-	@PostMapping("/favourites")
+	@PostMapping("/favourite-authors")
 	public void addFavouriteAuthor(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
-		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		memberService.addAuthorToFavourites(jwtUser.getMemberId(), favouriteRequestDTO);
+		memberService.addAuthorToFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
 	}
 	
-	@DeleteMapping("/favourites")
+	@DeleteMapping("/favourite-authors")
 	public void deleteFavouriteAuthor(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
-		JwtUser jwtUser = (JwtUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		memberService.removeAuthorFromFavourites(jwtUser.getMemberId(), favouriteRequestDTO);
+		memberService.removeAuthorFromFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
+	}
+
+	@GetMapping("/favourite-items")
+	public List<AuthorDTO> getFavouriteItems() {
+		return memberService.getFavouriteAuthors(CurrentUser.getMemberId());
+	}
+
+	@PostMapping("/favourite-items")
+	public void addFavouriteItem(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
+		memberService.addAuthorToFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
+	}
+
+	@DeleteMapping("/favourite-items")
+	public void deleteFavouriteItem(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
+		memberService.removeAuthorFromFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
 	}
 
 }

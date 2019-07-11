@@ -61,7 +61,7 @@ public class MapperHelper {
 		Comparator<ItemImage> itemImageComparator = Comparator.comparing(ItemImage::getOrder);
 		List<ItemImageDTO> itemImages = item.getItemImages().stream().sorted(itemImageComparator)
 				.map(it -> toItemImageDTO(it)).collect(Collectors.toList());
-		itemDTO.setItemImages(itemImages);
+		itemDTO.setImages(itemImages);
 		itemDTO.setArchived(item.isArchived());
 		return itemDTO;
 	}

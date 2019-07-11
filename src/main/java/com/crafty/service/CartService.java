@@ -1,11 +1,13 @@
 package com.crafty.service;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.crafty.dto.CartDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,9 +41,16 @@ public class CartService {
 		this.mapperHelper = mapperHelper;
 	}
 	
-	public List<CartItemDTO> getCartItems(String memberId) {
-		return cartItemRepository.findByMemberId(memberId).stream()
+	public CartDTO getCartItems(String memberId) {
+		List<CartItem> items = cartItemRepository.findByMemberId(memberId);
+		List<CartItemDTO> itemDTOs = items.stream()
 				.map(ci -> mapperHelper.toCartItemDTO(ci)).collect(Collectors.toList());
+		BigDecimal total = BigDecimal.ZERO;
+		for (CartItem item : items) {
+			total = total.add(
+				item.getItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+		}
+		return new CartDTO(total, itemDTOs);
 	}
 	
 	public String addItemToCart(String memberId, String itemId, int quantity) {
