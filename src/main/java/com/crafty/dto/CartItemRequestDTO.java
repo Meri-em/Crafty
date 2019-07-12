@@ -8,7 +8,7 @@ public class CartItemRequestDTO implements Serializable {
 	
 	private String itemId;
 	
-	private int quantity;
+	private String quantity;
 
 	public String getItemId() {
 		return itemId;
@@ -18,11 +18,11 @@ public class CartItemRequestDTO implements Serializable {
 		this.itemId = itemId;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 	

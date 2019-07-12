@@ -8,16 +8,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.crafty.dto.CartDTO;
+import com.crafty.entity.OrderItem;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.crafty.dto.CartItemDTO;
 import com.crafty.entity.CartItem;
 import com.crafty.entity.Item;
-import com.crafty.entity.Payment;
+import com.crafty.entity.Order;
 import com.crafty.repository.CartItemRepository;
 import com.crafty.repository.ItemRepository;
-import com.crafty.repository.PaymentRepository;
+import com.crafty.repository.OrderRepository;
 import com.crafty.util.MapperHelper;
 import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.NotFoundException;
@@ -28,16 +29,16 @@ public class CartService {
 	
 	private final ItemRepository itemRepository;
 	private final CartItemRepository cartItemRepository;
-	private final PaymentRepository paymentRepository;
+	private final OrderRepository orderRepository;
 	private final MapperHelper mapperHelper;
 	
 	public CartService(CartItemRepository cartItemRepository,
 			ItemRepository itemRepository,
-			PaymentRepository paymentRepository,
+			OrderRepository orderRepository,
 			MapperHelper mapperHelper) {
 		this.cartItemRepository = cartItemRepository;
 		this.itemRepository = itemRepository;
-		this.paymentRepository = paymentRepository;
+		this.orderRepository = orderRepository;
 		this.mapperHelper = mapperHelper;
 	}
 	
@@ -53,11 +54,13 @@ public class CartService {
 		return new CartDTO(total, itemDTOs);
 	}
 	
-	public String addItemToCart(String memberId, String itemId, int quantity) {
+	public String createOrUpdateCartItem(String memberId, String itemId, String quantityString) {
 		Optional<CartItem> cartItemOptional =  cartItemRepository.findByMemberIdAndItemId(memberId, itemId);
 		CartItem cartItem = null;
+		int savedQuantity = 0;
 		if (cartItemOptional.isPresent()) {
 			cartItem = cartItemOptional.get();
+			savedQuantity = cartItem.getQuantity();
 		} else {
 			cartItem = new CartItem();
 			Item item = itemRepository.findById(itemId)
@@ -65,17 +68,20 @@ public class CartService {
 			cartItem.setItem(item);
 			cartItem.setMemberId(memberId);
 		}
-		cartItem.setQuantity(quantity);
-		cartItem = cartItemRepository.save(cartItem);
-		return "Item saved";
-	}
-	
-	public String modifyCartItem(String memberId, String itemId, int quantity) {
-		CartItem cartItem =  cartItemRepository.findByMemberIdAndItemId(memberId, itemId)
-				.orElseThrow(() -> new NotFoundException("No item with id " + itemId + " found for this user"));
-		cartItem.setQuantity(quantity);
-		cartItem = cartItemRepository.save(cartItem);
-		return cartItem.getId();
+		int newQuantity = calculateNewQuantity(savedQuantity, quantityString);
+		if (newQuantity > 0) {
+			if (savedQuantity == newQuantity) {
+				return String.format("Item with id %s and quantity %s already exists",
+					itemId, savedQuantity);
+			}
+			cartItem.setQuantity(newQuantity);
+			cartItem = cartItemRepository.save(cartItem);
+			return "Item saved";
+		} else if (savedQuantity != 0) {
+			cartItemRepository.delete(cartItem);
+			return "Item deleted";
+		}
+		return "Item not added because quantity is non-positive";
 	}
 	
 	public void deleteItems(String memberId, List<String> itemIds) {
@@ -91,20 +97,33 @@ public class CartService {
 		if (cartItems.isEmpty()) {
 			throw new BadRequestException("The cart is empty");
 		}
-		Instant createdAt = Instant.now();
-		List<Payment> payments = new ArrayList<>();
+		Order order = new Order();
+		order.setCreatedAt(Instant.now());
+		order.setMemberId(memberId);
+		List<OrderItem> orderItems = new ArrayList<>();
 		for (CartItem cartItem : cartItems) {
-			Payment payment = new Payment();
-			payment.setCreatedAt(createdAt);
-			payment.setMemberId(memberId);
+			OrderItem orderItem = new OrderItem();
 			Item item = cartItem.getItem();
-			payment.setItem(item);
-			payment.setPaidPerItem(item.getPrice());
-			payment.setQuantity(cartItem.getQuantity());
-			payments.add(payment);
+			orderItem.setItem(item);
+			orderItem.setPaidPerItem(item.getPrice());
+			orderItem.setQuantity(cartItem.getQuantity());
+			orderItem.setOrder(order);
+			orderItems.add(orderItem);
 		}
-		payments = paymentRepository.saveAll(payments);
+		order.setItems(orderItems);
+		order = orderRepository.save(order);
 		cartItemRepository.deleteAll(cartItems);
+	}
+
+	private int calculateNewQuantity(int savedQuantity, String quantityString) {
+		if (quantityString.startsWith("+")) {
+			int counter = Integer.valueOf(quantityString.substring(1));
+			return savedQuantity + counter;
+		} else if (quantityString.startsWith("-")) {
+			int counter = Integer.valueOf(quantityString.substring(1));
+			return savedQuantity - counter;
+		}
+		return Integer.valueOf(quantityString);
 	}
 
 }

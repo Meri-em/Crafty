@@ -1,5 +1,6 @@
 package com.crafty.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class ItemService {
 	}
 	
 	public List<SimpleItemDTO> searchItems(String text, List<String> authorIds,
-			List<String> categories, Double minPrice, Double maxPrice) {
+										   List<String> categories, BigDecimal minPrice, BigDecimal maxPrice) {
 		String authorIdsString = CollectionUtils.isEmpty(authorIds) ? null : "";
 		String categoriesString =  CollectionUtils.isEmpty(categories) ? null : "";
 		

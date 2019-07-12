@@ -37,8 +37,8 @@ public class CartResource {
 	}
 	
 	@PostMapping("")
-	public String addItemToCart(@RequestBody CartItemRequestDTO cartItemRequest) {
-		return cartService.addItemToCart(CurrentUser.getMemberId(), cartItemRequest.getItemId(),
+	public String createOrUpdateCartItem(@RequestBody CartItemRequestDTO cartItemRequest) {
+		return cartService.createOrUpdateCartItem(CurrentUser.getMemberId(), cartItemRequest.getItemId(),
 				cartItemRequest.getQuantity());
 	}
 	
