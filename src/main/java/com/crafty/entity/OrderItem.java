@@ -12,26 +12,31 @@ import javax.validation.constraints.NotNull;
 import com.crafty.entity.base.BaseEntityId;
 
 @Entity
-public class Payment extends BaseEntityId {
-	
+public class OrderItem extends BaseEntityId {
+
 	private static final long serialVersionUID = -5553205123797954099L;
 
-	@JoinColumn(name = "member_id")
+	@ManyToOne
+	@JoinColumn(name = "order_id")
 	@NotNull
-	@Column(columnDefinition = "CHAR(255)")
-	private String memberId;
-	
+	private Order order;
+
 	@ManyToOne
 	@JoinColumn(name = "item_id")
 	@NotNull
 	private Item item;
-	
+
 	private int quantity;
-	
+
 	private BigDecimal paidPerItem;
-	
-	@NotNull
-	private Instant createdAt;
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 
 	public Item getItem() {
 		return item;
@@ -39,14 +44,6 @@ public class Payment extends BaseEntityId {
 
 	public void setItem(Item item) {
 		this.item = item;
-	}
-
-	public String getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
 	}
 
 	public int getQuantity() {
@@ -65,12 +62,4 @@ public class Payment extends BaseEntityId {
 		this.paidPerItem = paidPerItem;
 	}
 
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
-	
 }

@@ -1,5 +1,6 @@
 package com.crafty.web.rest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,8 +33,8 @@ public class ItemResource {
 			@RequestParam(value = "text", required = false) String text,
 			@RequestParam(value = "author-ids", required = false) List<String> authorIds,
 			@RequestParam(value = "categories", required = false) List<String> categories,
-			@RequestParam(value = "min-price", required = false) Double minPrice,
-			@RequestParam(value = "max-price", required = false) Double maxPrice) {
+			@RequestParam(value = "min-price", required = false) BigDecimal minPrice,
+			@RequestParam(value = "max-price", required = false) BigDecimal maxPrice) {
 		return itemService.searchItems(text, authorIds, categories, minPrice, maxPrice);
 
 	}

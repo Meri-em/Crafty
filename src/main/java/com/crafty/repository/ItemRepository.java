@@ -1,5 +1,6 @@
 package com.crafty.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,11 +26,11 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 	        + "  AND (:maxPrice IS NULL OR it.price <= :maxPrice)"
 	        + "  AND it.archived IS FALSE"
 	        + "  ORDER BY it.createdAt DESC")
-	List<Item> findItems(@Param("text") String text, 
-			@Param("authorIdsString") String authorIdsString,
-			@Param("authorIds") List<String> authorIds,
-			@Param("categoriesString") String categoriesString,
-			@Param("categories") List<String> categories,
-			@Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
+	List<Item> findItems(@Param("text") String text,
+						 @Param("authorIdsString") String authorIdsString,
+						 @Param("authorIds") List<String> authorIds,
+						 @Param("categoriesString") String categoriesString,
+						 @Param("categories") List<String> categories,
+						 @Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice);
 
 }

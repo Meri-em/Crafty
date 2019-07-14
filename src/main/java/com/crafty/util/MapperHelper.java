@@ -1,24 +1,15 @@
 package com.crafty.util;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.crafty.dto.*;
+import com.crafty.entity.*;
 import org.springframework.stereotype.Component;
-
-import com.crafty.dto.AuthorDTO;
-import com.crafty.dto.CartItemDTO;
-import com.crafty.dto.ItemDTO;
-import com.crafty.dto.ItemImageDTO;
-import com.crafty.dto.PaymentItemDTO;
-import com.crafty.dto.SimpleItemDTO;
-import com.crafty.entity.Author;
-import com.crafty.entity.CartItem;
-import com.crafty.entity.Item;
-import com.crafty.entity.ItemImage;
-import com.crafty.entity.Payment;
 
 @Component
 public class MapperHelper {
@@ -73,16 +64,26 @@ public class MapperHelper {
 		return cartItemDTO;
 	}
 	
-	public PaymentItemDTO toPaymentItemDTO(Payment payment) {
-		PaymentItemDTO dto = new PaymentItemDTO();
-		dto.setQuantity(payment.getQuantity());
-		dto.setCreatedAt(LocalDateTime.ofInstant(payment.getCreatedAt(), ZoneOffset.UTC));
-		dto.setPaidPerItem(payment.getPaidPerItem());
-		dto.setItem(toSimpleItemDTO(payment.getItem()));
-		return dto;
+	public OrderDTO toOrderDTO(Order order, BigDecimal total) {
+		OrderDTO orderDTO = new OrderDTO();
+		orderDTO.setCreatedAt(LocalDateTime.ofInstant(order.getCreatedAt(), ZoneOffset.UTC));
+		orderDTO.setTotal(total);
+		List<OrderItemDTO> orderItemDTOs = order.getItems().stream()
+			.map(i -> this.toOrderItemDTO(i))
+			.collect(Collectors.toList());
+		orderDTO.setItems(orderItemDTOs);
+		return orderDTO;
 	}
 	
 	private String getImagePath(ItemImage itemImage) {
 		return String.format("%s/%s/%s", IMAGES_DIRECTORY, itemImage.getItem().getId(), itemImage.getName());
+	}
+
+	private OrderItemDTO toOrderItemDTO(OrderItem orderItem) {
+		OrderItemDTO orderItemDTO = new OrderItemDTO();
+		orderItemDTO.setItem(toSimpleItemDTO(orderItem.getItem()));
+		orderItemDTO.setPaid(orderItem.getPaidPerItem());
+		orderItemDTO.setQuantity(orderItem.getQuantity());
+		return orderItemDTO;
 	}
 }
