@@ -63,5 +63,7 @@ export const browse       = group => search({ categories: group.toUpperCase() })
 
 
 // CART
-export const getCart     = () => authorized({ url: EP.CART });
-export const updateCart  = () => authorized({ url: EP.CART, method: 'POST' });
+export const getCart        = () => authorized({ url: EP.CART });
+export const updateCart     = data => authorized({ url: EP.CART, method: 'POST', data});
+export const addToCart      = ({id, quantity=1}) => updateCart({itemId: id, quantity: `+${quantity}`});
+export const removeFromCart = ({id, quantity=1}) => updateCart({itemId: id, quantity: `-${quantity}`});

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { addToCart } from 'core/actions';
 
 import './Item.css';
 
@@ -14,11 +15,11 @@ class ItemDetailed extends Component {
   state = {};
 
   render() {
-    const { author, price, name, images, description } = this.props;
+    const { author, price, name, images, description, id } = this.props;
     const image = this.state.image || this.props.image;
 
     return (
-      <div className="Item large">
+      <div className="Item large" id={id}>
         <div className="item-name">{name}</div>
         <div className="item-preview">
           <img className="item-image" src={image} alt="" />
@@ -29,7 +30,7 @@ class ItemDetailed extends Component {
           </div>
         </div>
         <div className="item-price">{price}</div>
-        <div className="item-add">Add to cart</div>
+        <div className="item-add" onClick={() => addToCart({id})}>Add to cart</div>
         <div className="item-author">{author.name}</div>
         <div className="item-description">{description}</div>
       </div>

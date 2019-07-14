@@ -62,6 +62,19 @@
   left: 0;
   right: 0;
 }
+.item-add {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #ddd;
+  background: linear-gradient(#ccc, #fff);
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.item-add:hover {
+  background: linear-gradient(rgb(216, 183, 93), #fff);
+  box-shadow: 0 0 2px;
+}
 /* Small */
 .Item.thumbnail {
   position: relative;
