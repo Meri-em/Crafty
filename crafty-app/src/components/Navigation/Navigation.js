@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getNavigation } from 'actions';
+import { getNavigation } from 'core/actions';
 
 import './Navigation.css';
 
@@ -37,7 +37,10 @@ class Navigation extends Component {
 
     return (
       <div className={`Navigation mobile-${this.state.on ? 'on' : 'off'}`}>
-        <a className="mobile-menu" onClick={() => this.setState({ on: !this.state.on })}></a>
+        <a className="mobile-menu" href="#/" onClick={e => {
+          e.preventDefault();
+          this.setState({ on: !this.state.on });
+        }}> </a>
         {menu.map((e, i) => <Group {...e} key={i} />)}
       </div>
     )

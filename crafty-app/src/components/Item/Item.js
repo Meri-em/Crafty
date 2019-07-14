@@ -29,6 +29,7 @@ class ItemDetailed extends Component {
           </div>
         </div>
         <div className="item-price">{price}</div>
+        <div className="item-add">Add to cart</div>
         <div className="item-author">{author.name}</div>
         <div className="item-description">{description}</div>
       </div>

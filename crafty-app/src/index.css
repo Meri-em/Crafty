@@ -23,3 +23,21 @@ a {
   text-decoration: none;
   color: #ccc;
 }
+
+.App {
+  white-space: pre-wrap;
+}
+
+.App-logo {
+  height: 15vmin;
+  pointer-events: none;
+  display: block;
+  margin: auto;
+}
+.App > header {
+  display: flex;
+  flex-wrap: wrap;
+}
+.Navigation {
+  flex: 100%;
+}

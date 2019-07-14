@@ -16,3 +16,6 @@ export const MY_PROFILE  = `${API_ROOT}/user/info`;
 export const ITEM        = `${API_ROOT}/items/`;
 export const ITEMS       = `${API_ROOT}/items/search`;
 export const SEARCH      = `${API_ROOT}/items/search`;
+
+// ITEMS
+export const CART        = `${API_ROOT}/cart`;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getItem } from 'actions';
+import { getItem } from 'core/actions';
 import { ItemDetailed } from 'components/Item/Item';
 
 

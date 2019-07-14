@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getItems, browse, searchByName } from 'actions';
+import { getItems, browse, searchByName } from 'core/actions';
 import Item from 'components/Item/Item';
 
 import './Browse.css';
@@ -9,10 +9,8 @@ class Browse extends Component {
 
   updateItems() {
     const { group, subgroup } = this.props.match.params;
-    const f = group == 'search' ? searchByName : subgroup ? browse : getItems;
-    f(subgroup).then(res => {
-      this.setState({ items: res.data });
-    })
+    const f = group === 'search' ? searchByName : subgroup ? browse : getItems;
+    f(subgroup).then(res => this.setState({ items: res.data }));
   }
 
   componentDidMount() {

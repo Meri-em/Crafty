@@ -8,7 +8,6 @@ class Search extends Component {
   onSubmit = e => {
     const { value } = this.state;
     e.preventDefault();
-    console.log(this.state.value);
     window.location.hash = value ? '/search/' + encodeURIComponent(value) : '';
   };
 
