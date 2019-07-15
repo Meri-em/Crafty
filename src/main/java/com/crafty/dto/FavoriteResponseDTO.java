@@ -2,7 +2,7 @@ package com.crafty.dto;
 
 import java.io.Serializable;
 
-public class FavouriteResponseDTO implements Serializable {
+public class FavoriteResponseDTO implements Serializable {
 	
 	private static final long serialVersionUID = -4477303140302930634L;
 
@@ -10,7 +10,7 @@ public class FavouriteResponseDTO implements Serializable {
 	
 	private String name;
 
-	public FavouriteResponseDTO(String id, String name) {
+	public FavoriteResponseDTO(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}

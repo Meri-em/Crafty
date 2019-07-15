@@ -8,7 +8,7 @@ import com.crafty.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.crafty.dto.FavouriteResponseDTO;
+import com.crafty.dto.FavoriteResponseDTO;
 import com.crafty.dto.FavouriteRequestDTO;
 import com.crafty.entity.Author;
 import com.crafty.entity.Member;
@@ -35,9 +35,9 @@ public class MemberService {
 		this.mapperHelper = mapperHelper;
 	}
 	
-	public List<FavouriteResponseDTO> getFavouriteAuthors(String memberId) {
+	public List<FavoriteResponseDTO> getFavouriteAuthors(String memberId) {
 		Member member = getMemberByIdOrNotFound(memberId);
-		return member.getFavouriteAuthors().stream().map(a -> new FavouriteResponseDTO(a.getId(), a.getName()))
+		return member.getFavouriteAuthors().stream().map(a -> new FavoriteResponseDTO(a.getId(), a.getName()))
 			.collect(Collectors.toList());
 	}
 	
@@ -67,9 +67,9 @@ public class MemberService {
 		}		
 	}
 
-	public List<FavouriteResponseDTO> getFavouriteItems(String memberId) {
+	public List<FavoriteResponseDTO> getFavouriteItems(String memberId) {
 		Member member = getMemberByIdOrNotFound(memberId);
-		return member.getFavouriteItems().stream().map(i -> new FavouriteResponseDTO(i.getId(), i.getName()))
+		return member.getFavouriteItems().stream().map(i -> new FavoriteResponseDTO(i.getId(), i.getName()))
 			.collect(Collectors.toList());
 	}
 
