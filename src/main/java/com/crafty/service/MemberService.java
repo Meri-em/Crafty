@@ -3,10 +3,12 @@ package com.crafty.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.crafty.entity.Item;
+import com.crafty.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.crafty.dto.AuthorDTO;
+import com.crafty.dto.FavouriteResponseDTO;
 import com.crafty.dto.FavouriteRequestDTO;
 import com.crafty.entity.Author;
 import com.crafty.entity.Member;
@@ -22,25 +24,27 @@ public class MemberService {
 	
 	private final MemberRepository memberRepository;
 	private final AuthorRepository authorRepository;
+	private final ItemRepository itemRepository;
 	private final MapperHelper mapperHelper;
 	
 	public MemberService(MemberRepository memberRepository, AuthorRepository authorRepository,
-			MapperHelper mapperHelper) {
+						 ItemRepository itemRepository, MapperHelper mapperHelper) {
 		this.memberRepository = memberRepository;
 		this.authorRepository = authorRepository;
+		this.itemRepository = itemRepository;
 		this.mapperHelper = mapperHelper;
 	}
 	
-	public List<AuthorDTO> getFavouriteAuthors(String memberId) {
+	public List<FavouriteResponseDTO> getFavouriteAuthors(String memberId) {
 		Member member = getMemberByIdOrNotFound(memberId);
-		return member.getFavouriteAuthors().stream().map(a -> mapperHelper.toAuthorDTO(a))
+		return member.getFavouriteAuthors().stream().map(a -> new FavouriteResponseDTO(a.getId(), a.getName()))
 			.collect(Collectors.toList());
 	}
 	
 	public void addAuthorToFavourites(String memberId, FavouriteRequestDTO favourite) {
-		String authorId = favourite.getAuthorId();
+		String authorId = favourite.getId();
 		if (authorId == null) {
-			throw new BadRequestException("No authorId provided");
+			throw new BadRequestException("No id provided for author");
 		}
 		Author author = getAuthorByIdOrNotFound(authorId);
 		Member member = getMemberByIdOrNotFound(memberId);
@@ -51,9 +55,9 @@ public class MemberService {
 	}
 	
 	public void removeAuthorFromFavourites(String memberId, FavouriteRequestDTO favourite) {
-		String authorId = favourite.getAuthorId();
+		String authorId = favourite.getId();
 		if (authorId == null) {
-			throw new BadRequestException("No authorId provided");
+			throw new BadRequestException("No id provided for author");
 		}
 		Author author = getAuthorByIdOrNotFound(authorId);
 		Member member = getMemberByIdOrNotFound(memberId);
@@ -61,6 +65,38 @@ public class MemberService {
 			member.getFavouriteAuthors().remove(author);
 			memberRepository.save(member);
 		}		
+	}
+
+	public List<FavouriteResponseDTO> getFavouriteItems(String memberId) {
+		Member member = getMemberByIdOrNotFound(memberId);
+		return member.getFavouriteItems().stream().map(i -> new FavouriteResponseDTO(i.getId(), i.getName()))
+			.collect(Collectors.toList());
+	}
+
+	public void addItemToFavourites(String memberId, FavouriteRequestDTO favourite) {
+		String itemId = favourite.getId();
+		if (itemId == null) {
+			throw new BadRequestException("No id provider for item");
+		}
+		Item item = getItemByIdOrNotFound(itemId);
+		Member member = getMemberByIdOrNotFound(memberId);
+		if (!member.getFavouriteItems().contains(item)) {
+			member.getFavouriteItems().add(item);
+			memberRepository.save(member);
+		}
+	}
+
+	public void removeItemFromFavourites(String memberId, FavouriteRequestDTO favourite) {
+		String itemId = favourite.getId();
+		if (itemId == null) {
+			throw new BadRequestException("No id provided for item");
+		}
+		Item item = getItemByIdOrNotFound(itemId);
+		Member member = getMemberByIdOrNotFound(memberId);
+		if (member.getFavouriteAuthors().contains(item)) {
+			member.getFavouriteAuthors().remove(item);
+			memberRepository.save(member);
+		}
 	}
 	
 	private Member getMemberByIdOrNotFound(String memberId) {
@@ -71,6 +107,11 @@ public class MemberService {
 	private Author getAuthorByIdOrNotFound(String authorId) {
 		return authorRepository.findById(authorId)
 				.orElseThrow(() -> new NotFoundException("No author found with id " + authorId));
+	}
+
+	private Item getItemByIdOrNotFound(String authorId) {
+		return itemRepository.findById(authorId)
+			.orElseThrow(() -> new NotFoundException("No author found with id " + authorId));
 	}
 
 }

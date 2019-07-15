@@ -2,13 +2,18 @@ package com.crafty.dto;
 
 import java.io.Serializable;
 
-public class AuthorDTO implements Serializable {
-
-	private static final long serialVersionUID = -790552399929845846L;
+public class FavouriteResponseDTO implements Serializable {
+	
+	private static final long serialVersionUID = -4477303140302930634L;
 
 	private String id;
-
+	
 	private String name;
+
+	public FavouriteResponseDTO(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 	public String getId() {
 		return id;
@@ -25,4 +30,5 @@ public class AuthorDTO implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 }

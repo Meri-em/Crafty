@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 class EditItem extends Component {
   render() {
     return (
-      <form action="http://localhost:8080/api/v1/upload">
-        <input type="file"/>
+      <form method="post" action="http://localhost:8080/api/v1/upload">
+        <input type="file" name="image"/>
         <input type="submit" value="Upload Image"/>    
       </form>
     );

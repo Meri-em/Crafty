@@ -6,14 +6,13 @@ public class FavouriteRequestDTO implements Serializable {
 	
 	private static final long serialVersionUID = -1847760977078822577L;
 	
-	private String authorId;
+	private String id;
 
-	public String getAuthorId() {
-		return authorId;
+	public String getId() {
+		return id;
 	}
 
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
+	public void setId(String id) {
+		this.id = id;
 	}
-	
 }
