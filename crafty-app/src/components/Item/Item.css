@@ -15,7 +15,7 @@
   display: inline-block;
 }
 .item-price::after {
-  content: ' $';
+  content: ' лв';
 }
 .item-author {
   font-style: italic;

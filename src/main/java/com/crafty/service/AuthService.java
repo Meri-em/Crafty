@@ -85,7 +85,8 @@ public class AuthService {
 
 	public LoginResultDTO login(LoginDTO loginDTO) {
 		String email = loginDTO.getEmail();
-		userRepository.findByEmail(email).orElseThrow(() -> new UnauthorizedException("Incorrect email or password"));
+		userRepository.findByEmail(email).orElseThrow(
+			() -> new UnauthorizedException("Грешно потребителско име или парола"));
 		this.authenticate(email, loginDTO.getPassword());
 		return generateToken(email);
 	}
@@ -108,7 +109,7 @@ public class AuthService {
 			authentication = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 		} catch (AuthenticationException ex) {
-			throw new UnauthorizedException("Incorrect email or password");
+			throw new UnauthorizedException("Грешно потребителско име или парола");
 		}
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
