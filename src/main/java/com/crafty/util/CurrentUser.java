@@ -13,6 +13,10 @@ public class CurrentUser {
 		return getJwtUser().getMemberId();
 	}
 
+	public static String getAuthorId() {
+		return getJwtUser().getAuthorId();
+	}
+
 	public static JwtUser getJwtUser() {
 		return (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}

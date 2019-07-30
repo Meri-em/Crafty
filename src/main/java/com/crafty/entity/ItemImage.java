@@ -1,5 +1,6 @@
 package com.crafty.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,6 +15,7 @@ public class ItemImage extends BaseEntityId {
 	
 	private String name;
 	
+	@Column(name = "`order`")
 	private int order;
 	
 	@ManyToOne
