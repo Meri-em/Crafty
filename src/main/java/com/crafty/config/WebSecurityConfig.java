@@ -3,6 +3,7 @@ package com.crafty.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -69,8 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/v1/upload").permitAll()
             .antMatchers("/images/**").permitAll()
             .antMatchers("/api/v1/categories").permitAll()
-            .antMatchers("/api/v1/items/*").permitAll()
-            .antMatchers("/api/v1/items").hasRole("AUTHOR")
+            .antMatchers(HttpMethod.GET, "/api/v1/items/*").permitAll()
+            .antMatchers("/api/v1/items/*").hasRole("AUTHOR")
+			.antMatchers("/api/v1/items").hasRole("AUTHOR")
             .anyRequest().authenticated();
     	
     	// Custom JWT based security filter.

@@ -51,7 +51,7 @@ public class AuthResource {
 	}
 	
 	/*
-	 * This endpoint can be access if the user is logged in the system. It is used to verify that the user is logged in.
+	 * This endpoint can be accessed if the user is logged in the system. It is used to verify that the user is logged in.
 	 */
 	@GetMapping("/user/info")
 	public String getEmail() {

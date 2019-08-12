@@ -55,11 +55,6 @@ public class AuthorResource {
 		return "redirect:/uploadStatus";
 	}
 
-	@RequestMapping(value = "/upload",method = RequestMethod.POST)
-	public String adminAddProductSubmit(final @ModelAttribute(value = "product") @Valid UploadItemDTO item,
-										BindingResult bindingResult, final @RequestParam(value = "file") MultipartFile[] files){
-		return authorService.addNewItem("387927a1-f131-4a45-a7b7-b50969ff3cba",
-			item, files);
-	}
+
 
 }

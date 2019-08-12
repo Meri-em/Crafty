@@ -45,7 +45,7 @@ CREATE TABLE item (
 
 CREATE TABLE item_image (
 	id CHAR(36) NOT NULL,
-	name VARCHAR(100) NOT NULL,
+	extension VARCHAR(100) NOT NULL,
 	item_id CHAR(36) NOT NULL,
 	`order` INT(11) NOT NULL,
 	PRIMARY KEY (id),
@@ -111,33 +111,33 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('9c3c5471-379d-44f6-825d-ac8e0ca9229c', 'Малки обеци от роза', 'Нежни обеци изработени от малки, пъстри листенца на роза.\n\nДължина на обеците с кукичките - около 3,5 см.\n\nСребърни кукички.\n\nОбеците ще получите в красива торбичка от органза, придружени със сертификат за качество.', 'EARRINGS','2019-03-07 23:11:32', 29,'387927a1-f131-4a45-a7b7-b50969ff3cba');
 
 REPLACE INTO item_image VALUES
-	('9ed87836-d42f-4fbf-a5f4-cc38b481d243','1.jpg','cd8c8983-dc7a-4570-97ca-ed2a218b18ba',1),
-	('97151fa9-fdb6-4b75-9556-4fa2a5a87df6','2.jpg','cd8c8983-dc7a-4570-97ca-ed2a218b18ba',2),
-	('5de23216-5f93-488b-a034-27872f130269','1.jpg','64605868-ab4d-40a1-9b1e-28c5ac5a7ae0',1),
-	('5c2af457-a07f-4c0f-95ae-ff9e297dc581','2.jpg','64605868-ab4d-40a1-9b1e-28c5ac5a7ae0',2),
-	('9d9af93b-b1c7-47b6-9f7a-606e2d2009a8','1.jpg','52038cd8-91b7-4852-abec-fa8281edef68',1),
-	('e4ff7555-7e47-4beb-af77-1c2b81ec0adf','1.jpg','9f159664-9f73-4c17-aa76-297ddd4a5ca4',1),
-	('7a49f4af-9b7c-4cf6-b9ff-c97fbd6efa22','1.jpg','7b3ebcf3-73d5-4342-a653-eda72195d025',1),
-	('dd24d4fa-22d5-4bce-9b74-99e04700a07a','2.jpg','7b3ebcf3-73d5-4342-a653-eda72195d025',2),
-	('960e0464-d673-448b-9308-021684f5ef5f','1.jpg','5dd0b033-c131-4544-93ee-815cb419d7dc',1),
-	('a55621e2-f2b8-41c9-96bc-75dcf0816b9c','2.jpg','5dd0b033-c131-4544-93ee-815cb419d7dc',2),
-	('384173cb-12a0-4fee-be68-745d51094c39','1.jpg','749cfa82-bb71-407d-ab3c-6ac52c69a553',1),
-	('4be0db34-6a92-492a-bc84-c117ed1518a9','2.jpg','749cfa82-bb71-407d-ab3c-6ac52c69a553',2),
-	('3c4c7326-e5bb-4405-83f5-f2b1fc9891c2','1.jpg','708b4f7f-6f96-4df2-9049-31fcf5baa407',1),
-	('7daa2720-d199-460d-8b78-485d957a96ad','2.jpg','708b4f7f-6f96-4df2-9049-31fcf5baa407',2),
-	('f41dd4ed-dd7f-4028-8283-2fb084078f24','1.jpg','94c10ef1-74de-4864-9d8a-e70484899a41',1),
-	('c1785613-28cc-4d30-865e-e0adac14f29d','2.jpg','94c10ef1-74de-4864-9d8a-e70484899a41',2),
-	('352dcd6d-de69-41a9-a3e4-0926335163ef','1.jpg','45544ac1-a268-482f-a962-8cc173cacb8e',1),
-	('a3a05db0-d0a1-49bb-b77e-ae4eb3465998','2.jpg','45544ac1-a268-482f-a962-8cc173cacb8e',2),
-	('18b59904-1e9f-4436-b3cd-113c6a6ea4c9','1.jpg','79b81e81-0da7-4763-80d5-fecab9359a99',1),
-	('b99f17f6-7fb1-443a-a14c-a7295ce5fa6a','2.jpg','79b81e81-0da7-4763-80d5-fecab9359a99',2),
-	('51ab6c29-ff64-456e-89ef-46f3fab45de3','1.jpg','8eb162b7-45af-455b-b07b-693924994d08',1),
-	('f68c17a6-9553-4cc2-a5e0-158ba360033d','2.jpg','8eb162b7-45af-455b-b07b-693924994d08',2),
-	('37728b66-60c0-4601-9ad2-324999013e3b','1.jpg','a46019f9-7b56-457a-909a-da5bbb82c09e',1),
-	('c3c48f49-a598-49e9-99d0-351314b9e100','1.jpg','244793c4-ac51-41ea-adb8-e7b7994676bd',1),
-	('fd6f4531-de8c-4e33-a80a-0c0da62ce229','2.jpg','244793c4-ac51-41ea-adb8-e7b7994676bd',2),
-	('89640f19-50d2-4ecd-9871-e6079614e3c0','1.jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',1),
-	('b8839dbe-c679-40b9-90c0-a26b131a501c','2.jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',2);
+	('9ed87836-d42f-4fbf-a5f4-cc38b481d243','jpg','cd8c8983-dc7a-4570-97ca-ed2a218b18ba',1),
+	('97151fa9-fdb6-4b75-9556-4fa2a5a87df6','jpg','cd8c8983-dc7a-4570-97ca-ed2a218b18ba',2),
+	('5de23216-5f93-488b-a034-27872f130269','jpg','64605868-ab4d-40a1-9b1e-28c5ac5a7ae0',1),
+	('5c2af457-a07f-4c0f-95ae-ff9e297dc581','jpg','64605868-ab4d-40a1-9b1e-28c5ac5a7ae0',2),
+	('9d9af93b-b1c7-47b6-9f7a-606e2d2009a8','jpg','52038cd8-91b7-4852-abec-fa8281edef68',1),
+	('e4ff7555-7e47-4beb-af77-1c2b81ec0adf','jpg','9f159664-9f73-4c17-aa76-297ddd4a5ca4',1),
+	('7a49f4af-9b7c-4cf6-b9ff-c97fbd6efa22','jpg','7b3ebcf3-73d5-4342-a653-eda72195d025',1),
+	('dd24d4fa-22d5-4bce-9b74-99e04700a07a','jpg','7b3ebcf3-73d5-4342-a653-eda72195d025',2),
+	('960e0464-d673-448b-9308-021684f5ef5f','jpg','5dd0b033-c131-4544-93ee-815cb419d7dc',1),
+	('a55621e2-f2b8-41c9-96bc-75dcf0816b9c','jpg','5dd0b033-c131-4544-93ee-815cb419d7dc',2),
+	('384173cb-12a0-4fee-be68-745d51094c39','jpg','749cfa82-bb71-407d-ab3c-6ac52c69a553',1),
+	('4be0db34-6a92-492a-bc84-c117ed1518a9','jpg','749cfa82-bb71-407d-ab3c-6ac52c69a553',2),
+	('3c4c7326-e5bb-4405-83f5-f2b1fc9891c2','jpg','708b4f7f-6f96-4df2-9049-31fcf5baa407',1),
+	('7daa2720-d199-460d-8b78-485d957a96ad','jpg','708b4f7f-6f96-4df2-9049-31fcf5baa407',2),
+	('f41dd4ed-dd7f-4028-8283-2fb084078f24','jpg','94c10ef1-74de-4864-9d8a-e70484899a41',1),
+	('c1785613-28cc-4d30-865e-e0adac14f29d','jpg','94c10ef1-74de-4864-9d8a-e70484899a41',2),
+	('352dcd6d-de69-41a9-a3e4-0926335163ef','jpg','45544ac1-a268-482f-a962-8cc173cacb8e',1),
+	('a3a05db0-d0a1-49bb-b77e-ae4eb3465998','jpg','45544ac1-a268-482f-a962-8cc173cacb8e',2),
+	('18b59904-1e9f-4436-b3cd-113c6a6ea4c9','jpg','79b81e81-0da7-4763-80d5-fecab9359a99',1),
+	('b99f17f6-7fb1-443a-a14c-a7295ce5fa6a','jpg','79b81e81-0da7-4763-80d5-fecab9359a99',2),
+	('51ab6c29-ff64-456e-89ef-46f3fab45de3','jpg','8eb162b7-45af-455b-b07b-693924994d08',1),
+	('f68c17a6-9553-4cc2-a5e0-158ba360033d','jpg','8eb162b7-45af-455b-b07b-693924994d08',2),
+	('37728b66-60c0-4601-9ad2-324999013e3b','jpg','a46019f9-7b56-457a-909a-da5bbb82c09e',1),
+	('c3c48f49-a598-49e9-99d0-351314b9e100','jpg','244793c4-ac51-41ea-adb8-e7b7994676bd',1),
+	('fd6f4531-de8c-4e33-a80a-0c0da62ce229','jpg','244793c4-ac51-41ea-adb8-e7b7994676bd',2),
+	('89640f19-50d2-4ecd-9871-e6079614e3c0','jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',1),
+	('b8839dbe-c679-40b9-90c0-a26b131a501c','jpg','9c3c5471-379d-44f6-825d-ac8e0ca9229c',2);
 
 REPLACE INTO favourite_author VALUES
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'f180cc79-5856-4985-9794-26b7a787bec2'),
@@ -189,21 +189,21 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('8449f40c-12b6-4e55-8701-b04908f4e1cd','Часовник Гигант Тъмен','Дизайнерски часовник от фурнирован МДФ бук.\n\nДекорирана основа с безшумен механизъм и комплект за окачване.\n\nДиаметър: 67.5см','CLOCK','2019-05-05 16:04:01', 31,'bdfbf791-95ba-401a-8461-8a8ecaf876dd');
 
 REPLACE INTO item_image VALUES
-	('df19f2ab-f38b-4bdc-8acc-6267911b6492','1.jpg','0c2c0b06-a20e-4999-88e6-be6643950faa',1),
-	('da84a706-5a53-4c41-80f0-a586b48047f0','1.jpg','59703d97-64bb-42ac-98b0-b8b5a7d851fb',1),
-	('74368e55-ba48-4d16-8069-915587be028f','1.jpg','ac184d4d-737f-4f17-9316-ce5452b931f4',1),
-	('0d3652ba-ace7-4c41-89c3-819ca2470eef','1.jpg','3d413a09-d5ff-4c11-9e3d-6d90cf802ba0',1),
-	('051b3fae-f88c-4c55-a7af-8fd4ba45ca5e','1.jpg','1bba50f0-3089-4f89-95cb-2604aa535b54',1),
-	('042a8974-aa00-49fe-9ae4-7d084f470404','1.jpg','b25b41d7-f2d0-4c68-80e2-3ddde3a12c9c',1),
-	('89f1ae4b-c37d-4a56-8316-32f2b2dbf532','1.jpg','2208d7a4-90db-4bb5-901b-9aeaeeaa81f8',1),
-	('1b917374-78f8-4cdc-baf4-df72d431761c','1.jpg','4882e46a-6182-4bfd-9318-e12f43cf2cf7',1),
-	('9d90e429-c27c-4375-bedf-cea05b8b5e56','1.jpg','96aa6a89-6d70-4994-aa21-10a7c4711e65',1),
-	('bcb3e39b-b268-4b59-82ac-1abc857f6798','1.jpg','e21e4dcf-5487-4894-8933-0912de9c4f78',1),
-	('c4966530-bbee-4ce9-b87c-e5f5269b358c','1.jpg','d998a599-96ff-438c-ab14-17dca1943071',1),
-	('eb3d092a-c9bc-4a1c-8a45-50b79a626319','1.jpg','5fb5495a-edc2-49a5-8134-bc547fdd0e7e',1),
-	('ad1c2e2e-09e2-4d93-b221-66cce0afd6ee','1.jpg','21eb5a07-b178-425a-a1dd-9452313fd881',1),
-	('59941095-16d3-4c10-adc2-8a2560631557','1.jpg','0fd64a76-6680-4de4-ae36-01e1905b123e',1),
-	('77ab7318-98df-4ed1-95c4-bae780283cba','1.jpg','8449f40c-12b6-4e55-8701-b04908f4e1cd',1);
+	('df19f2ab-f38b-4bdc-8acc-6267911b6492','jpg','0c2c0b06-a20e-4999-88e6-be6643950faa',1),
+	('da84a706-5a53-4c41-80f0-a586b48047f0','jpg','59703d97-64bb-42ac-98b0-b8b5a7d851fb',1),
+	('74368e55-ba48-4d16-8069-915587be028f','jpg','ac184d4d-737f-4f17-9316-ce5452b931f4',1),
+	('0d3652ba-ace7-4c41-89c3-819ca2470eef','jpg','3d413a09-d5ff-4c11-9e3d-6d90cf802ba0',1),
+	('051b3fae-f88c-4c55-a7af-8fd4ba45ca5e','jpg','1bba50f0-3089-4f89-95cb-2604aa535b54',1),
+	('042a8974-aa00-49fe-9ae4-7d084f470404','jpg','b25b41d7-f2d0-4c68-80e2-3ddde3a12c9c',1),
+	('89f1ae4b-c37d-4a56-8316-32f2b2dbf532','jpg','2208d7a4-90db-4bb5-901b-9aeaeeaa81f8',1),
+	('1b917374-78f8-4cdc-baf4-df72d431761c','jpg','4882e46a-6182-4bfd-9318-e12f43cf2cf7',1),
+	('9d90e429-c27c-4375-bedf-cea05b8b5e56','jpg','96aa6a89-6d70-4994-aa21-10a7c4711e65',1),
+	('bcb3e39b-b268-4b59-82ac-1abc857f6798','jpg','e21e4dcf-5487-4894-8933-0912de9c4f78',1),
+	('c4966530-bbee-4ce9-b87c-e5f5269b358c','jpg','d998a599-96ff-438c-ab14-17dca1943071',1),
+	('eb3d092a-c9bc-4a1c-8a45-50b79a626319','jpg','5fb5495a-edc2-49a5-8134-bc547fdd0e7e',1),
+	('ad1c2e2e-09e2-4d93-b221-66cce0afd6ee','jpg','21eb5a07-b178-425a-a1dd-9452313fd881',1),
+	('59941095-16d3-4c10-adc2-8a2560631557','jpg','0fd64a76-6680-4de4-ae36-01e1905b123e',1),
+	('77ab7318-98df-4ed1-95c4-bae780283cba','jpg','8449f40c-12b6-4e55-8701-b04908f4e1cd',1);
 
 -- Vase
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -221,22 +221,22 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('34da8986-9bfa-4fdc-9b45-327f280c6224','Ваза Лалета','Ръчно изработена керамична ваза\n\nПараметри: Модел - яребица\n\nРазмери - 11х5см\n\nВисочина - 27см','VASE','2019-05-07 17:22:01', 35,'f180cc79-5856-4985-9794-26b7a787bec2');
 
 REPLACE INTO item_image VALUES
-	('3320e196-f0dc-4ce2-a914-1450d93a5290','1.jpg','bfa084e2-9cbb-4774-8d45-e4eea380cd1a',1),
-	('4005b5c5-c108-439b-9e6f-b36233bf1ac4','1.jpg','e7b64b42-dd6b-4f0f-b168-4bb6313b769a',1),
-	('f50fe3d7-92df-4825-b177-31ca45e490d5','1.jpg','de23e691-1dfb-4e3d-88d5-5a0aafa2e053',1),
-	('553b77e7-dc08-4a15-97ad-e02f0d8f911c','1.jpg','6a198cee-2d0a-44d2-b828-e9f766ca41a7',1),
-	('aac7ec0a-868f-4c90-bd49-8fa044b70511','1.jpg','5095a4af-6ee5-4888-8b52-ac9cfecc0050',1),
-	('a7bbebfc-d775-42cf-b246-c2bb04c32b90','1.jpg','0d8dc2df-abe1-47fe-a848-a7bce2d6690e',1),
-	('03a90a23-16eb-4dee-bf38-84e62774d377','1.jpg','c2b76bc3-da3b-46fb-a8c8-cf44122a4f50',1),
-	('ca598439-90ee-4296-bae7-37df809c2020','1.jpg','74fb9a02-e0ef-45a8-92b3-c966f77d001d',1),
-	('d0f8ac5b-84e0-422b-9e4d-86abb70f3801','1.jpg','7084f5f6-ee07-4af5-a707-60bdf7ba00fc',1),
-	('20b12b02-eb90-49f9-84a5-faefa6d1da5b','1.jpg','d58d429d-dc04-4782-98f7-80328ad66bb9',1),
-	('1c62ed0a-a34b-4ce7-a334-e3d7973ac6a4','1.jpg','82ad6dc3-68ef-4b44-9724-7a894bfb2a4c',1),
-	('65a6a61f-d8f4-4db9-8928-24889283bb3c','1.jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',1),
-	('cea9a881-0b8f-40d4-9579-10d59153ff0f','2.jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',2),
-	('2c25fa96-08b0-43a9-b286-b993d294c18f','3.jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',3),
-	('33749658-53a3-4ac8-9cfc-0ef90b2cc09a','4.jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',4),
-	('429e7de0-3de5-477a-a21e-5e2d5535326f','5.jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',5);
+	('3320e196-f0dc-4ce2-a914-1450d93a5290','jpg','bfa084e2-9cbb-4774-8d45-e4eea380cd1a',1),
+	('4005b5c5-c108-439b-9e6f-b36233bf1ac4','jpg','e7b64b42-dd6b-4f0f-b168-4bb6313b769a',1),
+	('f50fe3d7-92df-4825-b177-31ca45e490d5','jpg','de23e691-1dfb-4e3d-88d5-5a0aafa2e053',1),
+	('553b77e7-dc08-4a15-97ad-e02f0d8f911c','jpg','6a198cee-2d0a-44d2-b828-e9f766ca41a7',1),
+	('aac7ec0a-868f-4c90-bd49-8fa044b70511','jpg','5095a4af-6ee5-4888-8b52-ac9cfecc0050',1),
+	('a7bbebfc-d775-42cf-b246-c2bb04c32b90','jpg','0d8dc2df-abe1-47fe-a848-a7bce2d6690e',1),
+	('03a90a23-16eb-4dee-bf38-84e62774d377','jpg','c2b76bc3-da3b-46fb-a8c8-cf44122a4f50',1),
+	('ca598439-90ee-4296-bae7-37df809c2020','jpg','74fb9a02-e0ef-45a8-92b3-c966f77d001d',1),
+	('d0f8ac5b-84e0-422b-9e4d-86abb70f3801','jpg','7084f5f6-ee07-4af5-a707-60bdf7ba00fc',1),
+	('20b12b02-eb90-49f9-84a5-faefa6d1da5b','jpg','d58d429d-dc04-4782-98f7-80328ad66bb9',1),
+	('1c62ed0a-a34b-4ce7-a334-e3d7973ac6a4','jpg','82ad6dc3-68ef-4b44-9724-7a894bfb2a4c',1),
+	('65a6a61f-d8f4-4db9-8928-24889283bb3c','jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',1),
+	('cea9a881-0b8f-40d4-9579-10d59153ff0f','jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',2),
+	('2c25fa96-08b0-43a9-b286-b993d294c18f','jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',3),
+	('33749658-53a3-4ac8-9cfc-0ef90b2cc09a','jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',4),
+	('429e7de0-3de5-477a-a21e-5e2d5535326f','jpg','34da8986-9bfa-4fdc-9b45-327f280c6224',5);
 
 -- Easter
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -251,17 +251,17 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('0c47ec79-b395-4241-9862-482bbb419afa','Венец с пиленца','Венец за врата, подходящ за Великден. изработен от прежда, декориран с черешови клонки и шишарки, дървени яйца и зайче, пиленца от филц и цветя от плат. \n\nРазмер - 25см','EASTER','2019-05-07 17:15:01', 30,'f180cc79-5856-4985-9794-26b7a787bec2');
 
 REPLACE INTO item_image VALUES
-	('adbb76a4-8411-4175-a9bf-97e76263147d','1.jpg','94d699e4-d60a-4729-941a-ba43cdc94880',1),
-	('160b2db0-2a63-49c1-8d2a-d26abeb06822','1.jpg','c4c28bf5-20ac-441b-8d88-6c0a1135c800',1),
-	('b9644a1d-b887-4baf-a4bb-390a1f68d680','1.jpg','2b0e0ed3-19d9-40e0-b8e4-5e8cdb59febd',1),
-	('acd4bd64-3045-433f-9394-9c24af86b234','1.jpg','02ad1a42-9b2b-43d8-8c57-63e1f34a18ac',1),
-	('59304f69-1133-4b17-9b50-8e27ead85118','1.jpg','a6174af6-699e-425b-9aae-a30c81fcd0f1',1),
-	('749fd69b-32b3-415a-b934-076b87322c7c','1.jpg','9375595f-d363-4180-804d-e0721b02796a',1),
-	('f0d202fc-0ecb-41dd-9a74-b62b11ab232f','1.jpg','aa63b110-6982-4b3f-b041-74300e18c9b2',1),
-	('02805c97-292b-4355-b58c-7ecacfd25f3e','1.jpg','835e48ac-aaee-4e57-a5d1-dbc32c3de43a',1),
-	('6c78af95-ba43-4677-bd54-ca9322933a77','2.jpg','835e48ac-aaee-4e57-a5d1-dbc32c3de43a',2),
-	('9bdf0f87-79e2-4cc9-b1b0-acb11bee56ab','1.jpg','0c47ec79-b395-4241-9862-482bbb419afa',1),
-	('21855d1c-0866-4ec0-bfb2-d9440be0d380','2.jpg','0c47ec79-b395-4241-9862-482bbb419afa',2);
+	('adbb76a4-8411-4175-a9bf-97e76263147d','jpg','94d699e4-d60a-4729-941a-ba43cdc94880',1),
+	('160b2db0-2a63-49c1-8d2a-d26abeb06822','jpg','c4c28bf5-20ac-441b-8d88-6c0a1135c800',1),
+	('b9644a1d-b887-4baf-a4bb-390a1f68d680','jpg','2b0e0ed3-19d9-40e0-b8e4-5e8cdb59febd',1),
+	('acd4bd64-3045-433f-9394-9c24af86b234','jpg','02ad1a42-9b2b-43d8-8c57-63e1f34a18ac',1),
+	('59304f69-1133-4b17-9b50-8e27ead85118','jpg','a6174af6-699e-425b-9aae-a30c81fcd0f1',1),
+	('749fd69b-32b3-415a-b934-076b87322c7c','jpg','9375595f-d363-4180-804d-e0721b02796a',1),
+	('f0d202fc-0ecb-41dd-9a74-b62b11ab232f','jpg','aa63b110-6982-4b3f-b041-74300e18c9b2',1),
+	('02805c97-292b-4355-b58c-7ecacfd25f3e','jpg','835e48ac-aaee-4e57-a5d1-dbc32c3de43a',1),
+	('6c78af95-ba43-4677-bd54-ca9322933a77','jpg','835e48ac-aaee-4e57-a5d1-dbc32c3de43a',2),
+	('9bdf0f87-79e2-4cc9-b1b0-acb11bee56ab','jpg','0c47ec79-b395-4241-9862-482bbb419afa',1),
+	('21855d1c-0866-4ec0-bfb2-d9440be0d380','jpg','0c47ec79-b395-4241-9862-482bbb419afa',2);
 
 -- Christmas
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -275,16 +275,16 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('8e79652f-7940-4ab2-bb09-c0feca7e912e','Коледна висулка','Декоративната висулка за елха с дядо Коледа е изработена чрез декупажна техника яйчено кракле, която дава релефна визия и прави висулката още по-интересен и желан подарък. Може да се използва многократно, тъй като материалите, от които е направено са защитени от прозрачен безвреден лак, а почистването става с влажна кърпа.','CHRISTMAS','2019-05-07 17:26:01', 6,'f180cc79-5856-4985-9794-26b7a787bec2');
 
 REPLACE INTO item_image VALUES
-	('c310d1a1-aa20-4eb1-bcd3-6c3596ab8120','1.jpg','f0621cf4-dccc-4d68-9aeb-055013c24a43',1),
-	('b928f71c-d138-4b04-9b2d-a345f74b9298','2.jpg','f0621cf4-dccc-4d68-9aeb-055013c24a43',2),
-	('cbe3c97b-2236-4ef1-ac96-b6fca1ecd8c8','1.jpg','d93c3605-581b-4139-acfe-48b465e682bb',1),
-	('1fe5a627-45e7-4400-ae07-0050f026e3d6','1.jpg','8f54a02a-d273-48ea-90de-72f78deb7b25',1),
-	('0222329a-534b-49ce-a6b3-abc3b4f7be06','1.jpg','0afec85e-31eb-4bad-a39e-78ede3852934',1),
-	('f3b56a3a-3402-4047-9cb8-649a6c6f8fcf','1.jpg','a6c0a188-94ba-4911-8692-d933845e3032',1),
-	('c03a5239-afc7-4f78-a8a5-befc77af82e0','2.jpg','a6c0a188-94ba-4911-8692-d933845e3032',2),
-	('50aaea12-310d-481f-9ce2-707b19e13efa','1.jpg','8814e4ea-0c67-4341-ab17-a01e20f0bcb5',1),
-	('dfdf521f-5e09-452f-88cd-e31a61fca905','1.png','251be582-14e9-44c4-a3b0-0afd233ad728',1),
-	('4c69931a-6dc8-42ec-94f5-da8f24825211','1.jpg','8e79652f-7940-4ab2-bb09-c0feca7e912e',1);	
+	('c310d1a1-aa20-4eb1-bcd3-6c3596ab8120','jpg','f0621cf4-dccc-4d68-9aeb-055013c24a43',1),
+	('b928f71c-d138-4b04-9b2d-a345f74b9298','jpg','f0621cf4-dccc-4d68-9aeb-055013c24a43',2),
+	('cbe3c97b-2236-4ef1-ac96-b6fca1ecd8c8','jpg','d93c3605-581b-4139-acfe-48b465e682bb',1),
+	('1fe5a627-45e7-4400-ae07-0050f026e3d6','jpg','8f54a02a-d273-48ea-90de-72f78deb7b25',1),
+	('0222329a-534b-49ce-a6b3-abc3b4f7be06','jpg','0afec85e-31eb-4bad-a39e-78ede3852934',1),
+	('f3b56a3a-3402-4047-9cb8-649a6c6f8fcf','jpg','a6c0a188-94ba-4911-8692-d933845e3032',1),
+	('c03a5239-afc7-4f78-a8a5-befc77af82e0','jpg','a6c0a188-94ba-4911-8692-d933845e3032',2),
+	('50aaea12-310d-481f-9ce2-707b19e13efa','jpg','8814e4ea-0c67-4341-ab17-a01e20f0bcb5',1),
+	('dfdf521f-5e09-452f-88cd-e31a61fca905','png','251be582-14e9-44c4-a3b0-0afd233ad728',1),
+	('4c69931a-6dc8-42ec-94f5-da8f24825211','jpg','8e79652f-7940-4ab2-bb09-c0feca7e912e',1);	
 
 -- Gloves
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -293,8 +293,8 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	
 
 REPLACE INTO item_image VALUES
-	('52e0c77d-7220-49b9-8d09-e2a97f7d2f37','1.jpg','0b1096b1-d9da-4421-8677-4425400dd971',1),
-	('87fd0778-9869-4f98-b04b-2f8b9a0cda92','1.jpg','d810e5c8-2d74-40eb-b3ff-7cb4e3a46c21',1);
+	('52e0c77d-7220-49b9-8d09-e2a97f7d2f37','jpg','0b1096b1-d9da-4421-8677-4425400dd971',1),
+	('87fd0778-9869-4f98-b04b-2f8b9a0cda92','jpg','d810e5c8-2d74-40eb-b3ff-7cb4e3a46c21',1);
 
 -- Scarf
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -306,17 +306,17 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('fb8afd47-d477-4708-8468-9b36384cf2fa','Шал Париж','Мек и топъл шал, подходящ и за най-студените зимни дни.\n\nДължина: ~ 185cм\n\nШирочина: ~ 20см\n\nСъстав: 20% вълна, 55% акрил, 25% полиамид','SCARF','2019-05-07 17:20:01', 32,'387927a1-f131-4a45-a7b7-b50969ff3cba');
 	
 REPLACE INTO item_image VALUES
-	('ecb740f6-0aa7-48e8-8863-7a273a79fbe9','1.jpg','9d135263-7961-4ff2-880b-56325c020e3d',1),
-	('a9fc80d7-5f78-4475-9589-e954cc73e9d1','1.jpg','14c06c99-54fd-43d8-bfff-e6f328757f9c',1),
-	('932e0769-8695-4781-849a-cf9255a82b6a','2.jpg','14c06c99-54fd-43d8-bfff-e6f328757f9c',2),
-	('c53e966c-3404-4fa0-baaa-d7cf601afdab','1.jpg','1eede579-2b43-4713-b008-4d3cf67291bc',1),
-	('9f511a27-aac7-4fe3-9b0a-7dcaca20578e','2.jpg','1eede579-2b43-4713-b008-4d3cf67291bc',2),
-	('60f53776-3605-473f-b7ba-4a3ffd1da5ab','1.jpg','86e51552-2a44-4e03-84fb-3220ad899d50',1),
-	('cd5670cd-55c1-4412-b4c8-969d5707196b','1.jpg','06dad238-ab32-4bdf-885b-be9283e5ae29',1),
-	('8a51e5a9-dfc1-41a7-8ebc-826db7e1b739','2.png','06dad238-ab32-4bdf-885b-be9283e5ae29',2),
-	('4036a07b-8ebe-4bac-8d74-c4b1660f63b3','3.jpg','06dad238-ab32-4bdf-885b-be9283e5ae29',3),
-	('d039b4a3-b659-4879-9014-33c23dfac984','4.jpg','06dad238-ab32-4bdf-885b-be9283e5ae29',4),
-	('6d3e19ce-0a45-4938-a400-a2430a848bd7','1.jpg','fb8afd47-d477-4708-8468-9b36384cf2fa',1);
+	('ecb740f6-0aa7-48e8-8863-7a273a79fbe9','jpg','9d135263-7961-4ff2-880b-56325c020e3d',1),
+	('a9fc80d7-5f78-4475-9589-e954cc73e9d1','jpg','14c06c99-54fd-43d8-bfff-e6f328757f9c',1),
+	('932e0769-8695-4781-849a-cf9255a82b6a','jpg','14c06c99-54fd-43d8-bfff-e6f328757f9c',2),
+	('c53e966c-3404-4fa0-baaa-d7cf601afdab','jpg','1eede579-2b43-4713-b008-4d3cf67291bc',1),
+	('9f511a27-aac7-4fe3-9b0a-7dcaca20578e','jpg','1eede579-2b43-4713-b008-4d3cf67291bc',2),
+	('60f53776-3605-473f-b7ba-4a3ffd1da5ab','jpg','86e51552-2a44-4e03-84fb-3220ad899d50',1),
+	('cd5670cd-55c1-4412-b4c8-969d5707196b','jpg','06dad238-ab32-4bdf-885b-be9283e5ae29',1),
+	('8a51e5a9-dfc1-41a7-8ebc-826db7e1b739','png','06dad238-ab32-4bdf-885b-be9283e5ae29',2),
+	('4036a07b-8ebe-4bac-8d74-c4b1660f63b3','jpg','06dad238-ab32-4bdf-885b-be9283e5ae29',3),
+	('d039b4a3-b659-4879-9014-33c23dfac984','jpg','06dad238-ab32-4bdf-885b-be9283e5ae29',4),
+	('6d3e19ce-0a45-4938-a400-a2430a848bd7','jpg','fb8afd47-d477-4708-8468-9b36384cf2fa',1);
 	
 -- Clock
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -327,14 +327,14 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('6fa27a04-7ac3-4ee1-aade-4087d10a46bb','Часовник Домино','Акцентът на стенният часовник "Domino" са релефните плочки, с които е декориран. Те заменят характерните цифри и следвайки правилата на играта посочват абсолютно точно часовете. Моделът е изработен ръчно, основата му е направена от MDF и е изрисуван с безвредни бои. Механизмът работи с плавно местене на секундарната стрелка и е напълно безшумен.\n\nДиаметър: 30cм','CLOCK','2019-05-05 15:16:01', 55,'f180cc79-5856-4985-9794-26b7a787bec2');
 	
 REPLACE INTO item_image VALUES
-	('941fc0c5-84cf-47a1-a883-3ffeff39b718','1.jpg','ed9c5126-2731-4aaf-87cb-d7c0533f76c4',1),
-	('e658bde1-4e91-4fb2-b1ab-28b0e1720088','1.jpg','cdcf631a-84cf-4512-815d-729decc003bc',1),
-	('10cdbba0-2510-4bd3-bb77-16d1af77f4db','2.jpg','cdcf631a-84cf-4512-815d-729decc003bc',2),
-	('12fbc9f7-3536-4b6c-9c11-27669059c16c','1.jpg','d397f8eb-a7b6-4adc-b57e-6e9e4219153e',1),
-	('ba7ceb88-9395-4d55-89a8-acf635a576ad','2.jpg','d397f8eb-a7b6-4adc-b57e-6e9e4219153e',2),
-	('3df02464-a1a3-40a7-99e2-ece9b5fff4fb','1.jpg','8b3f8f2c-8ce3-4d6f-83a6-118ec6aebea3',1),
-	('6c35d2f9-76be-4fad-9490-daf063f84d54','2.jpg','8b3f8f2c-8ce3-4d6f-83a6-118ec6aebea3',2),
-	('15b37ddb-0c17-4b28-9b9e-0851f9d343f9','1.jpg','6fa27a04-7ac3-4ee1-aade-4087d10a46bb',1);
+	('941fc0c5-84cf-47a1-a883-3ffeff39b718','jpg','ed9c5126-2731-4aaf-87cb-d7c0533f76c4',1),
+	('e658bde1-4e91-4fb2-b1ab-28b0e1720088','jpg','cdcf631a-84cf-4512-815d-729decc003bc',1),
+	('10cdbba0-2510-4bd3-bb77-16d1af77f4db','jpg','cdcf631a-84cf-4512-815d-729decc003bc',2),
+	('12fbc9f7-3536-4b6c-9c11-27669059c16c','jpg','d397f8eb-a7b6-4adc-b57e-6e9e4219153e',1),
+	('ba7ceb88-9395-4d55-89a8-acf635a576ad','jpg','d397f8eb-a7b6-4adc-b57e-6e9e4219153e',2),
+	('3df02464-a1a3-40a7-99e2-ece9b5fff4fb','jpg','8b3f8f2c-8ce3-4d6f-83a6-118ec6aebea3',1),
+	('6c35d2f9-76be-4fad-9490-daf063f84d54','jpg','8b3f8f2c-8ce3-4d6f-83a6-118ec6aebea3',2),
+	('15b37ddb-0c17-4b28-9b9e-0851f9d343f9','jpg','6fa27a04-7ac3-4ee1-aade-4087d10a46bb',1);
 
 -- Hat
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -345,10 +345,10 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	
 
 REPLACE INTO item_image VALUES
-	('ba52c6ea-3143-41b1-aa86-93ae44686d06','1.jpg','b25138ba-0571-4ac4-80a2-c4b0a2d9624f',1),
-	('3e191061-778b-4fe9-bffb-345179f81ed5','1.jpg','77dafc7d-32de-4561-a844-003a4364e150',1),
-	('2979fcf2-485a-47e7-a2a7-ebf6229d547c','1.jpg','4744bb31-63bb-47e1-95e4-5cbdbdb9268a',1),
-	('f75933b5-e9a2-4af7-8c65-944349b750a8','1.jpg','9fd0d062-1829-4720-9e59-41080a4b8736',1);
+	('ba52c6ea-3143-41b1-aa86-93ae44686d06','jpg','b25138ba-0571-4ac4-80a2-c4b0a2d9624f',1),
+	('3e191061-778b-4fe9-bffb-345179f81ed5','jpg','77dafc7d-32de-4561-a844-003a4364e150',1),
+	('2979fcf2-485a-47e7-a2a7-ebf6229d547c','jpg','4744bb31-63bb-47e1-95e4-5cbdbdb9268a',1),
+	('f75933b5-e9a2-4af7-8c65-944349b750a8','jpg','9fd0d062-1829-4720-9e59-41080a4b8736',1);
 
 -- BRACELET
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -365,16 +365,16 @@ REPLACE INTO item VALUES
 	('7523db10-c9c7-4dc0-873f-82ed64767010','Гривна от цикламена налба','Уникална гривна с истинско цвете - Налба. Лека, здрава и удобна.\n\nДължина на гривната - 16см.\n\nДиаметър на цвете - 3.5см.','BRACELET','2019-05-07 17:15:01', 34,'387927a1-f131-4a45-a7b7-b50969ff3cba',1);
 
 REPLACE INTO item_image VALUES
-	('c46d45e3-bb75-4adb-b5cf-0d271b36254f','1.jpg','39312010-f7c3-430e-93c3-f21d8a286084',1),
-	('39ef7fbb-66e4-4c9d-b5a8-34c0daf7d4a2','1.jpg','16f4cdc7-20df-4104-941c-c7cb862b6c1c',1),
-	('50362ddb-c1a3-445b-9540-3c55c5a9869a','1.jpg','d1fb3a38-d0a6-4e41-80d2-b1634c9561a5',1),
-	('061571ad-5c72-43e9-8a5f-f81033a09c28','1.jpg','0f47890a-de41-47cf-8cba-77a4a741a1c3',1),
-	('8d4b5e20-b00d-4e24-bf7c-e6565793c075','1.jpg','6dd966d7-0efd-4726-bf06-877781c89d19',1),
-	('a3bbb276-cb9b-406e-bf29-a6786aa89091','1.jpg','3d842338-3bf9-42c8-8a50-f5d6d97488d7',1),
-	('b5f639aa-b972-4ab5-a4d6-2361275aff63','1.jpg','0f5828a3-454b-482e-b507-56ec242b32d2',1),
-	('6270c0b1-eed4-4e29-a768-c74899328390','1.jpg','db3c6f65-760c-4c6b-bc96-58f8dbc007f2',1),
-	('72ead139-153e-49a3-a330-69beb4f13333','2.jpg','db3c6f65-760c-4c6b-bc96-58f8dbc007f2',2),
-	('802b8350-56db-4f8f-9e58-d1b4379cf8e2','1.jpg','7523db10-c9c7-4dc0-873f-82ed64767010',1);
+	('c46d45e3-bb75-4adb-b5cf-0d271b36254f','jpg','39312010-f7c3-430e-93c3-f21d8a286084',1),
+	('39ef7fbb-66e4-4c9d-b5a8-34c0daf7d4a2','jpg','16f4cdc7-20df-4104-941c-c7cb862b6c1c',1),
+	('50362ddb-c1a3-445b-9540-3c55c5a9869a','jpg','d1fb3a38-d0a6-4e41-80d2-b1634c9561a5',1),
+	('061571ad-5c72-43e9-8a5f-f81033a09c28','jpg','0f47890a-de41-47cf-8cba-77a4a741a1c3',1),
+	('8d4b5e20-b00d-4e24-bf7c-e6565793c075','jpg','6dd966d7-0efd-4726-bf06-877781c89d19',1),
+	('a3bbb276-cb9b-406e-bf29-a6786aa89091','jpg','3d842338-3bf9-42c8-8a50-f5d6d97488d7',1),
+	('b5f639aa-b972-4ab5-a4d6-2361275aff63','jpg','0f5828a3-454b-482e-b507-56ec242b32d2',1),
+	('6270c0b1-eed4-4e29-a768-c74899328390','jpg','db3c6f65-760c-4c6b-bc96-58f8dbc007f2',1),
+	('72ead139-153e-49a3-a330-69beb4f13333','jpg','db3c6f65-760c-4c6b-bc96-58f8dbc007f2',2),
+	('802b8350-56db-4f8f-9e58-d1b4379cf8e2','jpg','7523db10-c9c7-4dc0-873f-82ed64767010',1);
 
 -- NECKLACE
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -384,10 +384,10 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('de672f4a-0bb7-4b7d-bab5-34b087760a85','Колие с шевица','Ръчно изработено колие с избродирана шевица.\n\nДиаметър - 3.5см.','NECKLACE','2019-05-07 17:19:01', 8,'91b8bcec-0c65-4aa6-8e9b-3af9a309c802');
 
 REPLACE INTO item_image VALUES
-	('1221c2de-9809-4954-ad1f-ea7d7db5a308','1.jpg','da4b8c48-396f-4c84-8fd6-1c6f7dc925c1',1),
-	('9abdd726-217e-4f8d-b9b2-7fcaa76b542f','1.jpg','5948e632-ac3b-499a-b2f2-c229d35181ee',1),
-	('046c60d9-33b5-48aa-88c8-8a4c71a06eb4','1.jpg','8900b7f4-dcf9-4049-a3f8-1f00a47457d8',1),
-	('69b4da2c-6564-4e76-b856-94e8e55f4859','1.jpg','de672f4a-0bb7-4b7d-bab5-34b087760a85',1);
+	('1221c2de-9809-4954-ad1f-ea7d7db5a308','jpg','da4b8c48-396f-4c84-8fd6-1c6f7dc925c1',1),
+	('9abdd726-217e-4f8d-b9b2-7fcaa76b542f','jpg','5948e632-ac3b-499a-b2f2-c229d35181ee',1),
+	('046c60d9-33b5-48aa-88c8-8a4c71a06eb4','jpg','8900b7f4-dcf9-4049-a3f8-1f00a47457d8',1),
+	('69b4da2c-6564-4e76-b856-94e8e55f4859','jpg','de672f4a-0bb7-4b7d-bab5-34b087760a85',1);
 
 -- JEWELRY_SET
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`author_id`) VALUES
@@ -400,13 +400,13 @@ REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`aut
 	('68ca0930-8278-46d1-880a-624d72765efe','Комплект пролет','Пролетна композиция. Този нежен комплект ще се превърне в любимото Ви бижу!\n\nИзползвали сме китайска роза и върбинки отгледани в нашата собствена градина, както всички цветя, които виждате тук.\n\nПриблизителни размери на колието 6см  на 3см , използвана е фина стоманена верижка.\n\nДължина на обеците с кукичките - около 6.5 см. Сребърни кукички.','JEWELRY_SET','2019-05-07 17:15:01', 56,'91b8bcec-0c65-4aa6-8e9b-3af9a309c802');
 
 REPLACE INTO item_image VALUES
-	('5673ba2b-976f-45a5-a251-2fc8415b474e','1.jpg','e8bd62e3-0663-41a2-9b41-417cb45b2abd',1),
-	('4cc3c760-985a-4ae2-ba20-2f91168332d8','1.jpg','44d67116-358b-4ad2-99de-e8824e903dab',1),
-	('73503805-9981-44aa-826b-4f3b048c3027','1.jpg','e18f657d-8cb4-416b-a33f-8d6c7390fe91',1),
-	('82e9bb12-5919-4341-8189-2feca4680058','1.jpg','b08f8a44-3cd9-4029-8134-ea6d3d1f456e',1),
-	('c79f525b-d7a6-43b8-8476-771f422af302','1.jpg','d1174be8-e5d4-4883-a104-0c1f1fa8d6ed',1),
-	('d4256871-aa86-4ff6-a7bf-6e5cfe1cd80d','1.jpg','baa90954-1072-4717-97fb-e3dd5634ac05',1),
-	('bafe2c46-0e60-4e34-849b-c0abcfca6697','1.jpg','68ca0930-8278-46d1-880a-624d72765efe',1);
+	('5673ba2b-976f-45a5-a251-2fc8415b474e','jpg','e8bd62e3-0663-41a2-9b41-417cb45b2abd',1),
+	('4cc3c760-985a-4ae2-ba20-2f91168332d8','jpg','44d67116-358b-4ad2-99de-e8824e903dab',1),
+	('73503805-9981-44aa-826b-4f3b048c3027','jpg','e18f657d-8cb4-416b-a33f-8d6c7390fe91',1),
+	('82e9bb12-5919-4341-8189-2feca4680058','jpg','b08f8a44-3cd9-4029-8134-ea6d3d1f456e',1),
+	('c79f525b-d7a6-43b8-8476-771f422af302','jpg','d1174be8-e5d4-4883-a104-0c1f1fa8d6ed',1),
+	('d4256871-aa86-4ff6-a7bf-6e5cfe1cd80d','jpg','baa90954-1072-4717-97fb-e3dd5634ac05',1),
+	('bafe2c46-0e60-4e34-849b-c0abcfca6697','jpg','68ca0930-8278-46d1-880a-624d72765efe',1);
 
 CREATE TABLE cart_item (
 	id CHAR(36) NOT NULL,

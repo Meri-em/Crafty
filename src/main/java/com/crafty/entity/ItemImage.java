@@ -12,8 +12,9 @@ import com.crafty.entity.base.BaseEntityId;
 public class ItemImage extends BaseEntityId {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String name;
+
+	@Column(columnDefinition = "varchar(50)")
+	private String extension;
 	
 	@Column(name = "`order`")
 	private int order;
@@ -23,12 +24,16 @@ public class ItemImage extends BaseEntityId {
 	@NotNull
 	private Item item;
 
-	public String getName() {
-		return name;
+	public String getExtension() {
+		return extension;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+	public String getName() {
+		return String.format("%s.%s", getId(), getExtension());
 	}
 
 	public int getOrder() {

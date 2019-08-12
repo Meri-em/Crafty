@@ -3,17 +3,17 @@ package com.crafty.web.rest;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.crafty.dto.UploadItemDTO;
+import com.crafty.util.CurrentUser;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import com.crafty.dto.ItemDTO;
 import com.crafty.dto.SimpleItemDTO;
 import com.crafty.service.ItemService;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -36,11 +36,25 @@ public class ItemResource {
 			@RequestParam(value = "min-price", required = false) BigDecimal minPrice,
 			@RequestParam(value = "max-price", required = false) BigDecimal maxPrice) {
 		return itemService.searchItems(text, authorIds, categories, minPrice, maxPrice);
-
 	}
-	
-	@PostMapping("")
-	public String addItem() {
-		return "Add a new item";
+
+	@PostMapping
+	public String addItem(@Valid UploadItemDTO item,
+				BindingResult bindingResult, final @RequestParam(value = "file") MultipartFile[] files){
+		itemService.addItem(CurrentUser.getAuthorId(),
+			item, files);
+		return "Success!";
+	}
+
+	@PostMapping("/{itemId}")
+	public String updateItem(@PathVariable String itemId, @RequestBody UploadItemDTO item) {
+		itemService.updateItem(CurrentUser.getAuthorId(), itemId, item);
+		return "Success!";
+	}
+
+	@DeleteMapping("/{itemId}")
+	public String deleteItem(@PathVariable String itemId) {
+		itemService.deleteItem(CurrentUser.getAuthorId(), itemId);
+		return "Success!";
 	}
 }
