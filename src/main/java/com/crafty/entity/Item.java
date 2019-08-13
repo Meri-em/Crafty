@@ -35,7 +35,8 @@ public class Item extends BaseEntityId {
     @NotNull
 	private Author author;
 	
-	@OneToMany(mappedBy = "item", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "item", fetch=FetchType.EAGER, cascade = CascadeType.ALL,
+		orphanRemoval = true)
 	private List<ItemImage> itemImages = new ArrayList<>();
 	
 	@Column(columnDefinition = "BIT(1)")

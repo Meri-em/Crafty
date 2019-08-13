@@ -3,6 +3,7 @@ package com.crafty.web.rest;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.crafty.dto.DefaultImageDTO;
 import com.crafty.dto.UploadItemDTO;
 import com.crafty.util.CurrentUser;
 import org.springframework.validation.BindingResult;
@@ -57,4 +58,19 @@ public class ItemResource {
 		itemService.deleteItem(CurrentUser.getAuthorId(), itemId);
 		return "Success!";
 	}
+
+	@DeleteMapping("/{itemId}/images/{itemImageId}")
+	public String deleteItemImage(@PathVariable String itemId, @PathVariable String itemImageId) {
+		itemService.deleteItemImage(itemId, CurrentUser.getAuthorId(), itemImageId);
+		return "Success!";
+	}
+
+	@PostMapping("/{itemId}/images/default")
+	public String updateDefaultImage(@PathVariable String itemId,
+									 @RequestBody DefaultImageDTO defaultImageDTO) {
+		itemService.updateDefaultImage(itemId, CurrentUser.getAuthorId(), defaultImageDTO.getId());
+		return "Success!";
+	}
+
+
 }
