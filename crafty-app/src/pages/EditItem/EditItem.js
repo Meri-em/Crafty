@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
+import { addItem } from '../../core/actions';
 
+import './EditItem.css';
 
+// TODO image limit 1mb
+// encType
 class EditItem extends Component {
-  render() {
+  onSubmit = ({target}) => addItem({ url: '/api/v1/items', data: new FormData(target)}).then(res => console.log(res))
+
+  renderAdd() {
     return (
-      <form method="post" action="http://localhost:8080/api/v1/upload" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <input type="submit" value="Upload Image"/>    
+      <form className="ItemForm" method="post" action="/api/v1/items" encType="multipart/form-data">
+        <input name="name" placeholder="Име" required/>
+        <input type="file" name="file" multiple />
+        <textarea name="description" placeholder="Описание"></textarea>
+        <select name="category">
+          <option value="EARRINGS">Обеци</option>
+        </select>
+        <input name="price" type="number" placeholder="Цена"/>
+        <input type="submit" value="Добави предмет"/>    
       </form>
     );
+  }
+  render() {
+    if (location.href.endsWith('edit')) { // eslint-disable-line
+      return this.renderAdd();
+    }
   }
 }
 

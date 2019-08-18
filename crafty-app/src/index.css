@@ -41,3 +41,29 @@ a {
 .Navigation {
   flex: 100%;
 }
+
+input, button, select, textarea {
+  width: 200px;
+  align-self: center;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.5);
+  outline: none;
+  transition: 0.2s;
+  opacity: 0.7;
+  box-sizing: border-box;
+}
+input:focus, button:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 4px;
+  opacity: 0.9;
+}
+input::placeholder {
+  opacity: 1 !important;
+  color: #555;
+}
+input[type="submit"] {
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  opacity: 1;
+}
