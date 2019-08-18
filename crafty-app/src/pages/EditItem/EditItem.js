@@ -6,11 +6,14 @@ import './EditItem.css';
 // TODO image limit 1mb
 // encType
 class EditItem extends Component {
-  onSubmit = ({target}) => addItem({ url: '/api/v1/items', data: new FormData(target)}).then(res => console.log(res))
+  onSubmit = e => {
+    e.preventDefault();
+    addItem({ url: '/api/v1/items', data: new FormData(e.target)}).then(res => console.log(res));
+  }
 
   renderAdd() {
     return (
-      <form className="ItemForm" method="post" action="/api/v1/items" encType="multipart/form-data">
+      <form className="ItemForm" method="post" action="/api/v1/items" encType="multipart/form-data" onSubmit={e => this.onSubmit(e)}>
         <input name="name" placeholder="Име" required/>
         <input type="file" name="file" multiple />
         <textarea name="description" placeholder="Описание"></textarea>

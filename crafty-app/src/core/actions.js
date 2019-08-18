@@ -60,7 +60,7 @@ export const search       = params => items(EP.SEARCH + toQuery(params));
 export const searchByName = name => search({ text: name });
 export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
-export const addItem      = ({url, data}) => authorized({ method: 'POST', url, headers: { 'content-type': 'multipart/form-data' } });
+export const addItem      = ({url, data}) => authorized({ method: 'POST', url, data, headers: { 'content-type': 'multipart/form-data' } });
 
 export const updateDefaultImage = ({itemId, imageId}) => authorized({
   method: 'POST',
