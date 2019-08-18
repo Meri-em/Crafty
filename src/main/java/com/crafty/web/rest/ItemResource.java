@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.crafty.dto.DefaultImageDTO;
 import com.crafty.dto.UploadItemDTO;
-import com.crafty.service.AuthorService;
 import com.crafty.util.CurrentUser;
 import com.crafty.web.exception.BadRequestException;
 import org.springframework.validation.BindingResult;
@@ -23,12 +22,9 @@ import javax.validation.Valid;
 @RequestMapping("api/v1/items")
 public class ItemResource {
 	private final ItemService itemService;
-	private final AuthorService authorService;
 
-	public ItemResource(ItemService itemService,
-						AuthorService authorService) {
+	public ItemResource(ItemService itemService) {
 		this.itemService = itemService;
-		this.authorService = authorService;
 	}
 
 	@GetMapping("/{itemId}")
@@ -54,37 +50,32 @@ public class ItemResource {
 			throw new BadRequestException("The item name must be added!");
 		}
 		String authorId;
-		if (CurrentUser.getAuthorId() != null) {
-			authorId = CurrentUser.getAuthorId();
-		} else {
-			authorId = authorService.createAuthor(CurrentUser.getMemberId());
-		}
-		itemService.addItem(authorId, item, files);
+		itemService.addItem(CurrentUser.getMemberId(), item, files);
 		return "Success!";
 	}
 
 	@PostMapping("/{itemId}")
 	public String updateItem(@PathVariable String itemId, @RequestBody UploadItemDTO item) {
-		itemService.updateItem(CurrentUser.getAuthorId(), itemId, item);
+		itemService.updateItem(CurrentUser.getMemberId(), itemId, item);
 		return "Success!";
 	}
 
 	@DeleteMapping("/{itemId}")
 	public String deleteItem(@PathVariable String itemId) {
-		itemService.deleteItem(CurrentUser.getAuthorId(), itemId);
+		itemService.deleteItem(CurrentUser.getMemberId(), itemId);
 		return "Success!";
 	}
 
 	@DeleteMapping("/{itemId}/images/{itemImageId}")
 	public String deleteItemImage(@PathVariable String itemId, @PathVariable String itemImageId) {
-		itemService.deleteItemImage(itemId, CurrentUser.getAuthorId(), itemImageId);
+		itemService.deleteItemImage(itemId, CurrentUser.getMemberId(), itemImageId);
 		return "Success!";
 	}
 
 	@PostMapping("/{itemId}/images/default")
 	public String updateDefaultImage(@PathVariable String itemId,
 									 @RequestBody DefaultImageDTO defaultImageDTO) {
-		itemService.updateDefaultImage(itemId, CurrentUser.getAuthorId(), defaultImageDTO.getId());
+		itemService.updateDefaultImage(itemId, CurrentUser.getMemberId(), defaultImageDTO.getId());
 		return "Success!";
 	}
 

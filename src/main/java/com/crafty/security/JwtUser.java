@@ -15,17 +15,15 @@ public class JwtUser implements UserDetails {
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
     private final String memberId;
-    private final String authorId;
     private final Instant lastLogoutDate;
 	
 	public JwtUser(String id, String username, String password, Collection<? extends GrantedAuthority> authorities,
-			String memberId, String authorId, Instant lastLogoutDate) {
+			String memberId, Instant lastLogoutDate) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
 		this.memberId = memberId;
-		this.authorId = authorId;
 		this.lastLogoutDate = lastLogoutDate;
 	}
 
@@ -70,10 +68,6 @@ public class JwtUser implements UserDetails {
 
 	public String getMemberId() {
 		return memberId;
-	}
-
-	public String getAuthorId() {
-		return authorId;
 	}
 
 	public Instant getLastLogoutDate() {

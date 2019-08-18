@@ -47,7 +47,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     claims.getSubject(),
                     claims.getRoles(),
                     claims.getMemberId(),
-                    claims.getAuthorId(),
                     claims.getLastLogoutDate() != null ? Instant.parse(claims.getLastLogoutDate()) : null
                 );
 

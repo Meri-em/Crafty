@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     	authorities.add(user.getRole().name());
     	Set<GrantedAuthority> s = mapToGrantedAuthorities(authorities);
         return new JwtUser(user.getId(), user.getEmail(),user.getPassword(), s,
-        		user.getMemberId(), user.getAuthorId(), user.getLastLogoutDate());
+        		user.getMemberId(), user.getLastLogoutDate());
     }
     
     private static Set<GrantedAuthority> mapToGrantedAuthorities(Set<String> authorities) {

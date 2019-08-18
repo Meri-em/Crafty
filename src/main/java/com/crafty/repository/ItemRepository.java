@@ -19,25 +19,25 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 	List<Item> findByCategoryOrderByCreatedAtDesc(String category);
 
 	@Query(value = "SELECT it FROM Item it"
-		+ " JOIN it.author author"
-		+ " WHERE (author.id = :authorId"
+		+ " JOIN it.member m"
+		+ " WHERE (m.id = :memberId"
 		+ " AND it.id = :id)")
-	Optional<Item> findByAuthorIdAndId(@Param("authorId") String authorId,
+	Optional<Item> findByMemberIdAndId(@Param("memberId") String memberId,
 							   @Param("id") String id);
 	
 	@Query(value = "SELECT it FROM Item it"
-			+ " JOIN it.author author"
+			+ " JOIN it.member m"
 	        + " WHERE (:text IS NULL OR"
 	        + " LOWER(it.name) LIKE LOWER(CONCAT('%', :text, '%')) OR LOWER(it.description) LIKE LOWER(CONCAT('%', :text, '%')))"
 	        + " AND (:categoriesString IS NULL OR it.category IN (:categories))"
-			+ " AND (:authorIdsString IS NULL OR author.id IN (:authorIds))"
+			+ " AND (:memberIdsString IS NULL OR m.id IN (:memberIds))"
 	        + " AND (:minPrice IS NULL OR it.price >= :minPrice)"
 	        + " AND (:maxPrice IS NULL OR it.price <= :maxPrice)"
 	        + " AND it.archived = :archived"
 	        + " ORDER BY it.createdAt DESC")
 	List<Item> findItems(@Param("text") String text,
-						 @Param("authorIdsString") String authorIdsString,
-						 @Param("authorIds") List<String> authorIds,
+						 @Param("memberIdsString") String memberIdsString,
+						 @Param("memberIds") List<String> memberIds,
 						 @Param("categoriesString") String categoriesString,
 						 @Param("categories") List<String> categories,
 						 @Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice,

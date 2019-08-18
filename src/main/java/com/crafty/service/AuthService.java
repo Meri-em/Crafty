@@ -124,7 +124,7 @@ public class AuthService {
 		String email = claims.getSubject();
 
 		JwtUser jwtUser = JwtUserFactory.create(claims.getLoggedInUserId(), email, claims.getRoles(),
-				claims.getMemberId(), claims.getAuthorId(), 
+				claims.getMemberId(),
 				claims.getLastLogoutDate() != null ? Instant.parse(claims.getLastLogoutDate()) : null);
 
 		log.info("Checking registration token for {}", jwtUser);

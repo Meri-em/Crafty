@@ -12,9 +12,9 @@ public interface ItemImageRepository extends JpaRepository<ItemImage, String> {
 
 	@Query(value = "SELECT im FROM ItemImage im"
 		+ " JOIN im.item item"
-		+ " JOIN item.author author"
-		+ " WHERE item.id = :itemId AND author.id = :authorId"
+		+ " JOIN item.member m"
+		+ " WHERE item.id = :itemId AND m.id = :memberId"
 		+ " AND im.id = :id")
-	Optional<ItemImage> findByItemIdAuthorIdAndId(@Param("itemId") String itemId,
-		  @Param("authorId") String authorId, @Param("id") String id);
+	Optional<ItemImage> findByItemIdAndMemberIdAndId(@Param("itemId") String itemId,
+		  @Param("memberId") String memberId, @Param("id") String id);
 }

@@ -32,9 +32,6 @@ public class User extends BaseEntityId {
 	@Column(columnDefinition = "char(36)")
 	private String memberId;
 	
-	@Column(columnDefinition = "char(36)")
-	private String authorId;
-	
 	private Instant lastLogoutDate;
 
 	public String getEmail() {
@@ -67,14 +64,6 @@ public class User extends BaseEntityId {
 
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
-	}
-
-	public String getAuthorId() {
-		return authorId;
-	}
-
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
 	}
 
 	public Instant getLastLogoutDate() {

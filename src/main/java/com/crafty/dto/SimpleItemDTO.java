@@ -13,13 +13,13 @@ public class SimpleItemDTO implements Serializable {
 	
 	private BigDecimal price;
 	
-	private AuthorDTO author;
+	private MemberDTO author;
 	
 	private String image;
 	
 	public SimpleItemDTO () { }
 	
-	public SimpleItemDTO(String id, String name, BigDecimal price, AuthorDTO author, String image) {
+	public SimpleItemDTO(String id, String name, BigDecimal price, MemberDTO author, String image) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -51,11 +51,11 @@ public class SimpleItemDTO implements Serializable {
 		this.price = price;
 	}
 
-	public AuthorDTO getAuthor() {
+	public MemberDTO getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(AuthorDTO author) {
+	public void setAuthor(MemberDTO author) {
 		this.author = author;
 	}
 

@@ -1,11 +1,9 @@
 package com.crafty.entity;
 
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import com.crafty.entity.base.BaseEntityId;
 
@@ -19,14 +17,17 @@ public class Member extends BaseEntityId {
 	private String lastName;	
 	
 	@ManyToMany
-	@JoinTable(name = "favourite_author", joinColumns = @JoinColumn(name = "member_id"),
-			inverseJoinColumns = @JoinColumn(name = "author_id"))
-	private Set<Author> favouriteAuthors;
+	@JoinTable(name = "favorite_member", joinColumns = @JoinColumn(name = "member_id"),
+			inverseJoinColumns = @JoinColumn(name = "favorite_member_id"))
+	private Set<Member> favoriteMembers;
 
 	@ManyToMany
-	@JoinTable(name = "favourite_item", joinColumns = @JoinColumn(name = "member_id"),
+	@JoinTable(name = "favorite_item", joinColumns = @JoinColumn(name = "member_id"),
 		inverseJoinColumns = @JoinColumn(name = "item_id"))
-	private Set<Item> favouriteItems;
+	private Set<Item> favoriteItems;
+
+	@OneToMany(mappedBy = "member")
+	private List<Item> items;
 
 	public String getFirstName() {
 		return firstName;
@@ -44,19 +45,27 @@ public class Member extends BaseEntityId {
 		this.lastName = lastName;
 	}
 
-	public Set<Author> getFavouriteAuthors() {
-		return favouriteAuthors;
+	public Set<Member> getFavoriteMembers() {
+		return favoriteMembers;
 	}
 
-	public void setFavouriteAuthors(Set<Author> favouriteAuthors) {
-		this.favouriteAuthors = favouriteAuthors;
+	public void setFavoriteMembers(Set<Member> favoriteMembers) {
+		this.favoriteMembers = favoriteMembers;
 	}
 
-	public Set<Item> getFavouriteItems() {
-		return favouriteItems;
+	public Set<Item> getFavoriteItems() {
+		return favoriteItems;
 	}
 
-	public void setFavouriteItems(Set<Item> favouriteItems) {
-		this.favouriteItems = favouriteItems;
+	public void setFavoriteItems(Set<Item> favoriteItems) {
+		this.favoriteItems = favoriteItems;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 }

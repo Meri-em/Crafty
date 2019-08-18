@@ -16,11 +16,11 @@ public class MapperHelper {
 	
 	private static final String IMAGES_DIRECTORY = "/images";
 	
-	public AuthorDTO toAuthorDTO(Author author) {
-		AuthorDTO authorDTO = new AuthorDTO();
-		authorDTO.setId(author.getId());
-		authorDTO.setName(author.getName());
-		return authorDTO;
+	public MemberDTO toMemberDTO(Member member) {
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setId(member.getId());
+		memberDTO.setName(member.getFirstName());
+		return memberDTO;
 	}
 	
 	public ItemImageDTO toItemImageDTO(ItemImage itemImage) {
@@ -31,7 +31,7 @@ public class MapperHelper {
 	}
 
 	public SimpleItemDTO toSimpleItemDTO(Item item) {
-		AuthorDTO author = toAuthorDTO(item.getAuthor());
+		MemberDTO author = toMemberDTO(item.getMember());
 		String primaryImagePath = null;
 		
 		if (!item.getItemImages().isEmpty()) {

@@ -11,10 +11,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.crafty.dto.UploadItemDTO;
-import com.crafty.entity.Author;
 import com.crafty.entity.ItemImage;
-import com.crafty.repository.AuthorRepository;
+import com.crafty.entity.Member;
 import com.crafty.repository.ItemImageRepository;
+import com.crafty.repository.MemberRepository;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,16 +39,16 @@ public class ItemService {
 	
 	private final ItemRepository itemRepository;
 	private final ItemImageRepository itemImageRepository;
-	private final AuthorRepository authorRepository;
+	private final MemberRepository memberRepository;
 	private final MapperHelper mapperHelper;
 	
 	public ItemService(ItemRepository itemRepository,
 		   ItemImageRepository itemImageRepository,
-		   AuthorRepository authorRepository,
+		   MemberRepository memberRepository,
 		   MapperHelper mapperHelper) {
 		this.itemRepository = itemRepository;
 		this.itemImageRepository = itemImageRepository;
-		this.authorRepository = authorRepository;
+		this.memberRepository = memberRepository;
 		this.mapperHelper = mapperHelper;
 	}
 
@@ -57,28 +57,28 @@ public class ItemService {
 		return mapperHelper.toItemDTO(item);
 	}
 	
-	public List<SimpleItemDTO> searchItems(String text, List<String> authorIds,
+	public List<SimpleItemDTO> searchItems(String text, List<String> memberIds,
 		   List<String> categories, BigDecimal minPrice, BigDecimal maxPrice, boolean archived) {
-		String authorIdsString = CollectionUtils.isEmpty(authorIds) ? null : "";
+		String memberIdsString = CollectionUtils.isEmpty(memberIds) ? null : "";
 		String categoriesString =  CollectionUtils.isEmpty(categories) ? null : "";
 		
-		List<Item> items = itemRepository.findItems(text, authorIdsString, authorIds, 
+		List<Item> items = itemRepository.findItems(text, memberIdsString, memberIds,
 				categoriesString, categories, minPrice, maxPrice, archived);
 		return items.stream()
 			.map(item -> mapperHelper.toSimpleItemDTO(item))
 			.collect(Collectors.toList());
 	}
 
-	public void addItem(String authorId, UploadItemDTO itemDTO, MultipartFile[] files) {
-		Author author = authorRepository.findById(authorId)
-			.orElseThrow(() -> new NotFoundException("No author found with id: " + authorId));
+	public void addItem(String memberId, UploadItemDTO itemDTO, MultipartFile[] files) {
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new NotFoundException("No member found with id: " + memberId));
 		String itemId = UUID.randomUUID().toString();
 		Item item = new Item();
 		item.setName(itemDTO.getName());
 		item.setDescription(itemDTO.getDescription());
 		item.setPrice(itemDTO.getPrice());
 		item.setCategory(itemDTO.getCategory());
-		item.setAuthor(author);
+		item.setMember(member);
 		item.setId(itemId);
 		item.setCreatedAt(Instant.now());
 
@@ -114,13 +114,13 @@ public class ItemService {
 		itemRepository.save(item);
 	}
 
-	public void updateItem(String authorId, String itemId, UploadItemDTO itemDTO) {
-		Author author = authorRepository.findById(authorId)
-			.orElseThrow(() -> new NotFoundException("No author found with id: " + authorId));
+	public void updateItem(String memberId, String itemId, UploadItemDTO itemDTO) {
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new NotFoundException("No member found with id: " + memberId));
 
 		Item item = itemRepository.findById(itemId)
 			.orElseThrow(() -> new NotFoundException("No item found with id: " + itemId));
-		if (item.getAuthor().getId().equals(authorId)) {
+		if (item.getMember().getId().equals(memberId)) {
 			throw new NotFoundException("No item found with id: " + itemId);
 		}
 		item.setName(itemDTO.getName());
@@ -130,15 +130,15 @@ public class ItemService {
 		item = itemRepository.save(item);
 	}
 
-	public void deleteItem(String authorId, String itemId) {
-		Item item = itemRepository.findByAuthorIdAndId(authorId, itemId)
+	public void deleteItem(String memberId, String itemId) {
+		Item item = itemRepository.findByMemberIdAndId(memberId, itemId)
 			.orElseThrow(() -> new NotFoundException("No such item found!"));
 		item.setArchived(true);
 		itemRepository.save(item);
 	}
 
-	public void deleteItemImage(String itemId, String authorId, String itemImageId) {
-		ItemImage itemImage = itemImageRepository.findByItemIdAuthorIdAndId(itemId, authorId, itemImageId)
+	public void deleteItemImage(String itemId, String memberId, String itemImageId) {
+		ItemImage itemImage = itemImageRepository.findByItemIdAndMemberIdAndId(itemId, memberId, itemImageId)
 			.orElseThrow(() -> new NotFoundException("No such item image found!"));
 		String filePath = IMAGES_FOLDER + itemId + "/"
 			+ itemImage.getName();
@@ -156,8 +156,8 @@ public class ItemService {
 		itemRepository.save(item);
 	}
 
-	public void updateDefaultImage(String itemId, String authorId, String itemImageId) {
-		ItemImage itemImage = itemImageRepository.findByItemIdAuthorIdAndId(itemId, authorId, itemImageId)
+	public void updateDefaultImage(String itemId, String memberId, String itemImageId) {
+		ItemImage itemImage = itemImageRepository.findByItemIdAndMemberIdAndId(itemId, memberId, itemImageId)
 			.orElseThrow(() -> new NotFoundException("No such item image found!"));
 
 		Item item = itemImage.getItem();

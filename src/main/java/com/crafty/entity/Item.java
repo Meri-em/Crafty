@@ -31,9 +31,9 @@ public class Item extends BaseEntityId {
 	private BigDecimal price;
 	
 	@ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "member_id")
     @NotNull
-	private Author author;
+	private Member member;
 	
 	@OneToMany(mappedBy = "item", fetch=FetchType.EAGER, cascade = CascadeType.ALL,
 		orphanRemoval = true)
@@ -82,12 +82,12 @@ public class Item extends BaseEntityId {
 		this.price = price;
 	}
 
-	public Author getAuthor() {
-		return author;
+	public Member getMember() {
+		return member;
 	}
 
-	public void setAuthor(Author author) {
-		this.author = author;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 	public List<ItemImage> getItemImages() {

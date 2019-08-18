@@ -2,7 +2,7 @@ package com.crafty.dto;
 
 import java.io.Serializable;
 
-public class AuthorDTO implements Serializable {
+public class MemberDTO implements Serializable {
 
 	private static final long serialVersionUID = -790552399929845846L;
 

@@ -18,7 +18,6 @@ public class JwtClaims {
     public static final String ROLES = "roles";
     public static final String LOGGED_IN_USER_ID = "userId";
     public static final String MEMBER_ID = "memberId";
-    public static final String AUTHOR_ID = "authorId";
     public static final String SCOPE = "scope";
     public static final String LAST_LOGOUT_DATE = "lastLogoutDate";
     
@@ -26,7 +25,6 @@ public class JwtClaims {
     private final Set<String> roles;
     private final String loggedInUserId;
     private final String memberId;
-    private final String authorId;
     private final String scope;
     private final String lastLogoutDate;
     
@@ -40,7 +38,6 @@ public class JwtClaims {
             new HashSet<>((List<String>) getRawClaimValue.apply(token, JwtClaims.ROLES)),
             getStringClaimValue.apply(token, JwtClaims.LOGGED_IN_USER_ID),
             getStringClaimValue.apply(token, JwtClaims.MEMBER_ID),
-            getStringClaimValue.apply(token, JwtClaims.AUTHOR_ID),
             getStringClaimValue.apply(token, JwtClaims.SCOPE),
             getStringClaimValue.apply(token, JwtClaims.LAST_LOGOUT_DATE)
         );
@@ -51,7 +48,6 @@ public class JwtClaims {
         Set<String> roles,
         String loggedInUserId,
         String memberId,
-        String authorId,
         String scope,
         String lastLogoutDate
     ) {
@@ -59,7 +55,6 @@ public class JwtClaims {
         this.roles = roles;
         this.loggedInUserId = loggedInUserId;
         this.memberId = memberId;
-        this.authorId = authorId;
         this.scope = scope;
         this.lastLogoutDate = lastLogoutDate;
     }
@@ -80,10 +75,6 @@ public class JwtClaims {
         return memberId;
     }
     
-    public String getAuthorId() {
-        return authorId;
-    }
-    
     public String getScope() {
 		return scope;
 	}
@@ -98,7 +89,6 @@ public class JwtClaims {
             { put(ROLES, roles); }
             { put(LOGGED_IN_USER_ID, loggedInUserId); }
             { put(MEMBER_ID, memberId); }
-            { put(AUTHOR_ID, authorId); }
             { put(SCOPE, scope); }
             { put(LAST_LOGOUT_DATE, lastLogoutDate); }
         };
@@ -112,7 +102,6 @@ public class JwtClaims {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
 		result = prime * result + ((loggedInUserId == null) ? 0 : loggedInUserId.hashCode());
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
@@ -129,11 +118,6 @@ public class JwtClaims {
 		if (getClass() != obj.getClass())
 			return false;
 		JwtClaims other = (JwtClaims) obj;
-		if (authorId == null) {
-			if (other.authorId != null)
-				return false;
-		} else if (!authorId.equals(other.authorId))
-			return false;
 		if (loggedInUserId == null) {
 			if (other.loggedInUserId != null)
 				return false;
@@ -160,7 +144,7 @@ public class JwtClaims {
 	@Override
     public String toString() {
         return "JwtClaims [subject=" + subject + ", roles=" + roles + ", loggedInUserId=" + loggedInUserId
-                + ", memberId=" + memberId + ", authorId=" + authorId +  "]";
+                + ", memberId=" + memberId + "]";
     }
 
     public static class Builder {
@@ -180,7 +164,6 @@ public class JwtClaims {
                     .collect(Collectors.toSet());
             this.loggedInUserId = principal.getId();
             this.memberId = principal.getMemberId();
-            this.authorId = principal.getAuthorId();
             this.lastLogoutDate = principal.getLastLogoutDate() != null ? principal.getLastLogoutDate().toString(): null;
         }
                
@@ -195,7 +178,6 @@ public class JwtClaims {
                 roles,
                 loggedInUserId,
                 memberId,
-                authorId,
                 scope,
                 lastLogoutDate
             );

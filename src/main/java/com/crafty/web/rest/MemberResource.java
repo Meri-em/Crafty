@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crafty.dto.FavoriteResponseDTO;
-import com.crafty.dto.FavouriteRequestDTO;
+import com.crafty.dto.FavoriteRequestDTO;
 import com.crafty.service.MemberService;
 
 @RestController
@@ -29,14 +29,14 @@ public class MemberResource {
 		return memberService.getFavouriteAuthors(CurrentUser.getMemberId());
 	}
 	
-	@PostMapping("/favorite-authors")
-	public void addFavoriteAuthor(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
-		memberService.addAuthorToFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
+	@PostMapping("/favorite-members")
+	public void addFavoriteAuthor(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
+		memberService.addMemberToFavorites(CurrentUser.getMemberId(), favoriteRequestDTO);
 	}
 	
 	@DeleteMapping("/favorite-authors")
-	public void deleteFavouriteAuthor(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
-		memberService.removeAuthorFromFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
+	public void deleteFavouriteAuthor(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
+		memberService.removeAuthorFromFavourites(CurrentUser.getMemberId(), favoriteRequestDTO);
 	}
 
 	@GetMapping("/favorite-items")
@@ -45,13 +45,13 @@ public class MemberResource {
 	}
 
 	@PostMapping("/favorite-items")
-	public void addFavouriteItem(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
-		memberService.addItemToFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
+	public void addFavouriteItem(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
+		memberService.addItemToFavourites(CurrentUser.getMemberId(), favoriteRequestDTO);
 	}
 
 	@DeleteMapping("/favorite-items")
-	public void deleteFavouriteItem(@RequestBody FavouriteRequestDTO favouriteRequestDTO) {
-		memberService.removeItemFromFavourites(CurrentUser.getMemberId(), favouriteRequestDTO);
+	public void deleteFavouriteItem(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
+		memberService.removeItemFromFavourites(CurrentUser.getMemberId(), favoriteRequestDTO);
 	}
 
 }

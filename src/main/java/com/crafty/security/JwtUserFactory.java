@@ -15,10 +15,10 @@ public final class JwtUserFactory {
     private JwtUserFactory() { }
 
     public static JwtUser create(String id, String email, Set<String> authorities,
-    		String memberId, String authorId, Instant lastLogoutDate) {
+    		String memberId, Instant lastLogoutDate) {
         Set<GrantedAuthority> grantedAuthorities = mapToGrantedAuthorities(authorities);
         
-        return new JwtUser(id, email, null, grantedAuthorities, memberId, authorId, lastLogoutDate);
+        return new JwtUser(id, email, null, grantedAuthorities, memberId, lastLogoutDate);
     }
     
     private static Set<GrantedAuthority> mapToGrantedAuthorities(Set<String> authorities) {
