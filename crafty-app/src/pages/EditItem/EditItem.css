@@ -1,0 +1,8 @@
+.ItemForm {
+  display: flex;
+  flex-direction: column;
+}
+.ItemForm > * {
+  margin: 5px;
+  width: 300px;
+}

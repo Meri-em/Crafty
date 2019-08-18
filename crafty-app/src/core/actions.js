@@ -21,8 +21,8 @@ const auth = {
     return LS.set('tokens', {});
   }
 }
-export const register = data => axios.post(EP.REGISTER, data);
-export const login    = data => axios.post(EP.LOGIN, data).then(res => auth.set(res.data));
+export const register = data => axios.post(EP.REGISTER, data).then(setMessage);;
+export const login    = data => axios.post(EP.LOGIN, data).then(res => auth.set(res.data)).then(setMessage);
 export const refresh  = ({ refreshToken }) => axios.post(EP.REFRESH, null, {
   headers: { Authorization: refreshToken }
 }).then(res => auth.set(res.data));
@@ -32,7 +32,7 @@ export const authorized = settings => {
   console.log(settings);
   const request = ({ accessToken }) => axios({
     ...settings,
-    headers: { Authorization: accessToken }
+    headers: { ...(settings.headers || {}), Authorization: accessToken }
   });
   if (tokens.accessToken && tokens.accessExpires > Date.now()) {
     console.log('Access active (doing request)');
@@ -47,7 +47,7 @@ export const authorized = settings => {
   return Promise.reject({})
 };
 
-export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout());
+export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout()).then(setMessage);;
 export const getMyProfile  = () => authorized({ url: EP.MY_PROFILE });
 
 
@@ -60,10 +60,23 @@ export const search       = params => items(EP.SEARCH + toQuery(params));
 export const searchByName = name => search({ text: name });
 export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
+export const addItem      = ({url, data}) => authorized({ method: 'POST', url, headers: { 'content-type': 'multipart/form-data' } });
 
+export const updateDefaultImage = ({itemId, imageId}) => authorized({
+  method: 'POST',
+  url: EP.ITEM + `/${itemId}/images/default`,
+  data: {id: imageId}
+});
+
+export const deleteItemImage = ({itemId, imageId}) => authorized({
+  method: 'DELETE',
+  url: EP.ITEM + `/${itemId}/images/${imageId}`,
+});
 
 // CART
 export const getCart        = () => authorized({ url: EP.CART });
 export const updateCart     = data => authorized({ url: EP.CART, method: 'POST', data});
 export const addToCart      = ({id, quantity=1}) => updateCart({itemId: id, quantity: `+${quantity}`});
 export const removeFromCart = ({id, quantity=1}) => updateCart({itemId: id, quantity: `-${quantity}`});
+
+export const setMessage = res => window.store.set({message: res.data || res})

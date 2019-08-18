@@ -31,6 +31,7 @@
   width: 800px;
   max-width: 100%;
   margin: auto;
+  position: relative;
 }
 
 .Item.large .item-name {
@@ -47,6 +48,13 @@
   vertical-align: middle;
   box-shadow: 0 0 10px 2px;
   transition: 0.3s;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+.item-thumbnail-image {
+  max-width: 100px;
+  max-height: 50px;
 }
 .item-thumbnail:hover {
   box-shadow: 0 0 6px 6px;
@@ -108,4 +116,36 @@
   background: linear-gradient(rgba(60,40,20,0.85), rgba(80, 63, 39, 0.65) 95%, transparent);
   padding: 4px 10px;
   color: #efecea;
+}
+
+/* Edit mode */
+.item-edit-link {
+  color: #333;
+  position: absolute;
+  top: 0; 
+  right: 0;
+}
+.Item.edit .item-thumbnail, .Item.edit .item-thumbnail-image {
+  max-width: 200px;
+  max-height: 100px;
+}
+.image-remove, .image-make-default {
+  position: absolute;
+  font-weight: bold;
+  line-height: 20px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+.image-remove {
+  top: 0;
+  right: 0;
+  color: #f33;
+  font-size: 40px;
+  height: 30px;
+  border-bottom-left-radius: 10px;
+}
+.image-make-default {
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

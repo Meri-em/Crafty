@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { addToCart } from 'core/actions';
+import { addToCart, updateDefaultImage, deleteItemImage } from 'core/actions';
 
 import './Item.css';
 
@@ -16,16 +16,25 @@ class ItemDetailed extends Component {
 
   render() {
     const { author, price, name, images, description, id } = this.props;
+    const itemId = id;
     const image = this.state.image || this.props.image;
+    const isEdit = location.hash.endsWith('/edit'); // eslint-disable-line
 
     return (
-      <div className="Item large" id={id}>
+      <div className={`Item large ${isEdit ? 'edit' : 'view'}`} id={id}>
         <div className="item-name">{name}</div>
+        <Link className="item-edit-link" to={`/_/${id}/edit`} >Редактирай</Link>
         <div className="item-preview">
           <img className="item-image" src={image} alt="" />
           <div className="item-thumbnails">
             {images.map(({ path, id }) => (
-              <img className="item-thumbnail" src={path} key={id} alt="" onClick={() => this.setState({ image: path })} />
+              <div className="item-thumbnail" key={id}>
+                {isEdit && <>
+                  <span className="image-make-default" title="сложи на първо място" onClick={() => updateDefaultImage({itemId, imageId: id})} >[1]</span>
+                  <span className="image-remove" title="премахни картинката" onClick={() =>  deleteItemImage({itemId, imageId: id})} >&times;</span>
+                </>}
+                <img className="item-thumbnail-image" src={path} alt="" onClick={() => this.setState({ image: path })} />
+              </div>
             ))}
           </div>
         </div>
