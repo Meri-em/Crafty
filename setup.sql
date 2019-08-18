@@ -12,7 +12,7 @@ CREATE TABLE member (
 
 CREATE TABLE author (
 	id CHAR(36) NOT NULL,
-	name VARCHAR(255) NOT NULL,
+	name VARCHAR(255),
 	PRIMARY KEY (id)
 );
 
@@ -459,3 +459,16 @@ REPLACE INTO favourite_item VALUES
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'bfa084e2-9cbb-4774-8d45-e4eea380cd1a'),
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'e21e4dcf-5487-4894-8933-0912de9c4f78'),
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '9c3c5471-379d-44f6-825d-ac8e0ca9229c');
+
+UPDATE item SET archived = true WHERE id = '06dad238-ab32-4bdf-885b-be9283e5ae29';
+
+CREATE TABLE review (
+	id CHAR(36) NOT NULL,
+	item_id CHAR(36) NOT NULL,
+	member_id CHAR(36) NOT NULL,
+	comment TEXT,
+	score DECIMAL(5,2) DEFAULT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY (item_id) REFERENCES item(id),
+	FOREIGN KEY (member_id) REFERENCES member(id)
+);

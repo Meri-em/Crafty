@@ -58,12 +58,12 @@ public class ItemService {
 	}
 	
 	public List<SimpleItemDTO> searchItems(String text, List<String> authorIds,
-										   List<String> categories, BigDecimal minPrice, BigDecimal maxPrice) {
+		   List<String> categories, BigDecimal minPrice, BigDecimal maxPrice, boolean archived) {
 		String authorIdsString = CollectionUtils.isEmpty(authorIds) ? null : "";
 		String categoriesString =  CollectionUtils.isEmpty(categories) ? null : "";
 		
 		List<Item> items = itemRepository.findItems(text, authorIdsString, authorIds, 
-				categoriesString, categories, minPrice, maxPrice);
+				categoriesString, categories, minPrice, maxPrice, archived);
 		return items.stream()
 			.map(item -> mapperHelper.toSimpleItemDTO(item))
 			.collect(Collectors.toList());

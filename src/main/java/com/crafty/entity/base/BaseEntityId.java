@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @MappedSuperclass
 public abstract class BaseEntityId implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6558433615220944450L;
 
     @Id
     @org.springframework.data.annotation.Id

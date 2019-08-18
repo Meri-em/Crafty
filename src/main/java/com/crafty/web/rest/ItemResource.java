@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.crafty.dto.DefaultImageDTO;
 import com.crafty.dto.UploadItemDTO;
+import com.crafty.service.AuthorService;
 import com.crafty.util.CurrentUser;
+import com.crafty.web.exception.BadRequestException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,13 @@ import javax.validation.Valid;
 @CrossOrigin
 @RequestMapping("api/v1/items")
 public class ItemResource {
-	private final ItemService itemService;public ItemResource(ItemService itemService) {
+	private final ItemService itemService;
+	private final AuthorService authorService;
+
+	public ItemResource(ItemService itemService,
+						AuthorService authorService) {
 		this.itemService = itemService;
+		this.authorService = authorService;
 	}
 
 	@GetMapping("/{itemId}")
@@ -35,15 +42,24 @@ public class ItemResource {
 			@RequestParam(value = "author-ids", required = false) List<String> authorIds,
 			@RequestParam(value = "categories", required = false) List<String> categories,
 			@RequestParam(value = "min-price", required = false) BigDecimal minPrice,
-			@RequestParam(value = "max-price", required = false) BigDecimal maxPrice) {
-		return itemService.searchItems(text, authorIds, categories, minPrice, maxPrice);
+			@RequestParam(value = "max-price", required = false) BigDecimal maxPrice,
+			@RequestParam(value = "archived", required = false) boolean archived) {
+		return itemService.searchItems(text, authorIds, categories, minPrice, maxPrice, archived);
 	}
 
 	@PostMapping
 	public String addItem(@Valid UploadItemDTO item,
 				BindingResult bindingResult, final @RequestParam(value = "file") MultipartFile[] files){
-		itemService.addItem(CurrentUser.getAuthorId(),
-			item, files);
+		if (item.getName() == null) {
+			throw new BadRequestException("The item name must be added!");
+		}
+		String authorId;
+		if (CurrentUser.getAuthorId() != null) {
+			authorId = CurrentUser.getAuthorId();
+		} else {
+			authorId = authorService.createAuthor(CurrentUser.getMemberId());
+		}
+		itemService.addItem(authorId, item, files);
 		return "Success!";
 	}
 
