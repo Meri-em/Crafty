@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'core/store';
-import { logout } from 'core/actions';
+import { clearMessage } from 'core/actions';
 
-// import './Header.css';
+import './Notification.css';
 
-const Notification = ({message}) => (
-  <div className="Notification">
-    <div className="message">{message}</div>
-    <div className="close">&times;</div>
+const Notification = ({message=''}) => message && (
+  <div className={`Notification ${message.error ? 'error' : 'info'}`}>
+    <div className="message">{message.error || message}</div>
+    <div className="close" onClick={clearMessage}>&times;</div>
   </div>
 );
 

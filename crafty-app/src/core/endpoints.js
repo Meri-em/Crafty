@@ -17,5 +17,10 @@ export const ITEM        = `${API_ROOT}/items/`;
 export const ITEMS       = `${API_ROOT}/items/search`;
 export const SEARCH      = `${API_ROOT}/items/search`;
 
-// ITEMS
+// CART
 export const CART        = `${API_ROOT}/cart`;
+export const CART_BUY    = `${API_ROOT}/cart/purchase`;
+export const CART_CLEAR  = `${API_ROOT}/cart/clear`;
+
+// ORDERS
+export const ORDERS      = `${API_ROOT}/orders`;

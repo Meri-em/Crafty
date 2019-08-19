@@ -61,9 +61,9 @@ input::placeholder {
   opacity: 1 !important;
   color: #555;
 }
-input[type="submit"] {
+input[type="submit"], button {
   cursor: pointer;
 }
-input[type="submit"]:hover {
+input[type="submit"]:hover, button:hover {
   opacity: 1;
 }

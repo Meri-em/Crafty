@@ -22,7 +22,7 @@ export class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { email, password } = e.target;
-    register({email: email.value, password: password.value}).then(console.log, console.error)
+    console.log(register({email: email.value, password: password.value}).catch(console.log))
   }
 
   render() {
