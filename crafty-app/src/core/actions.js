@@ -21,8 +21,9 @@ const auth = {
     return LS.set('tokens', {});
   }
 }
+window.axios = axios;
 export const register = data => axios.post(EP.REGISTER, data).then(setMessage);;
-export const login    = data => axios.post(EP.LOGIN, data).then(res => auth.set(res.data)).then(setMessage);
+export const login    = data => axios.post(EP.LOGIN, data).then(res => auth.set(res.data)).catch(({response}) => setMessage(response));
 export const refresh  = ({ refreshToken }) => axios.post(EP.REFRESH, null, {
   headers: { Authorization: refreshToken }
 }).then(res => auth.set(res.data));
@@ -60,7 +61,7 @@ export const search       = params => items(EP.SEARCH + toQuery(params));
 export const searchByName = name => search({ text: name });
 export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
-export const addItem      = ({url, data}) => authorized({ method: 'POST', url, headers: { 'content-type': 'multipart/form-data' } });
+export const addItem      = ({url, data}) => authorized({ method: 'POST', url, data, headers: { 'content-type': 'multipart/form-data' } });
 
 export const updateDefaultImage = ({itemId, imageId}) => authorized({
   method: 'POST',
@@ -75,8 +76,15 @@ export const deleteItemImage = ({itemId, imageId}) => authorized({
 
 // CART
 export const getCart        = () => authorized({ url: EP.CART });
+export const clearCart      = () => authorized({ url: EP.CART_CLEAR, method: 'DELETE'}).then(setMessageAndRefresh);
+export const buyCart        = () => authorized({ url: EP.CART_BUY, method: 'POST'}).then(setMessageAndRefresh);
 export const updateCart     = data => authorized({ url: EP.CART, method: 'POST', data});
-export const addToCart      = ({id, quantity=1}) => updateCart({itemId: id, quantity: `+${quantity}`});
+export const addToCart      = ({id, quantity=1}) => updateCart({itemId: id, quantity: `+${quantity}`}).then(setMessage);
 export const removeFromCart = ({id, quantity=1}) => updateCart({itemId: id, quantity: `-${quantity}`});
 
-export const setMessage = res => window.store.set({message: res.data || res})
+// ORDERS
+export const getOrders      = () => authorized({ url: EP.ORDERS });
+
+export const setMessage = res => window.store.set('message', res.data || res);
+export const clearMessage = () => window.store.set('message', '');
+export const setMessageAndRefresh = res => (window.store.set('message', res.data || res), location.reload()); // eslint-disable-line

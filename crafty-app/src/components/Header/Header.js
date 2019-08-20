@@ -3,6 +3,7 @@ import Navigation from 'components/Navigation/Navigation';
 import Search from 'components/Search/Search';
 import { connect } from 'core/store';
 import { logout } from 'core/actions';
+import { FaUserPlus, FaSignInAlt, FaUser, FaShoppingCart, FaTruckLoading, FaSignOutAlt } from 'react-icons/fa';
 
 import './Header.css';
 
@@ -11,13 +12,14 @@ const Header = ({isLoggedIn}) => (
     <img src="/logo.svg" className="App-logo" alt="logo" />
     <Search />
     {!isLoggedIn && <nav className="AuthNav">
-      <a href="#/login">login</a>
-      <a href="#/register">register</a>
+      <a href="#/login"><FaSignInAlt/> Вход</a>
+      <a href="#/register"><FaUserPlus/> Регистрация</a>
     </nav>}
     {isLoggedIn && <nav className="AuthNav">
-      <a href="#/myProfile">myProfile</a>
-      <a href="#/myCart">myCart</a>
-      <a href="#/logout" onClick={logout}>logout</a>
+      <a href="#/myProfile"><FaUser/> Профил</a>
+      <a href="#/myOrders"><FaTruckLoading/> Поръчки</a>
+      <a href="#/myCart"><FaShoppingCart/> Количка</a>
+      <a href="#/logout" onClick={logout}><FaSignOutAlt/> Изход</a>
     </nav>}
     <Navigation />
   </header>

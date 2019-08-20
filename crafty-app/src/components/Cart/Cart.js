@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCart, removeFromCart } from 'core/actions';
+import { getCart, removeFromCart, buyCart, clearCart } from 'core/actions';
 
 import './Cart.css';
 const add = (arr, item) => (arr.push(item), item); // eslint-disable-line no-sequences
@@ -44,8 +44,9 @@ class Cart extends Component {
             </div>
           ))}
         </div>
-        <div>Total {this.state.total}</div>
-        <div>Proceed to payment</div>
+        <div>Общо {this.state.total}</div>
+        <button onClick={clearCart}>Изчисти количката</button>
+        <button onClick={buyCart}>Плати</button>
       </div>
     );
   }

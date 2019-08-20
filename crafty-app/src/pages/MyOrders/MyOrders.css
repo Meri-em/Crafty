@@ -1,0 +1,29 @@
+.MyOrders .order {
+  margin-top: 20px;
+}
+.MyOrders .total {
+  display: block;
+}
+.MyOrders .item-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.MyOrders .item {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  min-height: 200px;
+  margin: 5px;
+  padding: 5px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 20px;
+}
+.MyOrders .item-img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+  margin: auto;
+}
+.MyOrders .item-name, .MyOrders .item-price {
+  margin: 5px auto;
+}

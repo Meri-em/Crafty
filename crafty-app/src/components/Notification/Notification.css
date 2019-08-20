@@ -1,0 +1,21 @@
+.Notification {
+  margin: 10px auto;
+  max-width: 500px;
+  display: flex;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 2px;
+}
+.Notification .message {
+  flex: 1;
+}
+.Notification .close {
+  font: 30px/18px monospace;
+  cursor: pointer;
+}
+.Notification.error {
+  background: rgba(255,100,100,0.5);
+}
+.Notification.info {
+  background: rgba(100,255,150,0.5);
+}
