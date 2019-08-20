@@ -19,7 +19,7 @@ public class MapperHelper {
 	public MemberDTO toMemberDTO(Member member) {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setId(member.getId());
-		memberDTO.setName(member.getFirstName());
+		memberDTO.setName(member.getNickname());
 		return memberDTO;
 	}
 	

@@ -14,7 +14,15 @@ public class Member extends BaseEntityId {
 	
 	private String firstName;
 	
-	private String lastName;	
+	private String lastName;
+
+	@Column(columnDefinition = "varchar(100)")
+	private String nickname;
+
+	@Column(columnDefinition = "text")
+	private String description;
+
+	private String location;
 	
 	@ManyToMany
 	@JoinTable(name = "favorite_member", joinColumns = @JoinColumn(name = "member_id"),
@@ -43,6 +51,30 @@ public class Member extends BaseEntityId {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public Set<Member> getFavoriteMembers() {

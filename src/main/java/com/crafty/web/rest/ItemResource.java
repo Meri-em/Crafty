@@ -49,7 +49,6 @@ public class ItemResource {
 		if (item.getName() == null) {
 			throw new BadRequestException("The item name must be added!");
 		}
-		String authorId;
 		itemService.addItem(CurrentUser.getMemberId(), item, files);
 		return "Success!";
 	}

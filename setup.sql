@@ -7,6 +7,9 @@ CREATE TABLE member (
 	id CHAR(36) NOT NULL,
 	first_name VARCHAR(255),
 	last_name VARCHAR(255),
+	nickname VARCHAR(100),
+	description TEXT,
+	location VARCHAR(255),
 	PRIMARY KEY(id)
 );
 
@@ -60,11 +63,12 @@ CREATE TABLE favorite_item (
 );
 
 REPLACE INTO member VALUES
-	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'Maria', 'Karcheva'),
-	('834c8e56-6464-4143-acbc-b7e48e643a6c', 'Ангел', 'Димитров'),
-	('9d700ade-ed19-4bb8-81f6-8733f4ec4ab0', NULL, NULL),
-	('5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40', NULL, NULL),
-	('cb97aac4-1b58-4563-b8f7-14060124d49e', NULL, NULL);
+	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'Maria', 'Karcheva',"marianik",NULL,NULL),
+	('834c8e56-6464-4143-acbc-b7e48e643a6c', 'Ангел', 'Димитров','Арт точка','Тук ще намерите голямо разнообразие от ръчно изработени изделия','София'),
+	('9d700ade-ed19-4bb8-81f6-8733f4ec4ab0', NULL, NULL,'Дървен свят',NULL,NULL),
+	('5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40', NULL, NULL,'DaniMade',NULL,NULL),
+	('cb97aac4-1b58-4563-b8f7-14060124d49e', NULL, NULL,'Цветно Китно',NULL,NULL);
+
 
 REPLACE INTO user VALUES
 	('2bee9ef1-7a94-41e3-81d9-4a38e2a6bec8','maria.karcheva@yahoo.com','$e0801$OGKNxhbBab6TpdqAs0l61GND5E2n3tk5plM1J77CYFY=$/XMXe6swplcNEj3reL4Rwg3boLGljXqXzOJ5hyfpPKg=',

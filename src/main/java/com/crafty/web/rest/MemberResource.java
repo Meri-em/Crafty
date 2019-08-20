@@ -24,19 +24,19 @@ public class MemberResource {
 		this.memberService = memberService;
 	}
 	
-	@GetMapping("/favorite-authors")
-	public List<FavoriteResponseDTO> getFavoriteAuthors() {
-		return memberService.getFavouriteAuthors(CurrentUser.getMemberId());
+	@GetMapping("/favorite-members")
+	public List<FavoriteResponseDTO> getFavoriteMembers() {
+		return memberService.getFavouriteMembers(CurrentUser.getMemberId());
 	}
 	
 	@PostMapping("/favorite-members")
-	public void addFavoriteAuthor(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
+	public void addFavoriteMember(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
 		memberService.addMemberToFavorites(CurrentUser.getMemberId(), favoriteRequestDTO);
 	}
 	
-	@DeleteMapping("/favorite-authors")
-	public void deleteFavouriteAuthor(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
-		memberService.removeAuthorFromFavourites(CurrentUser.getMemberId(), favoriteRequestDTO);
+	@DeleteMapping("/favorite-members")
+	public void deleteFavouriteMember(@RequestBody FavoriteRequestDTO favoriteRequestDTO) {
+		memberService.removeMemberFromFavourites(CurrentUser.getMemberId(), favoriteRequestDTO);
 	}
 
 	@GetMapping("/favorite-items")

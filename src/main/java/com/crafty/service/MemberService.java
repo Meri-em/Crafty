@@ -31,16 +31,16 @@ public class MemberService {
 		this.mapperHelper = mapperHelper;
 	}
 	
-	public List<FavoriteResponseDTO> getFavouriteAuthors(String memberId) {
+	public List<FavoriteResponseDTO> getFavouriteMembers(String memberId) {
 		Member member = getMemberByIdOrNotFound(memberId);
-		return member.getFavoriteMembers().stream().map(a -> new FavoriteResponseDTO(a.getId(), a.getFirstName()))
+		return member.getFavoriteMembers().stream().map(a -> new FavoriteResponseDTO(a.getId(), a.getNickname()))
 			.collect(Collectors.toList());
 	}
 	
 	public void addMemberToFavorites(String memberId, FavoriteRequestDTO favourite) {
 		String favoriteMemberId = favourite.getId();
 		if (favoriteMemberId == null) {
-			throw new BadRequestException("No id provided for author");
+			throw new BadRequestException("No id provided for favorite member");
 		}
 		Member favoriteMember = getMemberByIdOrNotFound(favoriteMemberId);
 		Member member = getMemberByIdOrNotFound(memberId);
@@ -50,10 +50,10 @@ public class MemberService {
 		}		
 	}
 	
-	public void removeAuthorFromFavourites(String memberId, FavoriteRequestDTO favourite) {
+	public void removeMemberFromFavourites(String memberId, FavoriteRequestDTO favourite) {
 		String favoriteMemberId = favourite.getId();
 		if (favoriteMemberId == null) {
-			throw new BadRequestException("No id provided for author");
+			throw new BadRequestException("No id provided for favorite member");
 		}
 		Member favoriteMember = getMemberByIdOrNotFound(favoriteMemberId);
 		Member member = getMemberByIdOrNotFound(memberId);
@@ -69,8 +69,8 @@ public class MemberService {
 			.collect(Collectors.toList());
 	}
 
-	public void addItemToFavourites(String memberId, FavoriteRequestDTO favourite) {
-		String itemId = favourite.getId();
+	public void addItemToFavourites(String memberId, FavoriteRequestDTO favorite) {
+		String itemId = favorite.getId();
 		if (itemId == null) {
 			throw new BadRequestException("No id provider for item");
 		}
@@ -82,15 +82,15 @@ public class MemberService {
 		}
 	}
 
-	public void removeItemFromFavourites(String memberId, FavoriteRequestDTO favourite) {
-		String itemId = favourite.getId();
+	public void removeItemFromFavourites(String memberId, FavoriteRequestDTO favorite) {
+		String itemId = favorite.getId();
 		if (itemId == null) {
 			throw new BadRequestException("No id provided for item");
 		}
 		Item item = getItemByIdOrNotFound(itemId);
 		Member member = getMemberByIdOrNotFound(memberId);
-		if (member.getFavoriteMembers().contains(item)) {
-			member.getFavoriteMembers().remove(item);
+		if (member.getFavoriteItems().contains(item)) {
+			member.getFavoriteItems().remove(item);
 			memberRepository.save(member);
 		}
 	}
@@ -100,9 +100,9 @@ public class MemberService {
 				.orElseThrow(() -> new NotFoundException("No member found with id " + memberId));
 	}
 
-	private Item getItemByIdOrNotFound(String authorId) {
-		return itemRepository.findById(authorId)
-			.orElseThrow(() -> new NotFoundException("No author found with id " + authorId));
+	private Item getItemByIdOrNotFound(String itemId) {
+		return itemRepository.findById(itemId)
+			.orElseThrow(() -> new NotFoundException("No item found with id " + itemId));
 	}
 
 }

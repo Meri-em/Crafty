@@ -15,6 +15,7 @@ import com.crafty.entity.ItemImage;
 import com.crafty.entity.Member;
 import com.crafty.repository.ItemImageRepository;
 import com.crafty.repository.MemberRepository;
+import com.crafty.web.exception.UnauthorizedException;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,29 +86,31 @@ public class ItemService {
 		List<ItemImage> itemImages = new ArrayList<>();
 		int i = 0;
 		for (MultipartFile file : files) {
-			i++;
-			String extension = file.getOriginalFilename().split("\\.")[1];
-			ItemImage itemImage = new ItemImage();
-			itemImage.setId(UUID.randomUUID().toString());
-			itemImage.setItem(item);
-			itemImage.setExtension(extension);
-			String filePath = IMAGES_FOLDER + item.getId()+ "/"
-				+ itemImage.getName();
-			itemImage.setOrder(i);
-			try {
-				File imageFile = new File(filePath);
-				imageFile.getParentFile().mkdirs();
+			if (!file.getOriginalFilename().isEmpty()) {
+				i++;
+				String extension = file.getOriginalFilename().split("\\.")[1];
+				ItemImage itemImage = new ItemImage();
+				itemImage.setId(UUID.randomUUID().toString());
+				itemImage.setItem(item);
+				itemImage.setExtension(extension);
+				String filePath = IMAGES_FOLDER + item.getId() + "/"
+					+ itemImage.getName();
+				itemImage.setOrder(i);
+				try {
+					File imageFile = new File(filePath);
+					imageFile.getParentFile().mkdirs();
 
-				// Get the file and save it somewhere
-				byte[] bytes = file.getBytes();
-				Path path = Paths.get(filePath);
+					// Get the file and save it somewhere
+					byte[] bytes = file.getBytes();
+					Path path = Paths.get(filePath);
 
-				Files.write(path, bytes);
+					Files.write(path, bytes);
 
-			} catch (IOException e) {
-				e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				itemImages.add(itemImage);
 			}
-			itemImages.add(itemImage);
 
 		}
 		item.setItemImages(itemImages);
@@ -139,7 +142,7 @@ public class ItemService {
 
 	public void deleteItemImage(String itemId, String memberId, String itemImageId) {
 		ItemImage itemImage = itemImageRepository.findByItemIdAndMemberIdAndId(itemId, memberId, itemImageId)
-			.orElseThrow(() -> new NotFoundException("No such item image found!"));
+			.orElseThrow(() -> new UnauthorizedException("No such item for this author"));
 		String filePath = IMAGES_FOLDER + itemId + "/"
 			+ itemImage.getName();
 
@@ -158,7 +161,7 @@ public class ItemService {
 
 	public void updateDefaultImage(String itemId, String memberId, String itemImageId) {
 		ItemImage itemImage = itemImageRepository.findByItemIdAndMemberIdAndId(itemId, memberId, itemImageId)
-			.orElseThrow(() -> new NotFoundException("No such item image found!"));
+			.orElseThrow(() -> new UnauthorizedException("No such item for this author"));
 
 		Item item = itemImage.getItem();
 		Comparator<ItemImage> itemImageComparator = Comparator.comparing(ItemImage::getOrder);
