@@ -67,7 +67,8 @@ REPLACE INTO member VALUES
 	('834c8e56-6464-4143-acbc-b7e48e643a6c', 'Ангел', 'Димитров','Арт точка','Тук ще намерите голямо разнообразие от ръчно изработени изделия','София'),
 	('9d700ade-ed19-4bb8-81f6-8733f4ec4ab0', NULL, NULL,'Дървен свят',NULL,NULL),
 	('5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40', NULL, NULL,'DaniMade',NULL,NULL),
-	('cb97aac4-1b58-4563-b8f7-14060124d49e', NULL, NULL,'Цветно Китно',NULL,NULL);
+	('cb97aac4-1b58-4563-b8f7-14060124d49e', NULL, NULL,'Цветно Китно',NULL,NULL),
+	('fa3cda04-e188-40ab-97ca-220d8e52db16', NULL, NULL,'pesho123',NULL,NULL);
 
 
 REPLACE INTO user VALUES
@@ -80,7 +81,9 @@ REPLACE INTO user VALUES
 	('5b7d0db3-e3b2-41c0-b685-ac1410067313','sea@email.com','$e0801$OGKNxhbBab6TpdqAs0l61GND5E2n3tk5plM1J77CYFY=$/XMXe6swplcNEj3reL4Rwg3boLGljXqXzOJ5hyfpPKg=',
 	'ROLE_MEMBER','5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40',NULL),
 	('2814620a-3497-42aa-9020-bba97dfdfb65','kitno@email.com','$e0801$OGKNxhbBab6TpdqAs0l61GND5E2n3tk5plM1J77CYFY=$/XMXe6swplcNEj3reL4Rwg3boLGljXqXzOJ5hyfpPKg=',
-	'ROLE_MEMBER','cb97aac4-1b58-4563-b8f7-14060124d49e',NULL);
+	'ROLE_MEMBER','cb97aac4-1b58-4563-b8f7-14060124d49e',NULL),
+	('c8e921d5-ed0a-4950-a6f4-4d8300ec7eb3','pesho@email.com','$e0801$OGKNxhbBab6TpdqAs0l61GND5E2n3tk5plM1J77CYFY=$/XMXe6swplcNEj3reL4Rwg3boLGljXqXzOJ5hyfpPKg=',
+	'ROLE_MEMBER','fa3cda04-e188-40ab-97ca-220d8e52db16',NULL);
 
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`member_id`) VALUES
 	('cd8c8983-dc7a-4570-97ca-ed2a218b18ba','Възглавница с бухали','Тази възглавница ще внесе красота и настроение във вашия дом.\n\nРазмери: 33х33см.\n\nМатериал: памучни платове, силиконов пълнеж\n\nhttp://www.owl-in-home.com','PILLOW','2019-03-08 12:12:01', 14.5,'834c8e56-6464-4143-acbc-b7e48e643a6c'),
@@ -455,7 +458,16 @@ CREATE TABLE review (
 	member_id CHAR(36) NOT NULL,
 	comment TEXT,
 	score DECIMAL(5,2) DEFAULT NULL,
+	last_updated DATETIME NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY (item_id) REFERENCES item(id),
 	FOREIGN KEY (member_id) REFERENCES member(id)
 );
+
+REPLACE INTO review VALUES
+	('3fd7f262-80c7-419e-8883-f733fb8dd4e3','ed9c5126-2731-4aaf-87cb-d7c0533f76c4','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','Отлично качество, изглежда както на снимката!',5,'2019-08-21 17:29:01'),
+	('a376b34e-2495-4434-bf0a-4ea767ddea07','ed9c5126-2731-4aaf-87cb-d7c0533f76c4','fa3cda04-e188-40ab-97ca-220d8e52db16','Имаше забавяне в доставката',4,'2019-08-22 17:10:41'),
+	('6bf8f77a-f6e9-409f-81e2-6c77bcb334d8','ed9c5126-2731-4aaf-87cb-d7c0533f76c4','5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40','Взех го за подарък, но обмислям да взема такъв и на себе си',5,'2019-08-23 10:10:41'),
+	('a88d5948-c377-4033-8fd3-47ddc6229d41','7b3ebcf3-73d5-4342-a653-eda72195d025','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','Обожавам обеците и  кутийката',5,'2019-06-24 13:10:41');
+
+

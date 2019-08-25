@@ -1,6 +1,7 @@
 package com.crafty.util;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Comparator;
@@ -85,5 +86,16 @@ public class MapperHelper {
 		orderItemDTO.setPaid(orderItem.getPaidPerItem());
 		orderItemDTO.setQuantity(orderItem.getQuantity());
 		return orderItemDTO;
+	}
+
+	public ReviewDTO toReviewDTO(Review review) {
+		ReviewDTO reviewDTO = new ReviewDTO();
+		reviewDTO.setItemId(review.getItemId());
+		reviewDTO.setMember(toMemberDTO(review.getMember()));
+		reviewDTO.setComment(review.getComment());
+		reviewDTO.setScore(review.getScore());
+		reviewDTO.setLastUpdated(LocalDateTime.ofInstant(review.getLastUpdated(),
+			ZoneOffset.UTC).toLocalDate());
+		return reviewDTO;
 	}
 }

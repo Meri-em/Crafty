@@ -95,7 +95,7 @@ public class MemberService {
 		}
 	}
 	
-	private Member getMemberByIdOrNotFound(String memberId) {
+	public Member getMemberByIdOrNotFound(String memberId) {
 		return memberRepository.findById(memberId)
 				.orElseThrow(() -> new NotFoundException("No member found with id " + memberId));
 	}

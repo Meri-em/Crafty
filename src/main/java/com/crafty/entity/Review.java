@@ -6,16 +6,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
 public class Review extends BaseEntityId {
 
 	private static final long serialVersionUID = -4128706747050524950L;
 
-	@ManyToOne
 	@JoinColumn(name = "item_id")
-	private Item item;
+	@NotNull
+	@Column(columnDefinition = "CHAR(255)")
+	private String itemId;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
@@ -26,12 +29,15 @@ public class Review extends BaseEntityId {
 
 	private BigDecimal score;
 
-	public Item getItem() {
-		return item;
+	@NotNull
+	private Instant lastUpdated;
+
+	public String getItemId() {
+		return itemId;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
 	}
 
 	public Member getMember() {
@@ -56,5 +62,13 @@ public class Review extends BaseEntityId {
 
 	public void setScore(BigDecimal score) {
 		this.score = score;
+	}
+
+	public Instant getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Instant lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 }
