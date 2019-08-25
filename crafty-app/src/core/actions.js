@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as EP from './endpoints';
-import { LS, toQuery, transform } from './utils';
+import { LS, toQuery } from './utils';
 
 // GENERAL
 export const welcome       = () => axios(EP.WELCOME);
@@ -18,12 +18,17 @@ const auth = {
   },
   logout: () => {
     window.store.set('isLoggedIn', false);
+    LS.set('user', { guest: true });
     return LS.set('tokens', {});
   }
 }
 window.axios = axios;
 export const register = data => axios.post(EP.REGISTER, data).then(setMessage);;
-export const login    = data => axios.post(EP.LOGIN, data).then(res => auth.set(res.data)).catch(({response}) => setMessage(response));
+export const login    = data => axios.post(EP.LOGIN, data).then(res => {
+  auth.set(res.data);
+  location.hash = ''; // eslint-disable-line
+  getMyProfile().then(res => LS.set('user', res.data));
+}).catch(({response}) => setMessage(response));
 export const refresh  = ({ refreshToken }) => axios.post(EP.REFRESH, null, {
   headers: { Authorization: refreshToken }
 }).then(res => auth.set(res.data));
@@ -52,16 +57,19 @@ export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }
 export const getMyProfile  = () => authorized({ url: EP.MY_PROFILE });
 
 
-const items = axios.create({ transformResponse: data => transform(JSON.parse(data)) });
-
 // ITEMS
-export const getItem      = id => items(`${EP.ITEM}${id}`);
-export const getItems     = () => items(EP.ITEMS);
-export const search       = params => items(EP.SEARCH + toQuery(params));
+export const getItem      = id => axios(`${EP.ITEM}${id}`);
+export const getReviews   = id => axios(`${EP.REVIEWS}/${id}`);
+export const getItems     = () => axios(EP.ITEMS);
+export const search       = params => axios(EP.SEARCH + toQuery(params));
 export const searchByName = name => search({ text: name });
 export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
 export const addItem      = ({url, data}) => authorized({ method: 'POST', url, data, headers: { 'content-type': 'multipart/form-data' } });
+export const addReview    = data => authorized({ method: 'POST', url: EP.REVIEWS, data });
+export const deleteReview = itemId => authorized({ method: 'DELETE', url: `${EP.REVIEWS}/${itemId}` });
+
+
 
 export const updateDefaultImage = ({itemId, imageId}) => authorized({
   method: 'POST',

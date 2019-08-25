@@ -1,0 +1,74 @@
+.reviews {
+  box-shadow: 0 0 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.2);
+  margin: 10px 0 20px;
+}
+.reviews:empty {
+  display: none;
+}
+.Review {
+  padding: 10px;
+}
+.Review + .Review {
+  border-top: 1px solid rgba(0,0,0,0.3);
+}
+.Review .last-edit {
+  margin: 0 10px;
+}
+.Review .score {
+  display: inline-block;
+  font-size: 1.4em;
+}
+.Review .author {
+  text-shadow: 1px 1px 2px #333;
+  color: white;
+}
+.Review .star.inactive {
+  opacity: 1;
+}
+.Review .comment {
+  margin: 5px 0;
+}
+.Review .actions {
+  float: right;
+  display: flex;
+}
+.action {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  transition: 0.5s;
+}
+.action:hover {
+  background: rgba(0,0,0,0.2);
+  box-shadow: 0 0 2px;
+}
+
+.EditReview {
+  text-align: center;
+  padding: 10px;
+}
+.EditReview .score {
+  width: auto;
+  display: block;
+  margin: auto;
+}
+.EditReview .comment {
+  width: 80%;
+  display: block;
+  margin: 10px auto;
+}
+.EditReview button {
+  padding: 10px;
+  width: 100px;
+}
+.EditReview .cancel:not(:hover) {
+  opacity: 0.5;
+}
+.EditReview .publish {
+  background: gold;
+  margin-left: 10px;
+}

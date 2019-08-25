@@ -17,22 +17,16 @@ export const toQuery = obj => '?' + Object.entries(obj).map(
   ([ k, v ]) => (Array.isArray(v) ? v : [v]).map(e => `${k}=${v}`).join('&')
 ).join('&');
 
-const remap = Object.entries({
-  primaryImagePath: 'image',
-  itemImages: 'images',
-});
-
-export const transform = data => {
-  if (Array.isArray(data)) return data.map(transform);
-
-  remap.forEach(([theirs, ours]) => {
-    if (data[theirs]) {
-      data[ours] = data[theirs];
-      delete data[theirs];
-    }
-  });
-  
-  return data;
-};
-
 export const isLoggedIn = () => (LS.get('tokens') || {}).refreshExpires > Date.now();
+
+export const getUser = () => isLoggedIn() && LS.get('user') || { guest: true }; // eslint-disable-line
+
+export const getFormData = ({ elements }) => [].reduce.call(elements, (data, { name, value }) => {
+  const [group, key] = name.match(/(\w+)\.(\w+)/) || [];
+  if (group) {
+    data[group] = Object.assign(data[group] || {}, { [key]: value })
+  } else if (name) {
+    data[name] = value;
+  }
+  return data;
+}, {});

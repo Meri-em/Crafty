@@ -1,0 +1,12 @@
+.MyProfile {
+  padding: 20px;
+}
+.MyProfile .info {
+  padding: 20px;
+}
+.MyProfile .nick, .MyProfile .description {
+  margin-top: 10px;
+}
+.MyProfile .items {
+  text-align: center;
+}

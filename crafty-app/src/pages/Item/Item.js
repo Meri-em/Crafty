@@ -7,9 +7,10 @@ class Item extends Component {
   state = { };
 
   componentDidMount() {
-    getItem(this.props.match.params.id).then(res => {
+    const { id } = this.props.match.params;
+    getItem(id).then(res => {
       this.setState({ item: res.data });
-    })
+    });
   }
   render() {
     const { item } = this.state;

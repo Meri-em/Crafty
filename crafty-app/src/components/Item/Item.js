@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { FaPen } from 'react-icons/fa';
 import { addToCart, updateDefaultImage, deleteItemImage } from 'core/actions';
-
+import { getUser } from 'core/utils';
+import { ReviewList } from '../Review/Review';
 import './Item.css';
 
 const ItemSimple = ({ author, id, price, name, image }) => (
@@ -18,12 +20,13 @@ class ItemDetailed extends Component {
     const { author, price, name, images, description, id } = this.props;
     const itemId = id;
     const image = this.state.image || this.props.image;
-    const isEdit = location.hash.endsWith('/edit'); // eslint-disable-line
+    const isMine = author.id === getUser().id;
+    const isEdit = isMine && location.hash.endsWith('/edit'); // eslint-disable-line
 
     return (
       <div className={`Item large ${isEdit ? 'edit' : 'view'}`} id={id}>
         <div className="item-name">{name}</div>
-        <Link className="item-edit-link" to={`/_/${id}/edit`} >Редактирай</Link>
+        {isMine && <Link className="item-edit-link action" to={`/_/${id}${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>}
         <div className="item-preview">
           <img className="item-image" src={image} alt="" />
           <div className="item-thumbnails">
@@ -42,6 +45,7 @@ class ItemDetailed extends Component {
         <div className="item-add" onClick={() => addToCart({id})}>Add to cart</div>
         <div className="item-author">{author.name}</div>
         <div className="item-description">{description}</div>
+        <ReviewList itemId={itemId}/>
       </div>
     )
   }

@@ -10,12 +10,13 @@ export const REGISTER    = `${API_ROOT}/register`;
 export const LOGIN       = `${API_ROOT}/login`;
 export const REFRESH     = `${API_ROOT}/refresh`;
 export const LOGOUT      = `${API_ROOT}/logout`;
-export const MY_PROFILE  = `${API_ROOT}/user/info`;
+export const MY_PROFILE  = `${API_ROOT}/profile`;
 
 // ITEMS
 export const ITEM        = `${API_ROOT}/items/`;
 export const ITEMS       = `${API_ROOT}/items/search`;
 export const SEARCH      = `${API_ROOT}/items/search`;
+export const REVIEWS     = `${API_ROOT}/reviews`;
 
 // CART
 export const CART        = `${API_ROOT}/cart`;
