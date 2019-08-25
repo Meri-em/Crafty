@@ -18,4 +18,6 @@ const App = createStore(() => (
   </div>
 ));
 
+window.addEventListener('hashchange', () => window.store.set('message', ''));
+
 ReactDOM.render(<App />, document.getElementById('root'));

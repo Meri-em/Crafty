@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { FaPen } from 'react-icons/fa';
+import { FaPen, FaCartPlus } from 'react-icons/fa';
 import { addToCart, updateDefaultImage, deleteItemImage } from 'core/actions';
 import { getUser } from 'core/utils';
 import { ReviewList } from '../Review/Review';
@@ -42,7 +42,7 @@ class ItemDetailed extends Component {
           </div>
         </div>
         <div className="item-price">{price}</div>
-        <div className="item-add" onClick={() => addToCart({id})}>Add to cart</div>
+        <div className="item-add" onClick={() => addToCart({id})}><FaCartPlus title="Добави в количката" /></div>
         <div className="item-author">{author.name}</div>
         <div className="item-description">{description}</div>
         <ReviewList itemId={itemId}/>

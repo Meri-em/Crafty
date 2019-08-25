@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { getCart, removeFromCart, buyCart, clearCart } from 'core/actions';
-
+import { FaMinus } from 'react-icons/fa';
 import './Cart.css';
 const add = (arr, item) => (arr.push(item), item); // eslint-disable-line no-sequences
 
 class Cart extends Component {
   state = {total: 0, items: []};
 
+  loadCart = () => getCart().then(res => this.setState({...res.data}));
+  removeItem = ({ id }) => removeFromCart({id}).then(this.loadCart);
+
   componentDidMount() {
-    getCart().then(res => this.setState({...res.data}));
+    this.loadCart();
   }
+
   render() {
     const { items } = this.state;
     const groups = []
@@ -20,7 +24,7 @@ class Cart extends Component {
     })
     return (
       <div className="cart-page">
-        <h1>Cart contents</h1>
+        <h1>Количка</h1>
         <div className="cart-items">
           {groups.map(({author, items}) => (
             <div className="cart-group" key={author.id}>
@@ -31,12 +35,12 @@ class Cart extends Component {
               <div className="cart-author-items">
                 {items.map(({item, quantity}) => (
                   <div className="cart-item" key={item.id}>
+                    <a className="cart-item-name" href={'#/_/' + item.id}>{item.name}</a>
                     <img className="cart-item-image" src={item.image} alt={item.name} />
                     <div className="cart-item-info">
-                      <a className="cart-item-name" href={'#/_/' + item.id}>{item.name}</a>
-                      <div className="cart-item-price">{item.price}$</div>
-                      <div className="cart-item-quantity">x{quantity}</div>
-                      <div className="cart-item-remove" onClick={() => removeFromCart({id: item.id})}>Remove item</div>
+                      <div className="cart-item-quantity">{quantity} x </div>
+                      <div className="cart-item-price">{item.price}лв</div>
+                      <div className="cart-item-remove" onClick={() => this.removeItem(item)}><FaMinus title="Премахни"/></div>
                     </div>
                   </div>
                 ))}
