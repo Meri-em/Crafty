@@ -102,7 +102,7 @@ public class MapperHelper {
 
 	public ProfileDTO toProfileDTO(Member member) {
 		ProfileDTO profileDTO = new ProfileDTO();
-		profileDTO.setMemberId(member.getId());
+		profileDTO.setId(member.getId());
 		profileDTO.setFirstName(member.getFirstName());
 		profileDTO.setLastName(member.getLastName());
 		profileDTO.setNickname(member.getNickname());

@@ -97,9 +97,8 @@ public class CartService {
 		if (cartItems.isEmpty()) {
 			throw new BadRequestException("The cart is empty");
 		}
-		Order order = new Order();
-		order.setCreatedAt(Instant.now());
-		order.setMemberId(memberId);
+		// the number of orders is equal to the number of different authors created the items
+		List<Order> orders = new ArrayList<>();
 		List<OrderItem> orderItems = new ArrayList<>();
 		for (CartItem cartItem : cartItems) {
 			OrderItem orderItem = new OrderItem();
@@ -107,12 +106,30 @@ public class CartService {
 			orderItem.setItem(item);
 			orderItem.setPaidPerItem(item.getPrice());
 			orderItem.setQuantity(cartItem.getQuantity());
-			orderItem.setOrder(order);
+			orderItem.setOrder(findOrderforMember(orders, memberId, item.getMember().getId(), orderItem));
 			orderItems.add(orderItem);
 		}
-		order.setItems(orderItems);
-		order = orderRepository.save(order);
+		orders = orderRepository.saveAll(orders);
 		cartItemRepository.deleteAll(cartItems);
+	}
+
+	private Order findOrderforMember(List<Order> orders, String memberId, String itemsAuthorId, OrderItem orderItem) {
+		Order order = null;
+		Optional<Order> orderOptional = orders.stream()
+			.filter(or -> or.getItemsAuthorId() != null && or.getItemsAuthorId().equals(itemsAuthorId)).findFirst();
+		if (orderOptional.isPresent()) {
+			order = orderOptional.get();
+		} else {
+			order = new Order();
+			order.setMemberId(memberId);
+			order.setItemsAuthorId(itemsAuthorId);
+			order.setCreatedAt(Instant.now());
+			orders.add(order);
+
+		}
+		List<OrderItem> orderItems = order.getItems();
+		orderItems.add(orderItem);
+		return order;
 	}
 
 	private int calculateNewQuantity(int savedQuantity, String quantityString) {

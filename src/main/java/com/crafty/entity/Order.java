@@ -2,6 +2,7 @@ package com.crafty.entity;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -23,8 +24,11 @@ public class Order extends BaseEntityId {
 	@NotNull
 	private Instant createdAt;
 
+	@Transient
+	private String itemsAuthorId;
+
 	@OneToMany(mappedBy = "order", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-	List<OrderItem> items;
+	List<OrderItem> items = new ArrayList<>();
 
 	public String getMemberId() {
 		return memberId;
@@ -48,5 +52,13 @@ public class Order extends BaseEntityId {
 
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
+	}
+
+	public String getItemsAuthorId() {
+		return itemsAuthorId;
+	}
+
+	public void setItemsAuthorId(String itemsAuthorId) {
+		this.itemsAuthorId = itemsAuthorId;
 	}
 }

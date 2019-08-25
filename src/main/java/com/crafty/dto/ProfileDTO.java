@@ -7,7 +7,7 @@ public class ProfileDTO implements Serializable {
 
 	private static final long serialVersionUID = 8422676958486016579L;
 
-	private String memberId;
+	private String id;
 	private String firstName;
 	private String lastName;
 	private String nickname;
@@ -15,12 +15,12 @@ public class ProfileDTO implements Serializable {
 	private String location;
 	private List<SimpleItemDTO> items;
 
-	public String getMemberId() {
-		return memberId;
+	public String getId() {
+		return id;
 	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
