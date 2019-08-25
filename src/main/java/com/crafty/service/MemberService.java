@@ -3,6 +3,7 @@ package com.crafty.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.crafty.dto.ProfileDTO;
 import com.crafty.entity.Item;
 import com.crafty.repository.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 		this.itemRepository = itemRepository;
 		this.mapperHelper = mapperHelper;
+	}
+
+	public ProfileDTO getProfileInformation(String memberId) {
+		Member member = getMemberByIdOrNotFound(memberId);
+		return mapperHelper.toProfileDTO(member);
 	}
 	
 	public List<FavoriteResponseDTO> getFavouriteMembers(String memberId) {

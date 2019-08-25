@@ -2,13 +2,9 @@ package com.crafty.web.rest;
 
 import java.util.List;
 
+import com.crafty.dto.ProfileDTO;
 import com.crafty.util.CurrentUser;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.crafty.dto.FavoriteResponseDTO;
 import com.crafty.dto.FavoriteRequestDTO;
@@ -22,6 +18,16 @@ public class MemberResource {
 	
 	private MemberResource(MemberService memberService) {
 		this.memberService = memberService;
+	}
+
+	@GetMapping("/profile")
+	public ProfileDTO getProfile() {
+		return memberService.getProfileInformation(CurrentUser.getMemberId());
+	}
+
+	@GetMapping("/profile/{memberId}")
+	public ProfileDTO getMemberProfile(@PathVariable String memberId) {
+		return memberService.getProfileInformation(memberId);
 	}
 	
 	@GetMapping("/favorite-members")

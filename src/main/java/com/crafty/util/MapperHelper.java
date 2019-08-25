@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,5 +98,21 @@ public class MapperHelper {
 		reviewDTO.setLastUpdated(LocalDateTime.ofInstant(review.getLastUpdated(),
 			ZoneOffset.UTC).toLocalDate());
 		return reviewDTO;
+	}
+
+	public ProfileDTO toProfileDTO(Member member) {
+		ProfileDTO profileDTO = new ProfileDTO();
+		profileDTO.setMemberId(member.getId());
+		profileDTO.setFirstName(member.getFirstName());
+		profileDTO.setLastName(member.getLastName());
+		profileDTO.setNickname(member.getNickname());
+		profileDTO.setDescription(member.getDescription());
+		profileDTO.setLocation(member.getLocation());
+		List<SimpleItemDTO> itemDTOs = new ArrayList<>();
+		for (Item item : member.getItems()) {
+			itemDTOs.add(toSimpleItemDTO(item));
+		}
+		profileDTO.setItems(itemDTOs);
+		return profileDTO;
 	}
 }

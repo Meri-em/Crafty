@@ -65,9 +65,9 @@ CREATE TABLE favorite_item (
 REPLACE INTO member VALUES
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'Maria', 'Karcheva',"marianik",NULL,NULL),
 	('834c8e56-6464-4143-acbc-b7e48e643a6c', 'Ангел', 'Димитров','Арт точка','Тук ще намерите голямо разнообразие от ръчно изработени изделия','София'),
-	('9d700ade-ed19-4bb8-81f6-8733f4ec4ab0', NULL, NULL,'Дървен свят',NULL,NULL),
-	('5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40', NULL, NULL,'DaniMade',NULL,NULL),
-	('cb97aac4-1b58-4563-b8f7-14060124d49e', NULL, NULL,'Цветно Китно',NULL,NULL),
+	('9d700ade-ed19-4bb8-81f6-8733f4ec4ab0', NULL, NULL,'Дървен свят','Дървени предмети за дома и бижута','Велико Търново'),
+	('5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40', NULL, NULL,'DaniMade','Ръчна изработка вдъхновена от морето','Варна'),
+	('cb97aac4-1b58-4563-b8f7-14060124d49e', NULL, NULL,'Цветно Китно','Нека да е цветно!','Пловдив'),
 	('fa3cda04-e188-40ab-97ca-220d8e52db16', NULL, NULL,'pesho123',NULL,NULL);
 
 
