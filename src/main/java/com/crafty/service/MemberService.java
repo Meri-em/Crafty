@@ -36,6 +36,16 @@ public class MemberService {
 		Member member = getMemberByIdOrNotFound(memberId);
 		return mapperHelper.toProfileDTO(member);
 	}
+
+	public void updateProfile(ProfileDTO profileDTO, String memberId) {
+		Member member = getMemberByIdOrNotFound(memberId);
+		member.setFirstName(profileDTO.getFirstName());
+		member.setLastName(profileDTO.getLastName());
+		member.setNickname(profileDTO.getNickname());
+		member.setDescription(profileDTO.getDescription());
+		member.setLocation(profileDTO.getLocation());
+		memberRepository.save(member);
+	}
 	
 	public List<FavoriteResponseDTO> getFavouriteMembers(String memberId) {
 		Member member = getMemberByIdOrNotFound(memberId);

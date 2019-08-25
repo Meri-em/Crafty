@@ -25,6 +25,11 @@ public class MemberResource {
 		return memberService.getProfileInformation(CurrentUser.getMemberId());
 	}
 
+	@PostMapping("/profile")
+	public void updateProfile(@RequestBody ProfileDTO profileDTO) {
+		memberService.updateProfile(profileDTO, CurrentUser.getMemberId());
+	}
+
 	@GetMapping("/profile/{memberId}")
 	public ProfileDTO getMemberProfile(@PathVariable String memberId) {
 		return memberService.getProfileInformation(memberId);
