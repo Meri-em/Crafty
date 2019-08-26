@@ -10,9 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface OrderRepository extends JpaRepository<Order, String>  {
 
-	@Query(value = "SELECT o FROM Order o"
-		+ "  WHERE o.memberId = :memberId"
-		+ "  ORDER BY o.createdAt DESC")
-	List<Order> findByMemberId(@Param("memberId") String memberId);
+	List<Order> findByPurchaserMemberIdOrderByCreatedAtDesc(String purchaserMemberId);
+
+	List<Order> findBySellerMemberIdOrderByCreatedAtDesc(String sellerMemberId);
 
 }

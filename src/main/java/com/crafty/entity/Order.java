@@ -16,26 +16,34 @@ public class Order extends BaseEntityId {
 	
 	private static final long serialVersionUID = -5553205123797954099L;
 
-	@JoinColumn(name = "member_id")
 	@NotNull
-	@Column(columnDefinition = "CHAR(255)")
-	private String memberId;
+	@Column(columnDefinition = "char(36)")
+	private String purchaserMemberId;
+
+	@NotNull
+	@Column(columnDefinition = "char(36)")
+	private String sellerMemberId;
 	
 	@NotNull
 	private Instant createdAt;
 
-	@Transient
-	private String itemsAuthorId;
-
 	@OneToMany(mappedBy = "order", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	List<OrderItem> items = new ArrayList<>();
 
-	public String getMemberId() {
-		return memberId;
+	public String getPurchaserMemberId() {
+		return purchaserMemberId;
 	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setPurchaserMemberId(String purchaserMemberId) {
+		this.purchaserMemberId = purchaserMemberId;
+	}
+
+	public String getSellerMemberId() {
+		return sellerMemberId;
+	}
+
+	public void setSellerMemberId(String sellerMemberId) {
+		this.sellerMemberId = sellerMemberId;
 	}
 
 	public Instant getCreatedAt() {
@@ -52,13 +60,5 @@ public class Order extends BaseEntityId {
 
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
-	}
-
-	public String getItemsAuthorId() {
-		return itemsAuthorId;
-	}
-
-	public void setItemsAuthorId(String itemsAuthorId) {
-		this.itemsAuthorId = itemsAuthorId;
 	}
 }

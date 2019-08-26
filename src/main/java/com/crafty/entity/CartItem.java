@@ -13,7 +13,6 @@ public class CartItem extends BaseEntityId {
 	
 	private static final long serialVersionUID = -5553205123797954099L;
 
-	@JoinColumn(name = "member_id")
 	@NotNull
 	@Column(columnDefinition = "CHAR(255)")
 	private String memberId;

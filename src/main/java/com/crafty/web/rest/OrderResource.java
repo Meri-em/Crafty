@@ -1,12 +1,12 @@
 package com.crafty.web.rest;
 
+import com.crafty.dto.OrdersDTO;
 import com.crafty.util.CurrentUser;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.crafty.dto.OrderDTO;
 import com.crafty.service.OrderService;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class OrderResource {
 	}
 	
 	@GetMapping("")
-	public List<OrderDTO> getOrders() {
+	public OrdersDTO getOrders() {
 		return orderService.getOrders(CurrentUser.getMemberId());
 	}
 

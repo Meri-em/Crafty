@@ -417,10 +417,12 @@ REPLACE INTO cart_item VALUES
 
 CREATE TABLE `order` (
 	id CHAR(36) NOT NULL,
-	member_id CHAR(36) NOT NULL,
+	purchaser_member_id CHAR(36) NOT NULL,
+	seller_member_id CHAR(36) NOT NULL,
 	created_at DATETIME NOT NULL,
 	PRIMARY KEY(id),
-	FOREIGN KEY (member_id) REFERENCES member(id)
+	FOREIGN KEY (purchaser_member_id) REFERENCES member(id),
+	FOREIGN KEY (seller_member_id) REFERENCES member(id)
 );
 
 CREATE TABLE order_item (
@@ -435,17 +437,16 @@ CREATE TABLE order_item (
 );
 
 REPLACE INTO `order` VALUES
-	('d475b1b7-50a0-41c1-936e-37ea3a604851','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','2019-03-12 17:00:01'),
-	('f32ca85a-cd5f-409e-bd15-4cea84564fda','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','2019-06-22 14:29:18'),
-	('50d73bc1-b948-4b1f-8ffe-c2b67abf9064','834c8e56-6464-4143-acbc-b7e48e643a6c', '2019-07-05 12:16:53');
+	('d475b1b7-50a0-41c1-936e-37ea3a604851','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','834c8e56-6464-4143-acbc-b7e48e643a6c','2019-03-12 17:00:01'),
+	('f32ca85a-cd5f-409e-bd15-4cea84564fda','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','9d700ade-ed19-4bb8-81f6-8733f4ec4ab0','2019-06-22 14:29:18'),
+	('50d73bc1-b948-4b1f-8ffe-c2b67abf9064','834c8e56-6464-4143-acbc-b7e48e643a6c','5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40','2019-07-05 12:16:53');
 
 REPLACE INTO order_item VALUES
 	('7e21ec47-6ae2-4864-a46e-518a67710c57','c2b76bc3-da3b-46fb-a8c8-cf44122a4f50',1,14,'d475b1b7-50a0-41c1-936e-37ea3a604851'),
 	('ed8f4d2e-6c61-4a10-ba13-4b08ffa038cb','c4c28bf5-20ac-441b-8d88-6c0a1135c800',3,3.5,'d475b1b7-50a0-41c1-936e-37ea3a604851'),
-	('523fe06d-4cd9-44ef-820f-495d8c9eaaa0','7b3ebcf3-73d5-4342-a653-eda72195d025',1,10,'f32ca85a-cd5f-409e-bd15-4cea84564fda'),
+	('523fe06d-4cd9-44ef-820f-495d8c9eaaa0','8eb162b7-45af-455b-b07b-693924994d08',1,16,'f32ca85a-cd5f-409e-bd15-4cea84564fda'),
 	('41c0e224-fcb4-43dc-993e-a17a45f6e748','baa90954-1072-4717-97fb-e3dd5634ac05',1,50,'50d73bc1-b948-4b1f-8ffe-c2b67abf9064'),
-	('10da4934-479a-4f88-b2d1-b1735c229d68','6fa27a04-7ac3-4ee1-aade-4087d10a46bb',1,55,'50d73bc1-b948-4b1f-8ffe-c2b67abf9064'),
-	('7610cbdd-036f-400f-99ac-889309a59d35','16f4cdc7-20df-4104-941c-c7cb862b6c1c',1,11,'50d73bc1-b948-4b1f-8ffe-c2b67abf9064');
+	('10da4934-479a-4f88-b2d1-b1735c229d68','6fa27a04-7ac3-4ee1-aade-4087d10a46bb',1,55,'d475b1b7-50a0-41c1-936e-37ea3a604851');
 
 REPLACE INTO favorite_item VALUES
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', 'bfa084e2-9cbb-4774-8d45-e4eea380cd1a'),

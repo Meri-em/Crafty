@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.crafty.dto.OrdersDTO;
 import com.crafty.entity.OrderItem;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +29,22 @@ public class OrderService {
 		this.mapperHelper = mapperHelper;
 	}
 	
-	public List<OrderDTO> getOrders(String memberId) {
-		List<OrderDTO> result = new ArrayList<>();
-		List<Order> orders = orderRepository.findByMemberId(memberId);
-		for (Order order : orders) {
-			BigDecimal totalPaid = getOrderTotalPaid(order);
-			result.add(mapperHelper.toOrderDTO(order, totalPaid));
-		}
-		return result;
+	public OrdersDTO getOrders(String memberId) {
+		List<Order> purchases = orderRepository.findByPurchaserMemberIdOrderByCreatedAtDesc(memberId);
+		List<Order> sales = orderRepository.findBySellerMemberIdOrderByCreatedAtDesc(memberId);
+
+		List<OrderDTO> purchasesDTO = purchases.stream()
+			.map(p -> {
+				BigDecimal totalPaid = getOrderTotalPaid(p);
+				return mapperHelper.toOrderDTO(p, totalPaid);
+			}).collect(Collectors.toList());
+
+		List<OrderDTO> salesDTO = sales.stream()
+			.map(p -> {
+				BigDecimal totalPaid = getOrderTotalPaid(p);
+				return mapperHelper.toOrderDTO(p, totalPaid);
+			}).collect(Collectors.toList());
+		return new OrdersDTO(purchasesDTO, salesDTO);
 	}
 
 	private BigDecimal getOrderTotalPaid(Order order) {

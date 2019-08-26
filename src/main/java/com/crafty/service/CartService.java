@@ -113,16 +113,16 @@ public class CartService {
 		cartItemRepository.deleteAll(cartItems);
 	}
 
-	private Order findOrderforMember(List<Order> orders, String memberId, String itemsAuthorId, OrderItem orderItem) {
+	private Order findOrderforMember(List<Order> orders, String memberId, String sellerMemberId, OrderItem orderItem) {
 		Order order = null;
 		Optional<Order> orderOptional = orders.stream()
-			.filter(or -> or.getItemsAuthorId() != null && or.getItemsAuthorId().equals(itemsAuthorId)).findFirst();
+			.filter(or -> or.getSellerMemberId() != null && or.getSellerMemberId().equals(sellerMemberId)).findFirst();
 		if (orderOptional.isPresent()) {
 			order = orderOptional.get();
 		} else {
 			order = new Order();
-			order.setMemberId(memberId);
-			order.setItemsAuthorId(itemsAuthorId);
+			order.setPurchaserMemberId(memberId);
+			order.setSellerMemberId(sellerMemberId);
 			order.setCreatedAt(Instant.now());
 			orders.add(order);
 

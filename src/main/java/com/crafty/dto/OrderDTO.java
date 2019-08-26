@@ -18,6 +18,8 @@ public class OrderDTO implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm.SSS")
 	private LocalDateTime createdAt;
 
+	private MemberDTO member;
+
 	public BigDecimal getTotal() {
 		return total;
 	}
@@ -40,5 +42,13 @@ public class OrderDTO implements Serializable {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public MemberDTO getMember() {
+		return member;
+	}
+
+	public void setMember(MemberDTO member) {
+		this.member = member;
 	}
 }
