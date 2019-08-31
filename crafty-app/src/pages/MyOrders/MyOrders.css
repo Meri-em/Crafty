@@ -1,3 +1,10 @@
+.MyOrders {
+  display: flex;
+}
+.MyPurchases, .MySales {
+  margin: 10px;
+  flex: 1;
+}
 .MyOrders .order {
   margin-top: 20px;
 }
