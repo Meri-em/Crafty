@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.crafty.dto.OrdersDTO;
+import com.crafty.entity.Member;
 import com.crafty.entity.OrderItem;
+import com.crafty.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import com.crafty.dto.OrderDTO;
@@ -21,11 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 	
 	private final OrderRepository orderRepository;
+	private final MemberService memberService;
 	private final MapperHelper mapperHelper;
 	
 	public OrderService(OrderRepository orderRepository,
+						MemberService memberService,
 						MapperHelper mapperHelper) {
 		this.orderRepository = orderRepository;
+		this.memberService = memberService;
 		this.mapperHelper = mapperHelper;
 	}
 	
@@ -36,13 +41,15 @@ public class OrderService {
 		List<OrderDTO> purchasesDTO = purchases.stream()
 			.map(p -> {
 				BigDecimal totalPaid = getOrderTotalPaid(p);
-				return mapperHelper.toOrderDTO(p, totalPaid);
+				Member member = memberService.getMemberByIdOrNotFound(p.getSellerMemberId());
+				return mapperHelper.toOrderDTO(p, totalPaid, member);
 			}).collect(Collectors.toList());
 
 		List<OrderDTO> salesDTO = sales.stream()
 			.map(p -> {
 				BigDecimal totalPaid = getOrderTotalPaid(p);
-				return mapperHelper.toOrderDTO(p, totalPaid);
+				Member member = memberService.getMemberByIdOrNotFound(p.getPurchaserMemberId());
+				return mapperHelper.toOrderDTO(p, totalPaid, member);
 			}).collect(Collectors.toList());
 		return new OrdersDTO(purchasesDTO, salesDTO);
 	}

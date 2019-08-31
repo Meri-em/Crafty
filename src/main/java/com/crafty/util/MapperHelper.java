@@ -66,10 +66,11 @@ public class MapperHelper {
 		return cartItemDTO;
 	}
 	
-	public OrderDTO toOrderDTO(Order order, BigDecimal total) {
+	public OrderDTO toOrderDTO(Order order, BigDecimal total, Member member) {
 		OrderDTO orderDTO = new OrderDTO();
 		orderDTO.setCreatedAt(LocalDateTime.ofInstant(order.getCreatedAt(), ZoneOffset.UTC));
 		orderDTO.setTotal(total);
+		orderDTO.setMember(toMemberDTO(member));
 		List<OrderItemDTO> orderItemDTOs = order.getItems().stream()
 			.map(i -> this.toOrderItemDTO(i))
 			.collect(Collectors.toList());
