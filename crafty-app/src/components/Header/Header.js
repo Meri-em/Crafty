@@ -16,7 +16,7 @@ const Header = ({isLoggedIn}) => (
       <a href="#/register"><FaUserPlus/> Регистрация</a>
     </nav>}
     {isLoggedIn && <nav className="AuthNav">
-      <a href="#/myProfile"><FaUser/> Профил</a>
+      <a href="#/profile"><FaUser/> Профил</a>
       <a href="#/myOrders"><FaTruckLoading/> Поръчки</a>
       <a href="#/myCart"><FaShoppingCart/> Количка</a>
       <a href="#/logout" onClick={logout}><FaSignOutAlt/> Изход</a>

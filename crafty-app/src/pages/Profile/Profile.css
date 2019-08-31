@@ -1,0 +1,26 @@
+.Profile {
+  padding: 20px;
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
+}
+.Profile .info {
+  padding: 20px;
+}
+.Profile .nick, .Profile .description, .Profile label + label, .Profile .save {
+  margin-top: 10px;
+}
+.Profile .items {
+  text-align: center;
+}
+.Profile.edit .name label {
+  display: block;
+}
+.Profile.edit span, .Profile.edit input, .Profile.edit textarea {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 100px;
+}
+.Profile.edit textarea {
+  width: 400px;
+}

@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { FaPen, FaCartPlus } from 'react-icons/fa';
-import { addToCart, updateDefaultImage, deleteItemImage } from 'core/actions';
+import { FaPen, FaCartPlus, FaArchive, FaTrashRestoreAlt } from 'react-icons/fa';
+import { addToCart, updateDefaultImage, deleteItemImage, deleteItem, restoreItem } from 'core/actions';
 import { getUser } from 'core/utils';
 import { ReviewList } from '../Review/Review';
 import './Item.css';
 
-const ItemSimple = ({ author, id, price, name, image }) => (
+const ItemSimple = ({ author, id, price, name, image, edit, archived }) => (
   <Link className="Item thumbnail" to={`/_/${id}`} style={{ backgroundImage: 'url(' + image + ')' }}>
     <div className="item-name">{name}</div>
     <div className="item-price">{price}</div>
+    {edit && !archived && <div className="action" onClick={e => { e.preventDefault(); deleteItem(id); }}><FaArchive title="Архивирай"/></div>}
+    {edit && archived && <div className="action" onClick={e => { e.preventDefault(); restoreItem(id); }}><FaTrashRestoreAlt title="Възстанови"/></div>}
   </Link>
 );
 
@@ -43,7 +45,7 @@ class ItemDetailed extends Component {
         </div>
         <div className="item-price">{price}</div>
         <div className="item-add" onClick={() => addToCart({id})}><FaCartPlus title="Добави в количката" /></div>
-        <div className="item-author">{author.name}</div>
+        <Link className="item-author" to={`/profile/${author.id}`}>{author.name}</Link>
         <div className="item-description">{description}</div>
         <ReviewList itemId={itemId}/>
       </div>

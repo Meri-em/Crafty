@@ -10,7 +10,7 @@ export const REGISTER    = `${API_ROOT}/register`;
 export const LOGIN       = `${API_ROOT}/login`;
 export const REFRESH     = `${API_ROOT}/refresh`;
 export const LOGOUT      = `${API_ROOT}/logout`;
-export const MY_PROFILE  = `${API_ROOT}/profile`;
+export const PROFILE  = `${API_ROOT}/profile`;
 
 // ITEMS
 export const ITEM        = `${API_ROOT}/items/`;
