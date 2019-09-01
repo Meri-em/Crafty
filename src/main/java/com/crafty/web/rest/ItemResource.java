@@ -3,15 +3,12 @@ package com.crafty.web.rest;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.crafty.dto.DefaultImageDTO;
-import com.crafty.dto.UploadItemDTO;
+import com.crafty.dto.*;
 import com.crafty.util.CurrentUser;
 import com.crafty.web.exception.BadRequestException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.crafty.dto.ItemDTO;
-import com.crafty.dto.SimpleItemDTO;
 import com.crafty.service.ItemService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,10 +56,10 @@ public class ItemResource {
 		return "Success!";
 	}
 
-	@DeleteMapping("/{itemId}")
-	public String deleteItem(@PathVariable String itemId) {
-		itemService.deleteItem(CurrentUser.getMemberId(), itemId);
-		return "Success!";
+	@PatchMapping("/{itemId}")
+	public String updateArchived(@PathVariable String itemId,
+								 @RequestBody ItemArchivedDTO itemArchivedDTO) {
+		return itemService.updateArchived(CurrentUser.getMemberId(), itemId, itemArchivedDTO);
 	}
 
 	@DeleteMapping("/{itemId}/images/{itemImageId}")

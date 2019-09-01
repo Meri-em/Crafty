@@ -10,11 +10,13 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.crafty.dto.ItemArchivedDTO;
 import com.crafty.dto.UploadItemDTO;
 import com.crafty.entity.ItemImage;
 import com.crafty.entity.Member;
 import com.crafty.repository.ItemImageRepository;
 import com.crafty.repository.MemberRepository;
+import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.UnauthorizedException;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
@@ -37,6 +39,7 @@ public class ItemService {
 	private static final Logger log = LoggerFactory.getLogger(ItemService.class);
 
 	private static final String IMAGES_FOLDER = "src/main/resources/static/images/";
+	private static final int MAX_UPLOADED_PICTURES = 10;
 	
 	private final ItemRepository itemRepository;
 	private final ItemImageRepository itemImageRepository;
@@ -71,6 +74,10 @@ public class ItemService {
 	}
 
 	public void addItem(String memberId, UploadItemDTO itemDTO, MultipartFile[] files) {
+		if (files.length > MAX_UPLOADED_PICTURES) {
+			throw new BadRequestException("Cannot add item with more than "
+				+ MAX_UPLOADED_PICTURES + " pictures");
+		}
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new NotFoundException("No member found with id: " + memberId));
 		String itemId = UUID.randomUUID().toString();
@@ -131,6 +138,18 @@ public class ItemService {
 		item.setPrice(itemDTO.getPrice());
 		item.setCategory(itemDTO.getCategory());
 		item = itemRepository.save(item);
+	}
+
+	public String updateArchived(String memberId, String itemId,
+								 ItemArchivedDTO itemArchivedDTO){
+		Item item = itemRepository.findByMemberIdAndId(memberId, itemId)
+			.orElseThrow(() -> new NotFoundException("No such item found!"));
+		item.setArchived(itemArchivedDTO.getArchived());
+		item = itemRepository.save(item);
+		if (item.isArchived()) {
+			return "Артикулът е архивиривиран успешно";
+		}
+		return "Артикулът е възстановен успешно";
 	}
 
 	public void deleteItem(String memberId, String itemId) {

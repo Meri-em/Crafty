@@ -16,10 +16,13 @@ public class SimpleItemDTO implements Serializable {
 	private MemberDTO author;
 	
 	private String image;
+
+	private boolean archived;
 	
 	public SimpleItemDTO () { }
 	
-	public SimpleItemDTO(String id, String name, BigDecimal price, MemberDTO author, String image) {
+	public SimpleItemDTO(String id, String name, BigDecimal price, MemberDTO author,
+						 String image, boolean archived) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -65,5 +68,13 @@ public class SimpleItemDTO implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public boolean getArchived() {
+		return archived;
+	}
+
+	public void setArchived(boolean archived) {
+		this.archived = archived;
 	}
 }
