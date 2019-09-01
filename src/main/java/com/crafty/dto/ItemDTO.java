@@ -17,13 +17,11 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 	
 	private List<ItemImageDTO> images;
 	
-	private boolean archived;
-	
 	public ItemDTO() { }
 	
 	public ItemDTO(SimpleItemDTO simpleItem) {
 		super(simpleItem.getId(), simpleItem.getName(), simpleItem.getPrice(), 
-				simpleItem.getAuthor(), simpleItem.getImage());
+				simpleItem.getAuthor(), simpleItem.getImage(), simpleItem.getArchived());
 	}
 	
 	public String getDescription() {
@@ -48,14 +46,6 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 
 	public void setImages(List<ItemImageDTO> images) {
 		this.images = images;
-	}
-
-	public boolean isArchived() {
-		return archived;
-	}
-
-	public void setArchived(boolean archived) {
-		this.archived = archived;
 	}
 	
 }
