@@ -39,6 +39,7 @@ import com.crafty.web.exception.ConflictException;
 import com.crafty.web.exception.UnauthorizedException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import org.springframework.util.StringUtils;
 
 @Service
 public class AuthService {
@@ -66,8 +67,11 @@ public class AuthService {
 	}
 
 	public void register(RegistrationDTO registrationDTO) {
+		if (StringUtils.isEmpty(registrationDTO.getEmail()) || StringUtils.isEmpty(registrationDTO.getPassword())) {
+			throw new BadRequestException("Имейлът и паролата не трябва да бъдат празни");
+		}
 		userRepository.findByEmail(registrationDTO.getEmail()).ifPresent(u -> {
-			throw new ConflictException("User with provided email already exists");
+			throw new ConflictException("Вече съществува потребител с този имейл адрес");
 		});
 		String memberId = UUID.randomUUID().toString();
 		Member member = new Member();
@@ -85,9 +89,12 @@ public class AuthService {
 	}
 
 	public LoginResultDTO login(LoginDTO loginDTO) {
+		if (StringUtils.isEmpty(loginDTO.getEmail()) || StringUtils.isEmpty(loginDTO.getPassword())) {
+			throw new BadRequestException("Имейлът и паролата не трябва да бъдат празни");
+		}
 		String email = loginDTO.getEmail();
 		userRepository.findByEmail(email).orElseThrow(
-			() -> new UnauthorizedException("Грешно потребителско име или парола"));
+			() -> new UnauthorizedException("Грешен имейл или парола"));
 		this.authenticate(email, loginDTO.getPassword());
 		return generateToken(email);
 	}

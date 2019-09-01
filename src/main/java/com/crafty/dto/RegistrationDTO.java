@@ -9,11 +9,8 @@ public class RegistrationDTO implements Serializable{
 	
 	private static final long serialVersionUID = -8366908464623242015L;
 
-	@NotBlank
-    @Email
     private String email;
-	
-    @NotBlank
+
     private String password;
     
     private String firstName;

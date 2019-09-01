@@ -3,7 +3,6 @@ package com.crafty.web.rest;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import com.crafty.util.CurrentUser;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,20 +32,14 @@ public class AuthResource {
 		this.authService = authService;
 	}
 	
-	
-	@GetMapping("/welcome")
-    public String getWelcomeMessage() {
-		return "Welcome";
-    }
-	
 	@PostMapping(value="/register", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
-	public String register(@RequestBody @Valid RegistrationDTO registrationDTO) {
+	public String register(@RequestBody RegistrationDTO registrationDTO) {
 		authService.register(registrationDTO);
-		return "You were successfully registered";
+		return "Регистрацията е извършена успешно";
 	}
 	
 	@PostMapping(value="/login", consumes = "application/json", produces = "application/json")
-	public LoginResultDTO login(@RequestBody @Valid LoginDTO loginDTO) {
+	public LoginResultDTO login(@RequestBody LoginDTO loginDTO) {
 		return authService.login(loginDTO);
 	}
 	
