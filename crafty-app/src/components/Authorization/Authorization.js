@@ -8,11 +8,11 @@ const Form = ({onSubmit, name}) => (
     <h2>{name}</h2>
     <label>
       <div>Email:</div>
-      <input name="email" placeholder="Email"/>
+      <input name="email" type="email" placeholder="Email" required/>
     </label>
     <label>
       <div>Password:</div>
-      <input name="password" type="password" placeholder="Password"/>
+      <input name="password" type="password" placeholder="Password" required/>
     </label>
     <button type="submit">{name}</button>
   </form>
