@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Browse from 'pages/Browse/Browse';
-import MyProfile from 'pages/MyProfile/MyProfile';
+import Profile from 'pages/Profile/Profile';
 import MyOrders from 'pages/MyOrders/MyOrders';
 import Item from 'pages/Item/Item';
 import EditItem from 'pages/EditItem/EditItem';
@@ -10,7 +10,7 @@ import Cart from 'components/Cart/Cart';
 
 const Routes = () => (
   <Switch>
-    <Route path="/myProfile" component={MyProfile} />
+    <Route path="/profile" component={Profile} />
     <Route path="/myOrders" component={MyOrders} />
     <Route path="/myCart" component={Cart} />
     <Route path="/edit" component={EditItem} />

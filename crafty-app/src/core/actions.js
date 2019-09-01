@@ -27,7 +27,7 @@ export const register = data => axios.post(EP.REGISTER, data).then(setMessage);;
 export const login    = data => axios.post(EP.LOGIN, data).then(res => {
   auth.set(res.data);
   location.hash = ''; // eslint-disable-line
-  getMyProfile().then(res => LS.set('user', res.data));
+  getProfile().then(res => LS.set('user', res.data));
 }).catch(({response}) => setMessage(response));
 export const refresh  = ({ refreshToken }) => axios.post(EP.REFRESH, null, {
   headers: { Authorization: refreshToken }
@@ -54,7 +54,8 @@ export const authorized = settings => {
 };
 
 export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout()).then(setMessage);;
-export const getMyProfile  = () => authorized({ url: EP.MY_PROFILE });
+export const getProfile    = id => authorized({ url: EP.PROFILE + (id ? '/' + id : '')});
+export const setProfile  = data => authorized({ method: 'POST', url: EP.PROFILE, data });
 
 
 // ITEMS
@@ -66,6 +67,8 @@ export const searchByName = name => search({ text: name });
 export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
 export const addItem      = ({url, data}) => authorized({ method: 'POST', url, data, headers: { 'content-type': 'multipart/form-data' } });
+export const deleteItem   = id => authorized({ method: 'DELETE', url: `${EP.ITEM}${id}` });
+export const restoreItem  = id => authorized({ method: 'PATCH', url: `${EP.ITEM}${id}`, data: { archive: false } });
 export const addReview    = data => authorized({ method: 'POST', url: EP.REVIEWS, data });
 export const deleteReview = itemId => authorized({ method: 'DELETE', url: `${EP.REVIEWS}/${itemId}` });
 
