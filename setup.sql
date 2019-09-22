@@ -3,6 +3,33 @@ CREATE DATABASE craft CHARACTER SET UTF8 COLLATE utf8_bin;
 
 USE craft;
 
+CREATE TABLE category (
+	id VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	parent VARCHAR(50),
+	`order` INT(11),
+	PRIMARY KEY (id),
+	FOREIGN KEY (parent) REFERENCES category(id)
+);
+
+REPLACE INTO category VALUES
+	('HOLIDAYS', 'Празници', NULL, 0),
+	('JEWELRY', 'Бижута', NULL, 2),
+	('HOME', 'За дома', NULL, 1),
+	('KNITTING', 'Плетива', NULL, 3),
+	('CHRISTMAS', 'Коледа', 'HOLIDAYS', 0),
+	('EASTER', 'Великден', 'HOLIDAYS', 1),
+	('PILLOW', 'Възглавници', 'HOME', 0),
+	('VASE', 'Вази', 'HOME', 1),
+	('CLOCK', 'Часовници', 'HOME', 2),
+	('HAT', 'Шапки', 'KNITTING', 0),
+	('SCARF', 'Шалове', 'KNITTING', 1),
+	('GLOVES', 'Ръкавици', 'KNITTING', 2),
+	('EARRINGS', 'Обеци', 'JEWELRY', 0),
+	('BRACELET', 'Гривни', 'JEWELRY', 1),
+	('NECKLACE', 'Колиета', 'JEWELRY', 2),
+	('JEWELRY_SET', 'Комплекти', 'JEWELRY', 3);
+
 CREATE TABLE member (
 	id CHAR(36) NOT NULL,
 	first_name VARCHAR(255),
@@ -35,7 +62,8 @@ CREATE TABLE item (
 	member_id CHAR(36) NOT NULL,
 	archived BIT(1) DEFAULT 0,
 	PRIMARY KEY (id),
-	FOREIGN KEY (member_id) REFERENCES member(id)
+	FOREIGN KEY (member_id) REFERENCES member(id),
+	FOREIGN KEY (category) REFERENCES category(id)
 );
 
 CREATE TABLE item_image (
@@ -134,33 +162,6 @@ REPLACE INTO item_image VALUES
 REPLACE INTO favorite_member VALUES
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '834c8e56-6464-4143-acbc-b7e48e643a6c'),
 	('ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0', '5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40');
-
-CREATE TABLE category (
-	id VARCHAR(50) NOT NULL,
-	name VARCHAR(50) NOT NULL,
-	parent VARCHAR(50),
-	`order` INT(11),
-	PRIMARY KEY (id),
-	FOREIGN KEY (parent) REFERENCES category(id)
-);
-
-REPLACE INTO category VALUES
-	('HOLIDAYS', 'Празници', NULL, 0),
-	('JEWELRY', 'Бижута', NULL, 2),
-	('HOME', 'За дома', NULL, 1),
-	('KNITTING', 'Плетива', NULL, 3),
-	('CHRISTMAS', 'Коледа', 'HOLIDAYS', 0),
-	('EASTER', 'Великден', 'HOLIDAYS', 1),
-	('PILLOW', 'Възглавници', 'HOME', 0),
-	('VASE', 'Вази', 'HOME', 1),
-	('CLOCK', 'Часовници', 'HOME', 2),
-	('HAT', 'Шапки', 'KNITTING', 0),
-	('SCARF', 'Шалове', 'KNITTING', 1),
-	('GLOVES', 'Ръкавици', 'KNITTING', 2),
-	('EARRINGS', 'Обеци', 'JEWELRY', 0),
-	('BRACELET', 'Гривни', 'JEWELRY', 1),
-	('NECKLACE', 'Колиета', 'JEWELRY', 2),
-	('JEWELRY_SET', 'Комплекти', 'JEWELRY', 3);
 
 -- Clock
 REPLACE INTO item(`id`,`name`,`description`,`category`,`created_at`,`price`,`member_id`) VALUES
@@ -470,5 +471,3 @@ REPLACE INTO review VALUES
 	('a376b34e-2495-4434-bf0a-4ea767ddea07','ed9c5126-2731-4aaf-87cb-d7c0533f76c4','fa3cda04-e188-40ab-97ca-220d8e52db16','Имаше забавяне в доставката',4,'2019-08-22 17:10:41'),
 	('6bf8f77a-f6e9-409f-81e2-6c77bcb334d8','ed9c5126-2731-4aaf-87cb-d7c0533f76c4','5ac2a7e9-9f7e-4ec2-83dc-bb28460f8e40','Взех го за подарък, но обмислям да взема такъв и на себе си',5,'2019-08-23 10:10:41'),
 	('a88d5948-c377-4033-8fd3-47ddc6229d41','7b3ebcf3-73d5-4342-a653-eda72195d025','ad8765aa-b33f-4e9f-a0b3-c11a26d8c2b0','Обожавам обеците и  кутийката',5,'2019-06-24 13:10:41');
-
-
