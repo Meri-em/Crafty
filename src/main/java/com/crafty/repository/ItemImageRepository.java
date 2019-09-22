@@ -1,6 +1,5 @@
 package com.crafty.repository;
 
-import com.crafty.entity.Item;
 import com.crafty.entity.ItemImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

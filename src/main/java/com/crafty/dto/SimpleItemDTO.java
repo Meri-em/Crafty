@@ -28,6 +28,7 @@ public class SimpleItemDTO implements Serializable {
 		this.price = price;
 		this.author = author;
 		this.image = image;
+		this.archived = archived;
 	}
 	
 	public String getId() {
