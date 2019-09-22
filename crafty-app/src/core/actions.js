@@ -54,8 +54,8 @@ export const authorized = settings => {
 };
 
 export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout()).then(setMessage);;
-export const getProfile    = id => authorized({ url: EP.PROFILE + (id ? '/' + id : '')});
-export const setProfile  = data => authorized({ method: 'POST', url: EP.PROFILE, data });
+export const getProfile    = id => (id ? axios : authorized)({ url: EP.PROFILE + (id ? '/' + id : '') });
+export const setProfile    = data => authorized({ method: 'POST', url: EP.PROFILE, data });
 
 
 // ITEMS
