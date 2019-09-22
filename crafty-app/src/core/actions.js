@@ -53,7 +53,7 @@ export const authorized = settings => {
   return Promise.reject({})
 };
 
-export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout()).then(setMessage);;
+export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout());
 export const getProfile    = id => (id ? axios : authorized)({ url: EP.PROFILE + (id ? '/' + id : '') });
 export const setProfile    = data => authorized({ method: 'POST', url: EP.PROFILE, data });
 
