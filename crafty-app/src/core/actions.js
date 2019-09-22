@@ -53,9 +53,9 @@ export const authorized = settings => {
   return Promise.reject({})
 };
 
-export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout()).then(setMessage);;
-export const getProfile    = id => authorized({ url: EP.PROFILE + (id ? '/' + id : '')});
-export const setProfile  = data => authorized({ method: 'POST', url: EP.PROFILE, data });
+export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout());
+export const getProfile    = id => (id ? axios : authorized)({ url: EP.PROFILE + (id ? '/' + id : '') });
+export const setProfile    = data => authorized({ method: 'POST', url: EP.PROFILE, data });
 
 
 // ITEMS
@@ -67,8 +67,8 @@ export const searchByName = name => search({ text: name });
 export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
 export const addItem      = ({url, data}) => authorized({ method: 'POST', url, data, headers: { 'content-type': 'multipart/form-data' } });
-export const deleteItem   = id => authorized({ method: 'DELETE', url: `${EP.ITEM}${id}` });
-export const restoreItem  = id => authorized({ method: 'PATCH', url: `${EP.ITEM}${id}`, data: { archive: false } });
+export const deleteItem   = id => authorized({ method: 'PATCH', url: `${EP.ITEM}${id}`, data: { archived: true } });
+export const restoreItem  = id => authorized({ method: 'PATCH', url: `${EP.ITEM}${id}`, data: { archived: false } });
 export const addReview    = data => authorized({ method: 'POST', url: EP.REVIEWS, data });
 export const deleteReview = itemId => authorized({ method: 'DELETE', url: `${EP.REVIEWS}/${itemId}` });
 
