@@ -12,6 +12,8 @@ public class SimpleItemDTO implements Serializable {
 	private String name;
 	
 	private BigDecimal price;
+
+	private String category;
 	
 	private MemberDTO author;
 	
@@ -21,11 +23,12 @@ public class SimpleItemDTO implements Serializable {
 	
 	public SimpleItemDTO () { }
 	
-	public SimpleItemDTO(String id, String name, BigDecimal price, MemberDTO author,
+	public SimpleItemDTO(String id, String name, BigDecimal price, String category, MemberDTO author,
 						 String image, boolean archived) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.category = category;
 		this.author = author;
 		this.image = image;
 		this.archived = archived;
@@ -50,7 +53,19 @@ public class SimpleItemDTO implements Serializable {
 	public BigDecimal getPrice() {
 		return price;
 	}
-	
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public boolean isArchived() {
+		return archived;
+	}
+
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}

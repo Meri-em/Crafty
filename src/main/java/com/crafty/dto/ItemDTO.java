@@ -20,7 +20,7 @@ public class ItemDTO extends SimpleItemDTO implements Serializable {
 	public ItemDTO() { }
 	
 	public ItemDTO(SimpleItemDTO simpleItem) {
-		super(simpleItem.getId(), simpleItem.getName(), simpleItem.getPrice(), 
+		super(simpleItem.getId(), simpleItem.getName(), simpleItem.getPrice(),simpleItem.getCategory(),
 				simpleItem.getAuthor(), simpleItem.getImage(), simpleItem.getArchived());
 	}
 	
