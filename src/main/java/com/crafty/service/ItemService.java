@@ -130,7 +130,7 @@ public class ItemService {
 
 		Item item = itemRepository.findById(itemId)
 			.orElseThrow(() -> new NotFoundException("No item found with id: " + itemId));
-		if (item.getMember().getId().equals(memberId)) {
+		if (!item.getMember().getId().equals(memberId)) {
 			throw new NotFoundException("No item found with id: " + itemId);
 		}
 		item.setName(itemDTO.getName());

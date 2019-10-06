@@ -51,7 +51,8 @@ public class ItemResource {
 	}
 
 	@PostMapping("/{itemId}")
-	public String updateItem(@PathVariable String itemId, @RequestBody UploadItemDTO item) {
+	public String updateItem(@PathVariable String itemId, @Valid UploadItemDTO item,
+							 BindingResult bindingResult, final @RequestParam(value = "file") MultipartFile[] files) {
 		itemService.updateItem(CurrentUser.getMemberId(), itemId, item);
 		return "Success!";
 	}
