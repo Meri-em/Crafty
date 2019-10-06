@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addItem } from '../../core/actions';
+import { addItem } from 'core/actions';
 
 import './EditItem.css';
 

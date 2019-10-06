@@ -6,7 +6,7 @@ const StoreContext = React.createContext();
 export const createStore = WrappedComponent => {
   return class extends Component {
     state = window.store = {
-      get: key => this.state[key],
+      get: (key, fallback) => this.state[key] || fallback,
       set: (key, value) => {
         const state = this.state;
         state[key] = value;

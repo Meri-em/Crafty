@@ -4,7 +4,10 @@ import { LS, toQuery } from './utils';
 
 // GENERAL
 export const welcome       = () => axios(EP.WELCOME);
-export const getNavigation = () => axios(EP.NAVIGATION);
+export const getNavigation = () => axios(EP.NAVIGATION).then(res => {
+  window.store.set('categories', res.data);
+  return res;
+});
 
 // AUTH
 const auth = {
@@ -23,12 +26,12 @@ const auth = {
   }
 }
 window.axios = axios;
-export const register = data => axios.post(EP.REGISTER, data).then(setMessage);;
+export const register = data => axios.post(EP.REGISTER, data).then(setMessage, setError);
 export const login    = data => axios.post(EP.LOGIN, data).then(res => {
   auth.set(res.data);
   location.hash = ''; // eslint-disable-line
   getProfile().then(res => LS.set('user', res.data));
-}).catch(({response}) => setMessage(response));
+}).catch(setError);
 export const refresh  = ({ refreshToken }) => axios.post(EP.REFRESH, null, {
   headers: { Authorization: refreshToken }
 }).then(res => auth.set(res.data));
@@ -50,7 +53,8 @@ export const authorized = settings => {
   }
   console.log('Tokens expired', tokens);
   LS.set('tokens', {});
-  return Promise.reject({})
+  location.hash = '/login';  // eslint-disable-line
+  return Promise.reject({});
 };
 
 export const logout        = () => authorized({ method: 'POST', url: EP.LOGOUT }).finally(() => auth.logout());
@@ -97,5 +101,6 @@ export const removeFromCart = ({id, quantity=1}) => updateCart({itemId: id, quan
 export const getOrders      = () => authorized({ url: EP.ORDERS });
 
 export const setMessage = res => window.store.set('message', res.data || res);
+export const setError = ({response}) => setMessage(response);
 export const clearMessage = () => window.store.set('message', '');
 export const setMessageAndRefresh = res => (window.store.set('message', res.data || res), location.reload()); // eslint-disable-line

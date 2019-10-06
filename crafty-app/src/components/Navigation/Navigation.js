@@ -4,11 +4,11 @@ import { getNavigation } from 'core/actions';
 
 import './Navigation.css';
 
-const convert = (obj, baseHref='') => {
-  obj.href = `${baseHref}/${obj.href}`.toLowerCase();
-  obj.items = (obj.items || []).map(e => convert(e, obj.href));
-  return obj;
-};
+const convert = (obj, baseHref='') => ({
+  ...obj,
+  href: `${baseHref}/${obj.href}`.toLowerCase(),
+  items: (obj.items || []).map(e => convert(e, obj.href)),
+});
 
 const Group = ({ href, text, items }) => (
   <div className="NavGroup">

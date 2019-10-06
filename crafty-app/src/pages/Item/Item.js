@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getUser } from 'core/utils';
 import { getItem } from 'core/actions';
 import { ItemDetailed } from 'components/Item/Item';
 
@@ -15,7 +16,7 @@ class Item extends Component {
   render() {
     const { item } = this.state;
 
-    return !item || <ItemDetailed {...item} />;
+    return !item || <ItemDetailed {...item} isMine={item.author.id === getUser().id} />;
   }
 }
 
