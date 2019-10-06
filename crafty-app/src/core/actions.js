@@ -70,7 +70,7 @@ export const search       = params => axios(EP.SEARCH + toQuery(params));
 export const searchByName = name => search({ text: name });
 export const browse       = group => search({ categories: group.toUpperCase() });
 // (min|max)-price, text, author-ids, categories
-export const addItem      = ({url, data}) => authorized({ method: 'POST', url, data, headers: { 'content-type': 'multipart/form-data' } });
+export const addItem      = ({id, data}) => authorized({ method: 'POST', url: `${EP.ITEM}${id || ''}`, data, headers: { 'content-type': 'multipart/form-data' } });
 export const deleteItem   = id => authorized({ method: 'PATCH', url: `${EP.ITEM}${id}`, data: { archived: true } });
 export const restoreItem  = id => authorized({ method: 'PATCH', url: `${EP.ITEM}${id}`, data: { archived: false } });
 export const addReview    = data => authorized({ method: 'POST', url: EP.REVIEWS, data });

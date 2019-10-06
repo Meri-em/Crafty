@@ -50,13 +50,14 @@ export class ReviewList extends Component {
     this.updateList();
   }
   render() {
+    const { isMine } = this.props;
     const { reviews, user } = this.state;
     const mine = reviews.find(r => r.member.id === user.id) || { member: { id: user.id } };
     const others = reviews.filter(r => r !== mine);
   
     return (
       <div className="reviews">
-        <Review {...mine} editable={true} itemId={this.props.itemId} addItem={this.addItem} deleteItem={this.deleteItem} />
+        {!isMine && <Review {...mine} editable={true} itemId={this.props.itemId} addItem={this.addItem} deleteItem={this.deleteItem} />}
         {others.map(r => <Review {...r}/>)}
       </div>
     );

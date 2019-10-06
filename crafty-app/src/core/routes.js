@@ -4,7 +4,7 @@ import Browse from 'pages/Browse/Browse';
 import Profile from 'pages/Profile/Profile';
 import MyOrders from 'pages/MyOrders/MyOrders';
 import Item from 'pages/Item/Item';
-import EditItem from 'pages/EditItem/EditItem';
+import AddItem from 'pages/AddItem/AddItem';
 import { Register, Login } from 'components/Authorization/Authorization';
 import Cart from 'components/Cart/Cart';
 
@@ -13,7 +13,7 @@ const Routes = () => (
     <Route path="/profile" component={Profile} />
     <Route path="/myOrders" component={MyOrders} />
     <Route path="/myCart" component={Cart} />
-    <Route path="/edit" component={EditItem} />
+    <Route path="/add" component={AddItem} />
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
     <Route path="/_/:id" component={Item} />

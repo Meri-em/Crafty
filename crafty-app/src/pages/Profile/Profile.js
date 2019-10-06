@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { FaPen } from 'react-icons/fa';
+import { FaPen, FaPlus } from 'react-icons/fa';
 import { getProfile, setProfile } from 'core/actions';
 import { ItemSimple } from 'components/Item/Item';
 import { getFormData } from 'core/utils';
@@ -32,6 +32,7 @@ class Profile extends Component {
     return (
       <div className={`Profile${isEdit ? ' edit' : ''}`}>
         {isMine && <Link className="item-edit-link action" to={`/profile${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>}
+        {isMine && <Link className="item-add-link action" to="add" ><FaPlus title="Добави предмет" /></Link>}
         <Container className="info" onSubmit={this.onSubmit}>
           <div className="name">
             <label>

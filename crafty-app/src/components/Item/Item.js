@@ -4,6 +4,7 @@ import { FaPen, FaCartPlus, FaArchive, FaTrashRestoreAlt } from 'react-icons/fa'
 import { addToCart, updateDefaultImage, deleteItemImage, deleteItem, restoreItem } from 'core/actions';
 import { addItem } from 'core/actions';
 import { ReviewList } from '../Review/Review';
+import CategorySelect from '../CategorySelect/CategorySelect';
 import './Item.css';
 
 const ItemSimple = ({ author, id, price, name, image, edit, archived }) => (
@@ -20,23 +21,13 @@ class ItemDetailed extends Component {
 
   checkEditMode = () => this.props.isMine && location.hash.endsWith('/edit'); // eslint-disable-line
 
-  renderCategorySelect = (value) => (
-    <select name="category" defaultValue={value}>
-      {window.store.get('categories', []).map(g => (
-        <optgroup label={g.text} key={g.href}>
-          {g.items.map(e => <option value={e.href}>{e.text}</option>)}
-        </optgroup>
-      ))}
-    </select>
-  )
   renderField(field, type='text') {
     const [name, value] = Object.entries(field)[0];
     if (!this.checkEditMode()) {
       return value;
     }
     if (name === 'category') {
-      console.log(window.store.get('categories'));
-      return this.renderCategorySelect(value);
+      return <CategorySelect value={value}/>;
     }
     return type === 'textarea'? <textarea name={name} defaultValue={value}/> : <input name={name} type={type} defaultValue={value}/>;
   }
@@ -44,7 +35,7 @@ class ItemDetailed extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { id } = this.props; 
-    addItem({ url: `/api/v1/items/${id}`, data: new FormData(e.target)}).then(res => {
+    addItem({id, data: new FormData(e.target)}).then(res => {
       location.hash = `/_/${id}`; // eslint-disable-line
       console.log(res);
     });
@@ -55,7 +46,7 @@ class ItemDetailed extends Component {
     const itemId = id;
     const image = this.state.image || this.props.image;
     const isEdit = this.checkEditMode();
-    const Wrapper = isEdit ? 'form' : 'div';
+    const Wrapper = isMine ? 'form' : 'div';
 
     return (
       <Wrapper className={`Item large ${isEdit ? 'edit' : 'view'}`} id={id} onSubmit={this.onSubmit}>
@@ -85,7 +76,7 @@ class ItemDetailed extends Component {
           <div className="item-category">{this.renderField({category})}</div>
         </div>
         <div className="item-description">{this.renderField({description}, 'textarea')}</div>
-        {isEdit ? <button className="item-save">Запази</button> : <ReviewList itemId={itemId}/>}
+        {isEdit ? <button className="item-save">Запази</button> : <ReviewList itemId={itemId} isMine={isMine}/>}
       </Wrapper>
     )
   }

@@ -1,0 +1,13 @@
+.ItemForm {
+  display: flex;
+  flex-direction: column;
+}
+.ItemForm > * {
+  margin: 5px auto;
+  width: 300px;
+}
+.ItemForm h1 {
+  font-size: 20px;
+  text-align: center;
+  margin: 20px auto;
+}

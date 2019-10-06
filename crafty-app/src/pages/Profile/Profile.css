@@ -24,3 +24,9 @@
 .Profile.edit textarea {
   width: 400px;
 }
+.item-add-link {
+  position: absolute;
+  top: 0;
+  right: 35px;
+  color: #333;
+}
