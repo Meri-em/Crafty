@@ -42,7 +42,7 @@ public class MapperHelper {
 			primaryImagePath = getImagePath(itemImage);
 		}
 		SimpleItemDTO simpleItem = new SimpleItemDTO(item.getId(), item.getName(),item.getPrice(),
-				author, primaryImagePath, item.isArchived());
+			item.getCategory(), author, primaryImagePath, item.isArchived());
 		return simpleItem;
 	}
 	
