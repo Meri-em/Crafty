@@ -32,7 +32,7 @@ class Profile extends Component {
     return (
       <div className={`Profile${isEdit ? ' edit' : ''}`}>
         {isMine && <Link className="item-edit-link action" to={`/profile${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>}
-        {isMine && <Link className="item-add-link action" to="add" ><FaPlus title="Добави предмет" /></Link>}
+        {isMine && <Link className="item-add-link action" to="/add" ><FaPlus title="Добави предмет" /></Link>}
         <Container className="info" onSubmit={this.onSubmit}>
           <div className="name">
             <label>
