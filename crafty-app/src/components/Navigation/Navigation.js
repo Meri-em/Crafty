@@ -4,11 +4,10 @@ import { getNavigation } from 'core/actions';
 
 import './Navigation.css';
 
-const convert = (obj, baseHref='') => ({
-  ...obj,
-  href: `${baseHref}/${obj.href}`.toLowerCase(),
-  items: (obj.items || []).map(e => convert(e, obj.href)),
-});
+const convert = (obj, baseHref='') => {
+  const href = `${baseHref}/${obj.href}`.toLowerCase();
+  return { ...obj, href, items: (obj.items || []).map(e => convert(e, href))};
+};
 
 const Group = ({ href, text, items }) => (
   <div className="NavGroup">
@@ -26,6 +25,7 @@ class Navigation extends Component {
 
   componentDidMount() {
     getNavigation().then(({ data }) => {
+    console.log(data.map(e => convert(e)));
       this.setState({
         menu: data.map(e => convert(e))
       });
