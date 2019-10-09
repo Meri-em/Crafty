@@ -3,7 +3,6 @@ import * as EP from './endpoints';
 import { LS, toQuery } from './utils';
 
 // GENERAL
-export const welcome       = () => axios(EP.WELCOME);
 export const getNavigation = () => axios(EP.NAVIGATION).then(res => {
   window.store.set('categories', res.data);
   return res;
