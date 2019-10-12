@@ -1,12 +1,10 @@
 package com.crafty.repository;
 
 import com.crafty.entity.Member;
-import com.crafty.repository.MemberRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -18,7 +16,6 @@ import static org.junit.Assert.assertFalse;
 
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
 @DataJpaTest
 public class MemberRepositoryTest {
 

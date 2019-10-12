@@ -24,8 +24,6 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
-//@DataJpaTest
 public class AuthServiceTest {
 
 	@Mock
