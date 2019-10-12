@@ -28,7 +28,7 @@ class Cart extends Component {
         <div className="cart-items">
           {groups.map(({author, items}) => (
             <div className="cart-group" key={author.id}>
-              <a className="cart-author">
+              <a className="cart-author" href={`#/profile/${author.id}`}>
                 <img className="cart-author-image" src={author.image} alt={author.name} />
                 <div className="cart-author-name">{author.name}</div>
               </a>

@@ -68,14 +68,24 @@
 }
 .item-preview {
   text-align: center;
-  max-height: 600px;
+  height: 500px;
   position: relative;
+}
+/* Patch CrossfadeImage styles */
+.item-preview img:not(.item-thumbnail-image) {
+  max-height: 500px !important;
+  position: absolute !important;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 10px;
 }
 .item-thumbnails {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  justify-content: center;
 }
 .item-add {
   display: inline-block;
@@ -152,26 +162,30 @@
 .Item.edit .item-thumbnail, .Item.edit .item-thumbnail-image {
   max-width: 200px;
   max-height: 100px;
+  cursor: grab;
 }
-.image-remove, .image-make-default {
+.image-remove, .image-move {
   position: absolute;
+  top: 0;
   font-weight: bold;
-  line-height: 20px;
+  font-size: 24px;
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
+  padding: 3px;;
   background: rgba(0,0,0,0.6);
-  color: white;
 }
 .image-remove {
-  top: 0;
   right: 0;
   color: #f33;
-  font-size: 40px;
-  height: 30px;
   border-bottom-left-radius: 10px;
+  cursor: pointer;
 }
-.image-make-default {
-  bottom: 0;
+.image-move {
   left: 0;
-  right: 0;
+  font-size: 20px;
+  color: rgba(255,255,255,.7);
+  border-bottom-right-radius: 10px;
 }
 .Item.thumbnail .action {
   position: absolute;

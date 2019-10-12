@@ -25,7 +25,6 @@ class Navigation extends Component {
 
   componentDidMount() {
     getNavigation().then(({ data }) => {
-    console.log(data.map(e => convert(e)));
       this.setState({
         menu: data.map(e => convert(e))
       });

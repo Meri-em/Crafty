@@ -16,7 +16,7 @@ const Routes = () => (
     <Route path="/add" component={AddItem} />
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
-    <Route path="/_/:id" component={Item} />
+    <Route path="/_/:id/:edit?" component={Item} />
     <Route path="/:group/:subgroup" component={Browse} />
     <Route path="/:group" component={Browse} />
     <Route path="/" component={Browse} />

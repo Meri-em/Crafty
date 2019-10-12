@@ -75,18 +75,16 @@ export const restoreItem  = id => authorized({ method: 'PATCH', url: `${EP.ITEM}
 export const addReview    = data => authorized({ method: 'POST', url: EP.REVIEWS, data });
 export const deleteReview = itemId => authorized({ method: 'DELETE', url: `${EP.REVIEWS}/${itemId}` });
 
+// export const updateDefaultImage = ({itemId, imageId}) => authorized({
+//   method: 'POST',
+//   url: EP.ITEM + `/${itemId}/images/default`,
+//   data: {id: imageId}
+// });
 
-
-export const updateDefaultImage = ({itemId, imageId}) => authorized({
-  method: 'POST',
-  url: EP.ITEM + `/${itemId}/images/default`,
-  data: {id: imageId}
-});
-
-export const deleteItemImage = ({itemId, imageId}) => authorized({
-  method: 'DELETE',
-  url: EP.ITEM + `/${itemId}/images/${imageId}`,
-});
+// export const deleteItemImage = ({itemId, imageId}) => authorized({
+//   method: 'DELETE',
+//   url: EP.ITEM + `/${itemId}/images/${imageId}`,
+// });
 
 // CART
 export const getCart        = () => authorized({ url: EP.CART });

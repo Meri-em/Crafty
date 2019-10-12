@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import CrossfadeImage from 'react-crossfade-image';
 import { Link } from 'react-router-dom';
-import { FaPen, FaCartPlus, FaArchive, FaTrashRestoreAlt } from 'react-icons/fa';
-import { addToCart, updateDefaultImage, deleteItemImage, deleteItem, restoreItem } from 'core/actions';
+import { FaPen, FaCartPlus, FaArchive, FaTrashRestoreAlt, FaArrowsAlt, FaTimes } from 'react-icons/fa';
+import { addToCart, deleteItem, restoreItem } from 'core/actions';
 import { addItem } from 'core/actions';
+import { getCategoryName } from 'core/utils';
 import { ReviewList } from '../Review/Review';
 import CategorySelect from '../CategorySelect/CategorySelect';
+import ReorderableList from '../ReorderableList/ReorderableList';
 import './Item.css';
 
 const ItemSimple = ({ author, id, price, name, image, edit, archived }) => (
@@ -19,17 +22,27 @@ const ItemSimple = ({ author, id, price, name, image, edit, archived }) => (
 class ItemDetailed extends Component {
   state = {};
 
-  checkEditMode = () => this.props.isMine && location.hash.endsWith('/edit'); // eslint-disable-line
+  componentDidMount() {
+    this.props.images.forEach(({ path: src }) => {
+      const img = Object.assign(new Image(), { src, onload: () => {
+        const canvas = Object.assign(document.createElement('canvas'), {width: img.width, height: img.height});
+        canvas.getContext('2d').drawImage(img, 0, 0 );
+        this.setState({ [src]: canvas.toDataURL(0, 0, img.width, img.height) });
+      }});
+    });
+  }
+  
+  static getDerivedStateFromProps({ isEdit, images }, prevState) {
+    return (prevState.isEdit !== isEdit) ? ({ isEdit, images }) : null;
+  }
 
   renderField(field, type='text') {
     const [name, value] = Object.entries(field)[0];
-    if (!this.checkEditMode()) {
-      return value;
-    }
+    const { isEdit } = this.props;
     if (name === 'category') {
-      return <CategorySelect value={value}/>;
+      return isEdit ? <CategorySelect value={value}/> : getCategoryName(value);
     }
-    return type === 'textarea'? <textarea name={name} defaultValue={value}/> : <input name={name} type={type} defaultValue={value}/>;
+    return !isEdit ? value : type === 'textarea' ? <textarea name={name} defaultValue={value}/> : <input name={name} type={type} defaultValue={value}/>;
   }
 
   onSubmit = e => {
@@ -40,32 +53,36 @@ class ItemDetailed extends Component {
       console.log(res);
     });
   }
+  
+  setImages = images => this.setState({images});
+  removeImage = item => this.setImages((this.state.images || this.props.images).filter(e => e !== item));
 
+  renderThumbnail = ({ item }) => (
+    <div className="item-thumbnail" key={item.id}>
+      {this.props.isEdit && <>
+        <span className="image-move" title="размести реда на картинките"><FaArrowsAlt /></span>
+        <span className="image-remove" title="премахни картинката" onClick={() => this.removeImage(item)} ><FaTimes/></span>
+      </>}
+      <img className="item-thumbnail-image" src={item.path} alt="" onClick={() => this.setState({ image: item.path })}/>
+    </div>
+  )
   render() {
-    const { author, price, name, category, images, description, id, isMine } = this.props;
-    const itemId = id;
+    const { author, price, name, category, description, id, isMine, isEdit } = this.props;
+    const images = (isEdit && this.state.images) || this.props.images;
     const image = this.state.image || this.props.image;
-    const isEdit = this.checkEditMode();
     const Wrapper = isMine ? 'form' : 'div';
 
     return (
       <Wrapper className={`Item large ${isEdit ? 'edit' : 'view'}`} id={id} onSubmit={this.onSubmit}>
         <div className="item-name">{this.renderField({name})}</div>
-        {isEdit && <input name="id" value={id} type="hidden"/>}
+        {isEdit && <>
+          <input name="id" value={id} type="hidden"/>
+          <input name="images" value={images.map(e => e.id)} type="hidden"/>
+        </>}
         {isMine && <Link className="item-edit-link action" to={`/_/${id}${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>}
         <div className="item-preview">
-          <img className="item-image" src={image} alt="" />
-          <div className="item-thumbnails">
-            {images.map(({ path, id }) => (
-              <div className="item-thumbnail" key={id}>
-                {isEdit && <>
-                  <span className="image-make-default" title="сложи на първо място" onClick={() => updateDefaultImage({itemId, imageId: id})} >[1]</span>
-                  <span className="image-remove" title="премахни картинката" onClick={() =>  deleteItemImage({itemId, imageId: id})} >&times;</span>
-                </>}
-                <img className="item-thumbnail-image" src={path} alt="" onClick={() => this.setState({ image: path })} />
-              </div>
-            ))}
-          </div>
+          <CrossfadeImage className="item-image" src={this.state[image] || image} alt="" />
+          <ReorderableList className="item-thumbnails" items={images} setItems={this.setImages} Item={this.renderThumbnail} disabled={!isEdit}/>
         </div>
         <div className="item-actions">
           <div className="item-price">{this.renderField({price}, 'number')}</div>
@@ -76,7 +93,7 @@ class ItemDetailed extends Component {
           <div className="item-category">{this.renderField({category})}</div>
         </div>
         <div className="item-description">{this.renderField({description}, 'textarea')}</div>
-        {isEdit ? <button className="item-save">Запази</button> : <ReviewList itemId={itemId} isMine={isMine}/>}
+        {isEdit ? <button className="item-save">Запази</button> : <ReviewList itemId={id} isMine={isMine}/>}
       </Wrapper>
     )
   }
