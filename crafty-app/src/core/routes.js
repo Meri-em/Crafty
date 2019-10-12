@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { Register, Login } from 'components/Authorization/Authorization';
 import Browse from 'pages/Browse/Browse';
 import Profile from 'pages/Profile/Profile';
 import MyOrders from 'pages/MyOrders/MyOrders';
 import Item from 'pages/Item/Item';
 import AddItem from 'pages/AddItem/AddItem';
-import { Register, Login } from 'components/Authorization/Authorization';
-import Cart from 'components/Cart/Cart';
+import Cart from 'pages/Cart/Cart';
 
 const Routes = () => (
   <Switch>
