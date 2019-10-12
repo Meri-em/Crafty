@@ -5,18 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.crafty.entity.Item;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface ItemRepository extends JpaRepository<Item, String> {
 	
 	Optional<Item> findById(String id);
-	
-	List<Item> findByCategoryOrderByCreatedAtDesc(String category);
 
 	@Query(value = "SELECT it FROM Item it"
 		+ " JOIN it.member m"

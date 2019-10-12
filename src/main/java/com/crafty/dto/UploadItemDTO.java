@@ -3,6 +3,7 @@ package com.crafty.dto;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class UploadItemDTO implements Serializable {
 
@@ -16,6 +17,8 @@ public class UploadItemDTO implements Serializable {
 	private BigDecimal price;
 
 	private String category;
+
+	private List<String> images;
 
 	public String getName() {
 		return name;
@@ -47,5 +50,13 @@ public class UploadItemDTO implements Serializable {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 }

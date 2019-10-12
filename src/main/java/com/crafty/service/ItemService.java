@@ -138,6 +138,19 @@ public class ItemService {
 		item.setPrice(itemDTO.getPrice());
 		item.setCategory(itemDTO.getCategory());
 		item = itemRepository.save(item);
+
+		List<String> images = itemDTO.getImages();
+		List<ItemImage> persistedItemImages = item.getItemImages();
+		int order = 1;
+		for (ItemImage persistedItemImage : persistedItemImages) {
+			if (!images.contains(persistedItemImage.getId())) {
+				itemImageRepository.deleteById(persistedItemImage.getId());
+			} else {
+				persistedItemImage.setOrder(order);
+				itemImageRepository.save(persistedItemImage);
+				order++;
+			}
+		}
 	}
 
 	public String updateArchived(String memberId, String itemId,
