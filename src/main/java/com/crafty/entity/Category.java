@@ -28,7 +28,8 @@ public class Category implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "parent")
 	private Category parent;
-	
+
+	@Column(name = "`order`")
 	private int order;
 
 	public String getId() {

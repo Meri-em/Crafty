@@ -137,20 +137,20 @@ public class ItemService {
 		item.setDescription(itemDTO.getDescription());
 		item.setPrice(itemDTO.getPrice());
 		item.setCategory(itemDTO.getCategory());
-		item = itemRepository.save(item);
 
 		List<String> images = itemDTO.getImages();
 		List<ItemImage> persistedItemImages = item.getItemImages();
-		int order = 1;
-		for (ItemImage persistedItemImage : persistedItemImages) {
-			if (!images.contains(persistedItemImage.getId())) {
-				itemImageRepository.deleteById(persistedItemImage.getId());
-			} else {
-				persistedItemImage.setOrder(order);
-				itemImageRepository.save(persistedItemImage);
-				order++;
+
+		persistedItemImages.removeIf(pi -> !images.contains(pi.getId()));
+		for (int i = 0; i < images.size(); i++) {
+			for (ItemImage persistedItemImage : persistedItemImages) {
+				if (persistedItemImage.getId().equals(images.get(i))) {
+					persistedItemImage.setOrder(i + 1);
+				}
 			}
 		}
+
+		item = itemRepository.save(item);
 	}
 
 	public String updateArchived(String memberId, String itemId,
