@@ -32,3 +32,5 @@ export const getFormData = ({ elements }) => [].reduce.call(elements, (data, { n
 }, {});
 
 export const getCategoryName = value => (window.store.get('categories', []).map(e => e.items).flat().find(e => e.href === value) || {}).text || '';
+
+export const getSubCategories = value => (window.store.get('categories', []).find(e => e.href === value) || { items: [] }).items.map(e => e.href);

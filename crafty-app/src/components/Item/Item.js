@@ -13,7 +13,7 @@ import './Item.css';
 const ItemSimple = ({ author, id, price, name, image, edit, archived }) => (
   <Link className="Item thumbnail" to={`/_/${id}`} style={{ backgroundImage: 'url(' + image + ')' }}>
     <div className="item-name">{name}</div>
-    <div className="item-price">{price}</div>
+    <div className="item-price">{price === Math.round(price) ? price : price && price.toFixed(2)}</div>
     {edit && !archived && <div className="action" onClick={e => { e.preventDefault(); deleteItem(id); }}><FaArchive title="Архивирай"/></div>}
     {edit && archived && <div className="action" onClick={e => { e.preventDefault(); restoreItem(id); }}><FaTrashRestoreAlt title="Възстанови"/></div>}
   </Link>
