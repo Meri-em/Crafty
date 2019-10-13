@@ -11,10 +11,11 @@
   min-width: 60px;
   text-align: center;
 }
-.AuthNav a:hover {
+.AuthNav a:hover, .AuthNav a:focus {
   color: #000;
   background: rgba(0,0,0,0.1);
   box-shadow: 0 0 2px;
+  outline: none;
 }
 .AuthNav svg {
   display: block;
@@ -22,6 +23,6 @@
   font-size: 1.5em;
   transition: transform 0.5s;
 }
-.AuthNav a:hover svg {
+.AuthNav a:hover svg, .AuthNav a:focus svg {
   transform: rotate(360deg);
 }

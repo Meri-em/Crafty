@@ -13,8 +13,8 @@
   position: relative;
 }
 
-.Navigation a:hover {
-  background: #321
+.Navigation a:hover, .Navigation a:focus {
+  background: #321;
 } 
 .NavGroup {
   position: relative;
@@ -28,7 +28,21 @@
   border-radius: 0 0 10px 10px;
   box-shadow: 0 1px 5px black;
 }
-.NavGroup:hover nav {
+.menu-toggle {
+  font: bold 20px/1 monospace;
+  width: 1em;
+  box-sizing: content-box;
+  border: none;
+}
+.NavGroup .menu-toggle {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.menu-toggle:focus {
+  z-index: 4;
+}
+.NavGroup:hover nav, .NavGroup .menu-toggle.on + nav {
   display: block;
 }
 .Navigation .mobile-menu {
@@ -37,25 +51,24 @@
   font: bold 20px/1 monospace;
   display: none;
 }
-.mobile-menu::before {
+.menu-toggle::before {
   transition: 0.5s;
   border-radius: 1em;
   content: '☰';
   display: inline-block;
 }
 
-.mobile-on .mobile-menu::before {
+.menu-toggle.on::before {
   transform: rotate(90deg);
 }
 @media (max-width: 700px) {
   .Navigation .mobile-menu {
     display: block;
   }
-
   .Navigation {
     flex-direction: column;
   }
-  .Navigation.mobile-off .NavGroup {
+  .mobile-menu.off ~ .NavGroup {
     display: none;
   }
   .NavGroup nav {

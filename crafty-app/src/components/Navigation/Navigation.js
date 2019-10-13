@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getNavigation } from 'core/actions';
 
@@ -9,14 +9,19 @@ const convert = (obj, baseHref='') => {
   return { ...obj, href, items: (obj.items || []).map(e => convert(e, href))};
 };
 
+const Toggle = ({ className, children }) => {
+  const [open, setOpen] = useState(false);
+  return <button className={`${className} menu-toggle ${open ? 'on' : 'off'}`} aria-expanded={open} aria-haspopup="true" onClick={() => setOpen(!open)}>{children}</button>
+}
 const Group = ({ href, text, items }) => (
   <div className="NavGroup">
     <Link to={href}>{text}</Link>
-    {!items.length || (
+    {!items.length || <>
+      <Toggle/>
       <nav>
         {items.map((e, i) => <Group {...e} key={i} />)}
       </nav>
-    )}
+    </>}
   </div>
 );
 
@@ -35,11 +40,8 @@ class Navigation extends Component {
     const { menu } = this.state;
 
     return (
-      <div className={`Navigation mobile-${this.state.on ? 'on' : 'off'}`}>
-        <a className="mobile-menu" href="#/" onClick={e => {
-          e.preventDefault();
-          this.setState({ on: !this.state.on });
-        }}> </a>
+      <div className={`Navigation`}>
+        <Toggle className="mobile-menu"/>
         {menu.map((e, i) => <Group {...e} key={i} />)}
       </div>
     )

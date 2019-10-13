@@ -63,13 +63,14 @@
   max-width: 100px;
   max-height: 50px;
 }
-.item-thumbnail:hover {
+.item-thumbnail:hover, .item-thumbnail.active {
   box-shadow: 0 0 6px 6px;
 }
 .item-preview {
   text-align: center;
   height: 500px;
   position: relative;
+  outline: none;
 }
 /* Patch CrossfadeImage styles */
 .item-preview img:not(.item-thumbnail-image) {

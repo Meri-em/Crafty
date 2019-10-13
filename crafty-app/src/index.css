@@ -26,6 +26,7 @@ a {
 
 .App {
   white-space: pre-wrap;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -66,4 +67,12 @@ input[type="submit"], button {
 }
 input[type="submit"]:hover, button:hover {
   opacity: 1;
+}
+.App.dark {
+  background: linear-gradient(#3a2609, #333) fixed;
+  color: #b3a198;
+}
+
+.App.dark .AuthNav a, .App.dark .action {
+  color: #bbb;
 }

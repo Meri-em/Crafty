@@ -17,6 +17,15 @@ export const createStore = WrappedComponent => {
         delete state[key];
         this.setState(state);
       },
+      useState: (key, value) => {
+        if (!(key in this.state)) this.state.set(key, value);
+        return [this.state[key], value => this.state.set(key, value)];
+      },
+      usePersistentState: (key, value) => {
+        const [x, setX] = this.state.useState(key, value);
+        return [x, value => (LS.set(key, value), setX(key, value))];
+      },
+      darkMode: LS.get('darkMode'),
       isLoggedIn: (LS.get('tokens') || {}).refreshExpires > Date.now()
     }
     render() {

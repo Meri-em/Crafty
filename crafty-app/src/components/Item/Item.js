@@ -22,6 +22,10 @@ const ItemSimple = ({ author, id, price, name, image, edit, archived }) => (
 class ItemDetailed extends Component {
   state = {};
 
+  static getDerivedStateFromProps({ isEdit, images }, prevState) {
+    return (prevState.isEdit !== isEdit) ? ({ isEdit, images }) : null;
+  }
+
   componentDidMount() {
     this.props.images.forEach(({ path: src }) => {
       const img = Object.assign(new Image(), { src, onload: () => {
@@ -30,10 +34,21 @@ class ItemDetailed extends Component {
         this.setState({ [src]: canvas.toDataURL(0, 0, img.width, img.height) });
       }});
     });
+    document.addEventListener('keydown', this.onKey);
   }
-  
-  static getDerivedStateFromProps({ isEdit, images }, prevState) {
-    return (prevState.isEdit !== isEdit) ? ({ isEdit, images }) : null;
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKey);
+  }
+
+  onKey = ({ key }) => {
+    const direction = key === 'ArrowLeft' ? -1 : key === 'ArrowRight' ? 1 : 0;
+    if (direction && !this.props.isEdit) {
+      const paths = this.props.images.map(e => e.path);
+      const index = paths.findIndex(p => p === (this.state.image || this.props.image));
+
+      this.setState({ image: paths[(index + direction + paths.length) % paths.length] });
+    }
   }
 
   renderField(field, type='text') {
@@ -47,18 +62,18 @@ class ItemDetailed extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { id } = this.props; 
-    addItem({id, data: new FormData(e.target)}).then(res => {
+    const { id } = this.props;
+    addItem({ id, data: new FormData(e.target) }).then(res => {
       location.hash = `/_/${id}`; // eslint-disable-line
       console.log(res);
     });
   }
-  
-  setImages = images => this.setState({images});
+
+  setImages = images => this.setState({ images });
   removeImage = item => this.setImages((this.state.images || this.props.images).filter(e => e !== item));
 
   renderThumbnail = ({ item }) => (
-    <div className="item-thumbnail" key={item.id}>
+    <div className={`item-thumbnail ${item.path === this.state.image ? 'active' : ''}`}>
       {this.props.isEdit && <>
         <span className="image-move" title="размести реда на картинките"><FaArrowsAlt /></span>
         <span className="image-remove" title="премахни картинката" onClick={() => this.removeImage(item)} ><FaTimes/></span>
@@ -66,6 +81,7 @@ class ItemDetailed extends Component {
       <img className="item-thumbnail-image" src={item.path} alt="" onClick={() => this.setState({ image: item.path })}/>
     </div>
   )
+
   render() {
     const { author, price, name, category, description, id, isMine, isEdit } = this.props;
     const images = (isEdit && this.state.images) || this.props.images;
@@ -80,7 +96,7 @@ class ItemDetailed extends Component {
           <input name="images" value={images.map(e => e.id)} type="hidden"/>
         </>}
         {isMine && <Link className="item-edit-link action" to={`/_/${id}${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>}
-        <div className="item-preview">
+        <div className="item-preview" {...(!isEdit && { tabIndex: 0, 'aria-roledescription': 'Item preview. Press left/right arrow keys to change' })}>
           <CrossfadeImage className="item-image" src={this.state[image] || image} alt="" />
           <ReorderableList className="item-thumbnails" items={images} setItems={this.setImages} Item={this.renderThumbnail} disabled={!isEdit}/>
         </div>

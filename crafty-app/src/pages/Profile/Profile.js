@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { FaPen, FaPlus } from 'react-icons/fa';
+import { FaPen, FaPlus, FaSun, FaMoon } from 'react-icons/fa';
 import { getProfile, setProfile } from 'core/actions';
 import { ItemSimple } from 'components/Item/Item';
 import { getFormData } from 'core/utils';
 import './Profile.css';
+
+const DarkToggle = () => {
+  const [dark, setDark] = window.store.usePersistentState('darkMode', false);
+  return <button className={`dark-toggle ${dark ? 'on' : 'off'}`} aria-pressed={dark} title="включи тъмен режим" onClick={() => setDark(!dark)}>
+    <FaSun className="sun"/>
+    <FaMoon className="moon"/>
+  </button>
+}
 
 class Profile extends Component {
   state = { data: { items: [] } };
@@ -31,8 +39,11 @@ class Profile extends Component {
 
     return (
       <div className={`Profile${isEdit ? ' edit' : ''}`}>
-        {isMine && <Link className="item-edit-link action" to={`/profile${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>}
-        {isMine && <Link className="item-add-link action" to="/add" ><FaPlus title="Добави предмет" /></Link>}
+        {isMine && <>
+          <Link className="item-add-link action" to="/add" ><FaPlus title="Добави предмет" /></Link>
+          <Link className="item-edit-link action" to={`/profile${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>
+          <DarkToggle/>
+        </>}
         <Container className="info" onSubmit={this.onSubmit}>
           <div className="name">
             <label>

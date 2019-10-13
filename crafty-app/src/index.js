@@ -9,7 +9,7 @@ import { createStore } from './core/store';
 import './index.css';
 
 const App = createStore(() => (
-  <div className="App">
+  <div className={`App ${window.store.get('darkMode') ? 'dark' : 'light'}`}>
     <Router>
       <Header/>
       <Notification />
