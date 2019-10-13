@@ -76,7 +76,7 @@ public class CartService {
 			}
 			cartItem.setQuantity(newQuantity);
 			cartItem = cartItemRepository.save(cartItem);
-			return "Item saved";
+			return "Успешно добавено в количка";
 		} else if (savedQuantity != 0) {
 			cartItemRepository.delete(cartItem);
 			return "Item deleted";

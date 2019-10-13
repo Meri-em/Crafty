@@ -36,7 +36,7 @@ public class CartResource {
 		return cartService.getCartItems(memberId);
 	}
 	
-	@PostMapping("")
+	@PostMapping(value = "", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
 	public String createOrUpdateCartItem(@RequestBody CartItemRequestDTO cartItemRequest) {
 		return cartService.createOrUpdateCartItem(CurrentUser.getMemberId(), cartItemRequest.getItemId(),
 				cartItemRequest.getQuantity());
