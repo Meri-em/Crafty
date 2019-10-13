@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FaPen, FaPlus, FaSun, FaMoon } from 'react-icons/fa';
 import { getProfile, setProfile } from 'core/actions';

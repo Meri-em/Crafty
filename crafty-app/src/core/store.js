@@ -23,7 +23,7 @@ export const createStore = WrappedComponent => {
       },
       usePersistentState: (key, value) => {
         const [x, setX] = this.state.useState(key, value);
-        return [x, value => (LS.set(key, value), setX(value))];
+        return [x, value => (LS.set(key, value), setX(value))]; // eslint-disable-line
       },
       darkMode: LS.get('darkMode'),
       isLoggedIn: (LS.get('tokens') || {}).refreshExpires > Date.now()
