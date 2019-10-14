@@ -1,12 +1,14 @@
 package com.crafty.util;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.crafty.dto.*;
@@ -57,6 +59,19 @@ public class MapperHelper {
 		itemDTO.setImages(itemImages);
 		itemDTO.setArchived(item.isArchived());
 		return itemDTO;
+	}
+
+	public Item toItem(UploadItemDTO itemDTO, Member member) {
+		String itemId = UUID.randomUUID().toString();
+		Item item = new Item();
+		item.setName(itemDTO.getName());
+		item.setDescription(itemDTO.getDescription());
+		item.setPrice(itemDTO.getPrice());
+		item.setCategory(itemDTO.getCategory());
+		item.setMember(member);
+		item.setId(itemId);
+		item.setCreatedAt(Instant.now());
+		return item;
 	}
 	
 	public CartItemDTO toCartItemDTO(CartItem cartItem) {

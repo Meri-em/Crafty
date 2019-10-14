@@ -18,7 +18,6 @@ import com.crafty.repository.ItemImageRepository;
 import com.crafty.repository.MemberRepository;
 import com.crafty.web.exception.BadRequestException;
 import com.crafty.web.exception.UnauthorizedException;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -80,45 +79,26 @@ public class ItemService {
 		}
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new NotFoundException("No member found with id: " + memberId));
-		String itemId = UUID.randomUUID().toString();
-		Item item = new Item();
-		item.setName(itemDTO.getName());
-		item.setDescription(itemDTO.getDescription());
-		item.setPrice(itemDTO.getPrice());
-		item.setCategory(itemDTO.getCategory());
-		item.setMember(member);
-		item.setId(itemId);
-		item.setCreatedAt(Instant.now());
+		Item item = mapperHelper.toItem(itemDTO, member);
 
 		List<ItemImage> itemImages = new ArrayList<>();
-		int i = 0;
+		int imageFilesCount = 0;
 		for (MultipartFile file : files) {
 			if (!file.getOriginalFilename().isEmpty()) {
-				i++;
-				String extension = file.getOriginalFilename().split("\\.")[1];
 				ItemImage itemImage = new ItemImage();
 				itemImage.setId(UUID.randomUUID().toString());
 				itemImage.setItem(item);
-				itemImage.setExtension(extension);
-				String filePath = IMAGES_FOLDER + item.getId() + "/"
-					+ itemImage.getName();
-				itemImage.setOrder(i);
+				itemImage.setExtension(file.getOriginalFilename().split("\\.")[1]);
+				String filePath = IMAGES_FOLDER + item.getId() + "/" + itemImage.getName();
+				itemImage.setOrder(++imageFilesCount);
 				try {
-					File imageFile = new File(filePath);
-					imageFile.getParentFile().mkdirs();
-
-					// Get the file and save it somewhere
-					byte[] bytes = file.getBytes();
-					Path path = Paths.get(filePath);
-
-					Files.write(path, bytes);
-
+					new File(filePath).getParentFile().mkdirs();
+					Files.write(Paths.get(filePath), file.getBytes());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				itemImages.add(itemImage);
 			}
-
 		}
 		item.setItemImages(itemImages);
 		itemRepository.save(item);
