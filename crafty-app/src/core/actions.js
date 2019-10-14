@@ -13,7 +13,7 @@ const auth = {
   set: data => {
     window.store.set('isLoggedIn', true);
     return LS.set('tokens', {
-      ...data, 
+      ...data,
       accessExpires: Date.now() + 20 * 60 * 1000,
       refreshExpires: Date.now() + 4000 * 60 * 1000
     });

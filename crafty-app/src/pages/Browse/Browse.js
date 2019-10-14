@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getItems, browse, searchByName } from 'core/actions';
+import { getItems, browse, searchByName, getNavigation } from 'core/actions';
+import { getSubCategories } from 'core/utils';
 import Item from 'components/Item/Item';
 
 import './Browse.css';
@@ -9,7 +10,9 @@ class Browse extends Component {
 
   updateItems() {
     const { group, subgroup } = this.props.match.params;
-    const f = group === 'search' ? searchByName : subgroup ? browse : getItems;
+    console.log(getSubCategories(group));
+    let f = group === 'search' ? searchByName : !group ? getItems : subgroup ? browse : null;
+    f = f || (() => getNavigation().then(() => browse(getSubCategories(group.toUpperCase()).join(','))));
     f(subgroup).then(res => this.setState({ items: res.data }));
   }
 

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FaPen, FaPlus, FaSun, FaMoon } from 'react-icons/fa';
 import { getProfile, setProfile } from 'core/actions';
@@ -42,7 +42,7 @@ class Profile extends Component {
         {isMine && <>
           <Link className="item-add-link action" to="/add" ><FaPlus title="Добави предмет" /></Link>
           <Link className="item-edit-link action" to={`/profile${isEdit ? '' : '/edit'}`} ><FaPen title="Редактирай" /></Link>
-          <DarkToggle/>
+          <label><DarkToggle/> Смени тъмен/светъл изглед</label>
         </>}
         <Container className="info" onSubmit={this.onSubmit}>
           <div className="name">
