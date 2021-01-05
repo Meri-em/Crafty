@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "react": "^16.8.5",
     "react-beautiful-dnd": "^11.0.5",
     "react-crossfade-image": "^1.1.1",
